@@ -1,29 +1,27 @@
-const {
-  override,
-  fixBabelImports,
-  addLessLoader,
-  addWebpackAlias
-} = require("customize-cra");
+const { override, fixBabelImports, addLessLoader, addWebpackAlias } = require('customize-cra');
 
-const path = require("path");
+const path = require('path');
 
 module.exports = override(
-  fixBabelImports("import", {
-    libraryName: "antd",
-    libraryDirectory: "es",
-    style: true
+  fixBabelImports('import', {
+    libraryName: 'antd',
+    libraryDirectory: 'es',
+    style: true,
   }),
   addLessLoader({
     javascriptEnabled: true,
-    modifyVars: {}
+    modifyVars: {
+      '@primary-color': '#87b1fd',
+      '@font-family': 'Montserrat',
+    },
   }),
   addWebpackAlias({
-    "@components": path.resolve(__dirname, "src", "components"),
-    "@containers": path.resolve(__dirname, "src", "containers"),
-    "@pages": path.resolve(__dirname, "src", "pages"),
-    "@themes": path.resolve(__dirname, "src", "themes"),
-    "@sagas": path.resolve(__dirname, "src", "sagas"),
-    "@utils": path.resolve(__dirname, "src", "utils"),
-    "@apis": path.resolve(__dirname, "src", "apis")
-  })
+    '@components': path.resolve(__dirname, 'src', 'components'),
+    '@containers': path.resolve(__dirname, 'src', 'containers'),
+    '@pages': path.resolve(__dirname, 'src', 'pages'),
+    '@themes': path.resolve(__dirname, 'src', 'themes'),
+    '@sagas': path.resolve(__dirname, 'src', 'sagas'),
+    '@utils': path.resolve(__dirname, 'src', 'utils'),
+    '@apis': path.resolve(__dirname, 'src', 'apis'),
+  }),
 );
