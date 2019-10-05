@@ -1,0 +1,48 @@
+@import '@themes/themeVariables.scss';
+
+.home-page-header__container {
+  border-bottom: 1px solid $primary-border-color;
+  display: flex;
+  align-items: center;
+
+  .menu__container {
+    width: 90%;
+    border: none;
+
+    & * {
+      font-weight: bold;
+    }
+
+    .ant-menu-submenu-title {
+      .submenu-title__container {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  .signin__container {
+    height: 100%;
+    width: 10%;
+    min-width: 100px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover > * {
+      color: $primary-background-color;
+    }
+
+    .user-icon {
+      font-size: 26px;
+      margin: 0 0.5rem;
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .signin__container {
+    .signin-text {
+      display: none;
+    }
+  }
+}

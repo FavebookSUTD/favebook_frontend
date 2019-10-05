@@ -10,9 +10,7 @@ export function loginFromStorage() {
     const userCredentials = JSON.parse(user);
     return userCredentials;
   }
-
-  window.location.href = apiConfig.ADAuthentication;
-  return null;
+  return {};
 }
 
 export function loginFromAPI({ payload }) {
@@ -25,4 +23,14 @@ export function loginFromAPI({ payload }) {
       window.localStorage.setItem('user', JSON.stringify(user));
       return user;
     });
+}
+
+export function fetchRecommendBookList() {
+  const bookList = require('./mock/mockBookList.json');
+  return bookList.data;
+}
+
+export function fetchBestsellBookList() {
+  const bookList = require('./mock/mockBookList.json');
+  return bookList.data;
 }

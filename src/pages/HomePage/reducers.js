@@ -6,8 +6,10 @@ export const initialState = fromJS({
     userID: '',
     token: '',
   },
-  loading: true,
+  loading: false,
   error: '',
+  recommendBooks: [],
+  bestsellBooks: [],
 });
 
 export default function reducer(state = initialState, action) {
@@ -21,6 +23,12 @@ export default function reducer(state = initialState, action) {
 
     case ACTIONS.LOGIN_FAILURE:
       return state.set('error', 'Something went wrong.').set('loading', false);
+
+    case ACTIONS.FETCH_RECOMMEND_BOOKLIST_SUCCESS:
+      return state.set('recommendBooks', fromJS(action.payload));
+
+    case ACTIONS.FETCH_BESTSELL_BOOKLIST_SUCCESS:
+      return state.set('bestsellBooks', fromJS(action.payload));
 
     default:
       return state;

@@ -1,0 +1,32 @@
+@import '@themes/themeMixins.scss';
+@import '@themes/themeVariables.scss';
+
+.home-page__main-container {
+  height: 100%;
+  width: 100%;
+  padding: 2rem 4rem;
+  overflow: hidden;
+  background: $primary-background-color;
+
+  .home-page__container {
+    @include card();
+    @include boxShadow();
+    height: 100%;
+    width: 100%;
+    padding: 2rem;
+
+    .home-page__content {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+      @include overflowScrollY();
+      @include chromeCustomScrollbar();
+
+      .home-page-greeting__header {
+        font-weight: 300 !important;
+      }
+    }
+  }
+}

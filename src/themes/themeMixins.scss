@@ -1,12 +1,31 @@
-@mixin scale() {
-  transform: scale(1.2);
-}
+@import './themeVariables.scss';
 
 @mixin card() {
-  border-radius: 6px;
+  border-radius: 5px;
 }
 
-@mixin overflowNoScroll() {
+@mixin boxShadow() {
+  box-shadow: 0 30px 40px 0 rgba(0, 0, 0, 0.45);
+}
+
+@mixin noFocusOutline() {
+  &:focus {
+    outline: none;
+  }
+}
+
+@mixin overflowScrollY() {
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+@mixin chromeCustomScrollbar() {
+  &::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $primary-border-color;
+  }
 }
