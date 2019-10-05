@@ -25,7 +25,6 @@ import {
 } from './selectors';
 
 // import local components
-import Routers from './components/Routers';
 import HeaderMenu from './components/HeaderMenu';
 import FilterBar from './components/FilterBar';
 import BookDisplay from './components/BookCarousel';
@@ -48,14 +47,18 @@ class HomePage extends PureComponent {
     fetchBestsellBookList();
   }
 
+  menuClickHandler = url => {
+    const { history } = this.props;
+    history.push(url);
+  };
+
   render() {
     const { recommendBooks, bestsellBooks } = this.props;
 
     return (
       <div className="home-page__main-container">
-        <Routers />
         <Layout className="home-page__container">
-          <HeaderMenu />
+          <HeaderMenu menuClickHandler={this.menuClickHandler} />
           <Content className="home-page__content">
             <Title className="home-page-greeting__header">Good Morning, Friend</Title>
             <FilterBar />
