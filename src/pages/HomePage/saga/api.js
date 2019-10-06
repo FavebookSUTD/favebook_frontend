@@ -2,6 +2,7 @@ import api from '@apis/api';
 import apiConfig from '@apis/apiConfig';
 
 export function loginFromStorage() {
+  // TODO: Connect to real api
   const {
     localStorage: { user },
   } = window;
@@ -14,6 +15,7 @@ export function loginFromStorage() {
 }
 
 export function loginFromAPI({ payload }) {
+  // TODO: Connect to real api
   return api
     .post({
       url: apiConfig.authentication,
@@ -26,11 +28,23 @@ export function loginFromAPI({ payload }) {
 }
 
 export function fetchRecommendBookList() {
+  // TODO: Connect to real api
   const bookList = require('./mock/mockBookList.json');
   return bookList.data;
 }
 
 export function fetchBestsellBookList() {
+  // TODO: Connect to real api
   const bookList = require('./mock/mockBookList.json');
   return bookList.data;
+}
+
+export function searchBooks({ payload }) {
+  // TODO: Connect to real api
+  if (payload) {
+    return fetch('https://randomuser.me/api/?results=5')
+      .then(response => response.json())
+      .then(body => body.results);
+  }
+  return [];
 }

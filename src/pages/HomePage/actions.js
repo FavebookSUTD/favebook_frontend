@@ -9,6 +9,9 @@ const ACTIONS = {
   FETCH_BESTSELL_BOOKLIST: '@pages/HomePage/FETCH_BESTSELL_BOOKLIST',
   FETCH_BESTSELL_BOOKLIST_SUCCESS: '@pages/HomePage/FETCH_BESTSELL_BOOKLIST_SUCCESS',
   FETCH_BESTSELL_BOOKLIST_FAILURE: '@pages/HomePage/FETCH_BESTSELL_BOOKLIST_FAILURE',
+  SEARCH_BOOKS: '@pages/HomePage/SEARCH_BOOKS',
+  SEARCH_BOOKS_SUCCESS: '@pages/HomePage/SEARCH_BOOKS_SUCCESS',
+  SEARCH_BOOKS_FAILURE: '@pages/HomePage/SEARCH_BOOKS_FAILURE',
 };
 
 export default ACTIONS;
@@ -28,4 +31,9 @@ export const fetchRecommendBookList = () => ({
 
 export const fetchBestsellBookList = () => ({
   type: ACTIONS.FETCH_BESTSELL_BOOKLIST,
+});
+
+export const searchBooks = searchVal => ({
+  type: ACTIONS.SEARCH_BOOKS,
+  payload: searchVal,
 });
