@@ -20,6 +20,7 @@ import './index.scss';
 // import Antd
 import { Typography, Tabs } from 'antd';
 
+// Extract antd components
 const { Title, Paragraph, Text } = Typography;
 const { TabPane } = Tabs;
 
