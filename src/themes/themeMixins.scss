@@ -4,8 +4,8 @@
   border-radius: 5px;
 }
 
-@mixin boxShadow() {
-  box-shadow: 0 30px 40px 0 rgba(0, 0, 0, 0.45);
+@mixin boxShadow($opacity) {
+  box-shadow: 0 30px 40px 0 rgba(0, 0, 0, $opacity);
 }
 
 @mixin noFocusOutline() {

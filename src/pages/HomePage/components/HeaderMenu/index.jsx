@@ -1,5 +1,6 @@
 // import React
 import React from 'react';
+import propTypes from 'prop-types';
 
 // import local styling
 import './index.scss';
@@ -11,7 +12,7 @@ import { Typography, Icon, Menu } from 'antd';
 const { SubMenu } = Menu;
 const { Text } = Typography;
 
-const HeaderMenu = () => {
+const HeaderMenu = ({ menuClickHandler }) => {
   return (
     <header className="home-page-header__container">
       <Menu className="menu__container" mode="horizontal">
@@ -31,7 +32,7 @@ const HeaderMenu = () => {
         </SubMenu>
         <Menu.Item key="newsfeed">NEWSFEED</Menu.Item>
       </Menu>
-      <div className="signin__container">
+      <div className="signin__container" onClick={() => menuClickHandler('/authenticate')}>
         <Icon className="user-icon" type="user" />
         <Text className="signin-text" strong>
           SIGN IN
@@ -41,6 +42,8 @@ const HeaderMenu = () => {
   );
 };
 
-HeaderMenu.propTypes = {};
+HeaderMenu.propTypes = {
+  menuClickHandler: propTypes.func.isRequired,
+};
 
 export default HeaderMenu;

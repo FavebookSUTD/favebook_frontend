@@ -10,7 +10,7 @@
 
   .home-page__container {
     @include card();
-    @include boxShadow();
+    @include boxShadow(0.45);
     height: 100%;
     width: 100%;
     padding: 2rem;
