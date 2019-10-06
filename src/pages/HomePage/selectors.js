@@ -22,15 +22,21 @@ const selectLoading = select(selectHomePage, 'loading');
 
 const selectError = select(selectHomePage, 'error');
 
+const selectFetching = select(selectHomePage, 'fetching');
+
 const selectRecommendBooks = selectToJS(selectHomePage, 'recommendBooks');
 
 const selectBestsellBooks = selectToJS(selectHomePage, 'bestsellBooks');
+
+const selectSearchResult = selectToJS(selectHomePage, 'searchResults');
 
 export {
   selectUserInfo,
   selectLoggedIn,
   selectLoading,
   selectError,
+  selectFetching,
   selectRecommendBooks,
   selectBestsellBooks,
+  selectSearchResult,
 };

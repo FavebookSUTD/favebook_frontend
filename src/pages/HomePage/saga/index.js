@@ -8,6 +8,7 @@ import {
   loginFromStorage,
   fetchRecommendBookList,
   fetchBestsellBookList,
+  searchBooks,
 } from './api';
 
 export default function* watcherHome() {
@@ -39,6 +40,13 @@ export default function* watcherHome() {
       ACTIONS.FETCH_BESTSELL_BOOKLIST_SUCCESS,
       ACTIONS.FETCH_BESTSELL_BOOKLIST_FAILURE,
       fetchBestsellBookList,
+    ),
+    takeLatest(
+      ACTIONS.SEARCH_BOOKS,
+      saga,
+      ACTIONS.SEARCH_BOOKS_SUCCESS,
+      ACTIONS.SEARCH_BOOKS_FAILURE,
+      searchBooks,
     ),
   ]);
 }

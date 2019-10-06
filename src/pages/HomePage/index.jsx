@@ -13,15 +13,22 @@ import injectReducer from '@utils/injectReducer';
 import injectSaga from '@utils/injectSaga';
 
 // import actions
-import { loginFromStorage, fetchRecommendBookList, fetchBestsellBookList } from './actions';
+import {
+  loginFromStorage,
+  fetchRecommendBookList,
+  fetchBestsellBookList,
+  searchBooks,
+} from './actions';
 
 // import selector
 import {
   selectLoggedIn,
   selectLoading,
   selectError,
+  selectFetching,
   selectRecommendBooks,
   selectBestsellBooks,
+  selectSearchResult,
 } from './selectors';
 
 // import local components
@@ -53,7 +60,7 @@ class HomePage extends PureComponent {
   };
 
   render() {
-    const { recommendBooks, bestsellBooks } = this.props;
+    const { fetching, recommendBooks, bestsellBooks, searchResults, searchBooks } = this.props;
 
     return (
       <div className="home-page__main-container">
@@ -61,7 +68,7 @@ class HomePage extends PureComponent {
           <HeaderMenu menuClickHandler={this.menuClickHandler} />
           <Content className="home-page__content">
             <Title className="home-page-greeting__header">Good Morning, Friend</Title>
-            <FilterBar />
+            <FilterBar fetching={fetching} options={searchResults} searchHandler={searchBooks} />
             <BookDisplay title="just for you" rows={1} books={recommendBooks} />
             <BookDisplay title="best sellers" rows={2} books={bestsellBooks} />
           </Content>
@@ -72,26 +79,32 @@ class HomePage extends PureComponent {
 }
 
 HomePage.propTypes = {
+  fetching: PropTypes.bool.isRequired,
   recommendBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
   bestsellBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
+  searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
 
   loginFromStorage: PropTypes.func.isRequired,
   fetchRecommendBookList: PropTypes.func.isRequired,
   fetchBestsellBookList: PropTypes.func.isRequired,
+  searchBooks: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
+  loggedIn: selectLoggedIn,
   loading: selectLoading,
   error: selectError,
-  loggedIn: selectLoggedIn,
+  fetching: selectFetching,
   recommendBooks: selectRecommendBooks,
   bestsellBooks: selectBestsellBooks,
+  searchResults: selectSearchResult,
 });
 
 const mapDispatchToProps = {
   loginFromStorage,
   fetchRecommendBookList,
   fetchBestsellBookList,
+  searchBooks,
 };
 
 const withReducer = injectReducer({ key: 'HomePage', reducer });
