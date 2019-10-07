@@ -70,7 +70,7 @@ class HomePage extends PureComponent {
             <Title className="home-page-greeting__header">Good Morning, Friend</Title>
             <FilterBar fetching={fetching} options={searchResults} searchHandler={searchBooks} />
             <BookDisplay title="just for you" rows={1} books={recommendBooks} />
-            <BookDisplay title="best sellers" rows={2} books={bestsellBooks} />
+            <BookDisplay title="best sellers" rows={1} books={bestsellBooks} />
           </Content>
         </Layout>
       </div>
