@@ -1,6 +1,5 @@
 import { fromJS } from 'immutable';
 import ACTIONS from './actions';
-import isEmpty from 'lodash/isEmpty';
 
 export const initialState = fromJS({
   user: {
