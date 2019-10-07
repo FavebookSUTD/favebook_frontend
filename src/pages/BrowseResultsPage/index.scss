@@ -1,0 +1,33 @@
+@import '@themes/themeMixins.scss';
+@import '@themes/themeVariables.scss';
+
+.results-page__main-container {
+  height: 100%;
+  width: 100%;
+  padding: 2rem 4rem;
+  overflow: hidden;
+  background: $primary-background-color;
+
+  .results-page__container {
+    @include card();
+    @include boxShadow(0.45);
+    height: 100%;
+    width: 100%;
+    padding: 2rem;
+
+    .results-page__content {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .results-page__pagination {
+      display: flex;
+      justify-content: center;
+      margin: 2rem;
+    }
+  }
+}
