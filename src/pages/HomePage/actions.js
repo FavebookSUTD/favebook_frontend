@@ -12,6 +12,9 @@ const ACTIONS = {
   SEARCH_BOOKS: '@pages/HomePage/SEARCH_BOOKS',
   SEARCH_BOOKS_SUCCESS: '@pages/HomePage/SEARCH_BOOKS_SUCCESS',
   SEARCH_BOOKS_FAILURE: '@pages/HomePage/SEARCH_BOOKS_FAILURE',
+  FETCH_GENRES: '@pages/HomePage/FETCH_GENRES',
+  FETCH_GENRES_SUCCESS: '@pages/HomePage/FETCH_GENRES_SUCCESS',
+  FETCH_GENRES_FAILURE: '@pages/HomePage/FETCH_GENRES_FAILURE',
 };
 
 export default ACTIONS;
@@ -36,4 +39,8 @@ export const fetchBestsellBookList = () => ({
 export const searchBooks = searchVal => ({
   type: ACTIONS.SEARCH_BOOKS,
   payload: searchVal,
+});
+
+export const fetchGenres = () => ({
+  type: ACTIONS.FETCH_GENRES,
 });

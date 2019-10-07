@@ -3,9 +3,11 @@
 
 @mixin bannerStyling() {
   height: 400px;
-  min-width: 0px;
-  padding: 7rem;
+  min-width: calc(400px + 4rem);
+  display: flex;
   flex: 1 0;
+  flex-direction: column;
+  justify-content: center;
   border: solid 1px $primary-border-color;
   border-width: 1px 0 1px 0;
 
@@ -19,6 +21,7 @@
   width: 100%;
   display: flex;
   align-items: center;
+  overflow: hidden;
   background: $primary-background-color;
 
   .authenticate-page__content {
@@ -30,6 +33,7 @@
       @include bannerStyling();
 
       .app-name {
+        margin: 0 2rem;
         text-align: center;
         font-size: 80px;
         font-weight: 400;
@@ -76,6 +80,7 @@
 
         .ant-tabs-content {
           flex: 1 0;
+
           .form-pane__container {
             padding: 0 5% 10%;
             width: 100%;
@@ -89,6 +94,7 @@
 
       & > * {
         font-size: 16px;
+        margin: 0 6rem;
       }
 
       .motivation-slogan {

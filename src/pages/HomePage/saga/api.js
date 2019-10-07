@@ -48,3 +48,9 @@ export function searchBooks({ payload }) {
   }
   return [];
 }
+
+export function fetchGenres() {
+  // TODO: Connect to real api
+  const genres = require('./mock/mockGenres.json');
+  return genres.data;
+}

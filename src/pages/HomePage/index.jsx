@@ -18,6 +18,7 @@ import {
   fetchRecommendBookList,
   fetchBestsellBookList,
   searchBooks,
+  fetchGenres,
 } from './actions';
 
 // import selector
@@ -29,6 +30,7 @@ import {
   selectRecommendBooks,
   selectBestsellBooks,
   selectSearchResult,
+  selectGenres,
 } from './selectors';
 
 // import local components
@@ -48,10 +50,16 @@ const { Title } = Typography;
 
 class HomePage extends PureComponent {
   componentDidMount() {
-    const { loginFromStorage, fetchRecommendBookList, fetchBestsellBookList } = this.props;
+    const {
+      loginFromStorage,
+      fetchRecommendBookList,
+      fetchBestsellBookList,
+      fetchGenres,
+    } = this.props;
     loginFromStorage();
     fetchRecommendBookList();
     fetchBestsellBookList();
+    fetchGenres();
   }
 
   menuClickHandler = url => {
@@ -60,12 +68,19 @@ class HomePage extends PureComponent {
   };
 
   render() {
-    const { fetching, recommendBooks, bestsellBooks, searchResults, searchBooks } = this.props;
+    const {
+      fetching,
+      recommendBooks,
+      bestsellBooks,
+      searchResults,
+      genres,
+      searchBooks,
+    } = this.props;
 
     return (
       <div className="home-page__main-container">
         <Layout className="home-page__container">
-          <HeaderMenu menuClickHandler={this.menuClickHandler} />
+          <HeaderMenu genres={genres} menuClickHandler={this.menuClickHandler} />
           <Content className="home-page__content">
             <Title className="home-page-greeting__header">Good Morning, Friend</Title>
             <FilterBar fetching={fetching} options={searchResults} searchHandler={searchBooks} />
@@ -83,11 +98,13 @@ HomePage.propTypes = {
   recommendBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
   bestsellBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
   searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+  genres: PropTypes.arrayOf(PropTypes.object).isRequired,
 
   loginFromStorage: PropTypes.func.isRequired,
   fetchRecommendBookList: PropTypes.func.isRequired,
   fetchBestsellBookList: PropTypes.func.isRequired,
   searchBooks: PropTypes.func.isRequired,
+  fetchGenres: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -98,6 +115,7 @@ const mapStateToProps = createStructuredSelector({
   recommendBooks: selectRecommendBooks,
   bestsellBooks: selectBestsellBooks,
   searchResults: selectSearchResult,
+  genres: selectGenres,
 });
 
 const mapDispatchToProps = {
@@ -105,6 +123,7 @@ const mapDispatchToProps = {
   fetchRecommendBookList,
   fetchBestsellBookList,
   searchBooks,
+  fetchGenres,
 };
 
 const withReducer = injectReducer({ key: 'HomePage', reducer });
