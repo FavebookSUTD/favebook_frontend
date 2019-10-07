@@ -3,7 +3,7 @@
 
 @mixin bannerStyling() {
   height: 400px;
-  min-width: 620px;
+  min-width: 0px;
   padding: 7rem;
   flex: 1 0;
   border: solid 1px $primary-border-color;
