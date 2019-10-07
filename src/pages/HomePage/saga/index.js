@@ -9,6 +9,7 @@ import {
   fetchRecommendBookList,
   fetchBestsellBookList,
   searchBooks,
+  fetchGenres,
 } from './api';
 
 export default function* watcherHome() {
@@ -47,6 +48,13 @@ export default function* watcherHome() {
       ACTIONS.SEARCH_BOOKS_SUCCESS,
       ACTIONS.SEARCH_BOOKS_FAILURE,
       searchBooks,
+    ),
+    takeLatest(
+      ACTIONS.FETCH_GENRES,
+      saga,
+      ACTIONS.FETCH_GENRES_SUCCESS,
+      ACTIONS.FETCH_GENRES_FAILURE,
+      fetchGenres,
     ),
   ]);
 }

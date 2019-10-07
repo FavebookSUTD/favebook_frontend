@@ -12,6 +12,7 @@ export const initialState = fromJS({
   recommendBooks: [],
   bestsellBooks: [],
   searchResults: [],
+  genres: [],
 });
 
 export default function reducer(state = initialState, action) {
@@ -40,6 +41,9 @@ export default function reducer(state = initialState, action) {
 
     case ACTIONS.SEARCH_BOOKS_FAILURE:
       return state.set('error', 'Something went wrong.').set('fetching', false);
+
+    case ACTIONS.FETCH_GENRES_SUCCESS:
+      return state.set('genres', fromJS(action.payload));
 
     default:
       return state;
