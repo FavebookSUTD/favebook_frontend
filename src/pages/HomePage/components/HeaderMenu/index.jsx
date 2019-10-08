@@ -1,6 +1,9 @@
 // import React
 import React from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
+
+// import lodash
+import map from 'lodash/map';
 
 // import local styling
 import './index.scss';
@@ -12,14 +15,21 @@ import { Typography, Icon, Menu } from 'antd';
 const { SubMenu } = Menu;
 const { Text } = Typography;
 
-const HeaderMenu = ({ menuClickHandler }) => {
+const HeaderMenu = ({ genres, menuClickHandler }) => {
   return (
     <header className="home-page-header__container">
-      <Menu className="menu__container" mode="horizontal">
+      <Menu
+        className="menu__container"
+        mode="horizontal"
+        selectable={false}
+        onClick={(item, key, keyPath) => {
+          console.log(item, key, keyPath);
+        }}
+      >
         <Menu.Item key="home">HOME</Menu.Item>
         <Menu.Item key="mybooks">MY BOOKS</Menu.Item>
         <SubMenu
-          className="submenu__container"
+          popupClassName="home-page-submenu__container"
           title={
             <>
               <span className="submenu-title__container">BROWSE</span>
@@ -27,8 +37,20 @@ const HeaderMenu = ({ menuClickHandler }) => {
             </>
           }
         >
-          <Menu.Item key="option1">Option 1</Menu.Item>
-          <Menu.Item key="option2">Option 2</Menu.Item>
+          <Menu.ItemGroup className="menu-item-group__main-container">
+            <Menu.Item key="recommendations">Recommendations</Menu.Item>
+            <Menu.Item key="choice-awards">Choice Awards</Menu.Item>
+            <Menu.Item key="giveaways">Giveaways</Menu.Item>
+            <Menu.Item key="new-releases">New Releases</Menu.Item>
+            <Menu.Item key="news-feed">News Feed</Menu.Item>
+          </Menu.ItemGroup>
+          <Menu.ItemGroup className="menu-item-group__genres-container" title="GENRES">
+            {map(genres, genre => (
+              <Menu.Item key={genre.id} title={genre.title}>
+                {genre.title}
+              </Menu.Item>
+            ))}
+          </Menu.ItemGroup>
         </SubMenu>
         <Menu.Item key="newsfeed">NEWSFEED</Menu.Item>
       </Menu>
@@ -43,7 +65,8 @@ const HeaderMenu = ({ menuClickHandler }) => {
 };
 
 HeaderMenu.propTypes = {
-  menuClickHandler: propTypes.func.isRequired,
+  genres: PropTypes.arrayOf(PropTypes.object).isRequired,
+  menuClickHandler: PropTypes.func.isRequired,
 };
 
 export default HeaderMenu;

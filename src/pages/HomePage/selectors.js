@@ -30,6 +30,8 @@ const selectBestsellBooks = selectToJS(selectHomePage, 'bestsellBooks');
 
 const selectSearchResult = selectToJS(selectHomePage, 'searchResults');
 
+const selectGenres = selectToJS(selectHomePage, 'genres');
+
 export {
   selectUserInfo,
   selectLoggedIn,
@@ -39,4 +41,5 @@ export {
   selectRecommendBooks,
   selectBestsellBooks,
   selectSearchResult,
+  selectGenres,
 };
