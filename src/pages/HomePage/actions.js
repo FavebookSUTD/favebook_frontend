@@ -9,9 +9,6 @@ const ACTIONS = {
   FETCH_BESTSELL_BOOKLIST: '@pages/HomePage/FETCH_BESTSELL_BOOKLIST',
   FETCH_BESTSELL_BOOKLIST_SUCCESS: '@pages/HomePage/FETCH_BESTSELL_BOOKLIST_SUCCESS',
   FETCH_BESTSELL_BOOKLIST_FAILURE: '@pages/HomePage/FETCH_BESTSELL_BOOKLIST_FAILURE',
-  SEARCH_BOOKS: '@pages/HomePage/SEARCH_BOOKS',
-  SEARCH_BOOKS_SUCCESS: '@pages/HomePage/SEARCH_BOOKS_SUCCESS',
-  SEARCH_BOOKS_FAILURE: '@pages/HomePage/SEARCH_BOOKS_FAILURE',
   FETCH_GENRES: '@pages/HomePage/FETCH_GENRES',
   FETCH_GENRES_SUCCESS: '@pages/HomePage/FETCH_GENRES_SUCCESS',
   FETCH_GENRES_FAILURE: '@pages/HomePage/FETCH_GENRES_FAILURE',
@@ -34,11 +31,6 @@ export const fetchRecommendBookList = () => ({
 
 export const fetchBestsellBookList = () => ({
   type: ACTIONS.FETCH_BESTSELL_BOOKLIST,
-});
-
-export const searchBooks = searchVal => ({
-  type: ACTIONS.SEARCH_BOOKS,
-  payload: searchVal,
 });
 
 export const fetchGenres = () => ({

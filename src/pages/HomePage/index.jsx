@@ -17,7 +17,6 @@ import {
   loginFromStorage,
   fetchRecommendBookList,
   fetchBestsellBookList,
-  searchBooks,
   fetchGenres,
 } from './actions';
 
@@ -26,16 +25,14 @@ import {
   selectLoggedIn,
   selectLoading,
   selectError,
-  selectFetching,
   selectRecommendBooks,
   selectBestsellBooks,
-  selectSearchResult,
   selectGenres,
 } from './selectors';
 
 // import local components
 import HeaderMenu from './components/HeaderMenu';
-import FilterBar from './components/FilterBar';
+import FilterBar from '@containers/FilterBar';
 import BookDisplay from './components/BookCarousel';
 
 // import local styling
@@ -68,14 +65,7 @@ class HomePage extends PureComponent {
   };
 
   render() {
-    const {
-      fetching,
-      recommendBooks,
-      bestsellBooks,
-      searchResults,
-      genres,
-      searchBooks,
-    } = this.props;
+    const { recommendBooks, bestsellBooks, genres } = this.props;
 
     return (
       <div className="home-page__main-container">
@@ -83,7 +73,7 @@ class HomePage extends PureComponent {
           <HeaderMenu genres={genres} menuClickHandler={this.menuClickHandler} />
           <Content className="home-page__content">
             <Title className="home-page-greeting__header">Good Morning, Friend</Title>
-            <FilterBar fetching={fetching} options={searchResults} searchHandler={searchBooks} />
+            <FilterBar />
             <BookDisplay title="just for you" rows={1} books={recommendBooks} />
             <BookDisplay title="best sellers" rows={1} books={bestsellBooks} />
           </Content>
@@ -94,16 +84,13 @@ class HomePage extends PureComponent {
 }
 
 HomePage.propTypes = {
-  fetching: PropTypes.bool.isRequired,
   recommendBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
   bestsellBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
-  searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
   genres: PropTypes.arrayOf(PropTypes.object).isRequired,
 
   loginFromStorage: PropTypes.func.isRequired,
   fetchRecommendBookList: PropTypes.func.isRequired,
   fetchBestsellBookList: PropTypes.func.isRequired,
-  searchBooks: PropTypes.func.isRequired,
   fetchGenres: PropTypes.func.isRequired,
 };
 
@@ -111,10 +98,8 @@ const mapStateToProps = createStructuredSelector({
   loggedIn: selectLoggedIn,
   loading: selectLoading,
   error: selectError,
-  fetching: selectFetching,
   recommendBooks: selectRecommendBooks,
   bestsellBooks: selectBestsellBooks,
-  searchResults: selectSearchResult,
   genres: selectGenres,
 });
 
@@ -122,7 +107,6 @@ const mapDispatchToProps = {
   loginFromStorage,
   fetchRecommendBookList,
   fetchBestsellBookList,
-  searchBooks,
   fetchGenres,
 };
 
