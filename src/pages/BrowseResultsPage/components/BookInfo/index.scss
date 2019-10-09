@@ -1,0 +1,26 @@
+@import '@themes/themeMixins.scss';
+@import '@themes/themeVariables.scss';
+
+.book-row__container{
+    margin: 2rem 0;
+
+    .book-image{
+        text-align: 'center';
+        height: 100px;
+        width: 80px;
+        background: $primary-color;
+        margin-right: 4rem;
+    }
+
+    .book-info__container {
+        .book-title {
+            font-size: 18px;
+            font-weight: 400;
+            color: $primary-background-color;
+        }
+
+        .book-author {
+
+        }
+    }
+}
