@@ -33,7 +33,7 @@
     "build": "cross-env REACT_APP_API_ENV=production SKIP_PREFLIGHT_CHECK=true react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && aws s3 sync build/ s3://aoogebra-frontend"
+    "deploy": "docker build . -t tayts/aoogebra:latest && docker push tayts/aoogebra:latest && docker image prune -f"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -39,16 +39,6 @@ export function fetchBestsellBookList() {
   return bookList.data;
 }
 
-export function searchBooks({ payload }) {
-  // TODO: Connect to real api
-  if (payload) {
-    return fetch('https://randomuser.me/api/?results=5')
-      .then(response => response.json())
-      .then(body => body.results);
-  }
-  return [];
-}
-
 export function fetchGenres() {
   // TODO: Connect to real api
   const genres = require('./mock/mockGenres.json');
