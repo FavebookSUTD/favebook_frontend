@@ -2,7 +2,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -24,9 +23,12 @@ import {
   selectGenres,
 } from './selectors';
 
+// import utils
+import { goto } from '@utils/goto';
+
 // import local components
 import HeaderMenu from './components/HeaderMenu';
-import Router from './components/Routers';
+import Routers from './components/Routers';
 
 // import local styling
 import './index.scss';
@@ -42,8 +44,7 @@ class AppLayout extends PureComponent {
   }
 
   menuClickHandler = url => {
-    const { history } = this.props;
-    history.push(url);
+    goto(url);
   };
 
   render() {
@@ -53,7 +54,7 @@ class AppLayout extends PureComponent {
       <div className="app-layout__main-container">
         <Layout className="app-layout__container">
           <HeaderMenu genres={genres} menuClickHandler={this.menuClickHandler} />
-          <Router />
+          <Routers />
         </Layout>
       </div>
     );
@@ -91,6 +92,5 @@ const withConnect = connect(
 export default compose(
   withReducer,
   withSaga,
-  withRouter,
   withConnect,
 )(AppLayout);
