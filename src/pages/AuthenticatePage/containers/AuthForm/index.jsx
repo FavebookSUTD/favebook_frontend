@@ -2,17 +2,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
 // import reducer and saga
 import reducer from './reducers';
 import saga from './saga';
-import injectReducer from '@utils/injectReducer';
-import injectSaga from '@utils/injectSaga';
-
-// import local components
+import injectReducer from '@utils/core/injectReducer';
+import injectSaga from '@utils/core/injectSaga';
 
 // import lodash
 import isEqual from 'lodash/isEqual';
@@ -164,6 +161,5 @@ const AuthForm = Form.create()(Auth);
 export default compose(
   withReducer,
   withSaga,
-  withRouter,
   withConnect,
 )(AuthForm);

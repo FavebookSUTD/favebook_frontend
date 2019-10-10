@@ -1,15 +1,14 @@
 // import React
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
 // import reducer and saga
 import reducer from './reducers';
 import saga from './saga';
-import injectReducer from '@utils/injectReducer';
-import injectSaga from '@utils/injectSaga';
+import injectReducer from '@utils/core/injectReducer';
+import injectSaga from '@utils/core/injectSaga';
 
 // import local components
 import AuthForm from './containers/AuthForm';
@@ -70,6 +69,5 @@ const withConnect = connect(
 export default compose(
   withReducer,
   withSaga,
-  withRouter,
   withConnect,
 )(AuthenticatePage);

@@ -8,8 +8,8 @@ import { createStructuredSelector } from 'reselect';
 // import reducer and saga
 import reducer from './reducers';
 import saga from './saga';
-import injectReducer from '@utils/injectReducer';
-import injectSaga from '@utils/injectSaga';
+import injectReducer from '@utils/core/injectReducer';
+import injectSaga from '@utils/core/injectSaga';
 
 // import actions
 import { fetchRecommendBookList, fetchBestsellBookList } from './actions';
