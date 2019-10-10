@@ -1,6 +1,6 @@
 @import '@themes/themeVariables.scss';
 
-.home-page-header__container {
+.header-menu__container {
   border-bottom: 1px solid $primary-border-color;
   display: flex;
   align-items: center;
@@ -39,7 +39,7 @@
   }
 }
 
-.home-page-submenu__container {
+.submenu__container {
   max-width: 800px;
 
   .ant-menu:not(.ant-menu-hidden) {

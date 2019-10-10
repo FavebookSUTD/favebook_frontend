@@ -4,12 +4,12 @@ import { Switch, Route } from 'react-router-dom';
 
 // import page component
 import AuthenticatePage from '@pages/AuthenticatePage';
-import HomePage from '@pages/HomePage';
+import AppLayout from '@pages/AppLayout';
 
 const Routers = () => {
   return (
     <Switch>
-      <Route exact path="/" render={() => <HomePage />} />
+      <Route exact path="/" render={() => <AppLayout />} />
       <Route exact path="/authenticate" render={() => <AuthenticatePage />} />
     </Switch>
   );

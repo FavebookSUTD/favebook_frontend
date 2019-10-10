@@ -2,7 +2,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -13,25 +12,12 @@ import injectReducer from '@utils/injectReducer';
 import injectSaga from '@utils/injectSaga';
 
 // import actions
-import {
-  loginFromStorage,
-  fetchRecommendBookList,
-  fetchBestsellBookList,
-  fetchGenres,
-} from './actions';
+import { fetchRecommendBookList, fetchBestsellBookList } from './actions';
 
 // import selector
-import {
-  selectLoggedIn,
-  selectLoading,
-  selectError,
-  selectRecommendBooks,
-  selectBestsellBooks,
-  selectGenres,
-} from './selectors';
+import { selectLoading, selectError, selectRecommendBooks, selectBestsellBooks } from './selectors';
 
 // import local components
-import HeaderMenu from './components/HeaderMenu';
 import FilterBar from '@containers/FilterBar';
 import BookDisplay from './components/BookCarousel';
 
@@ -47,38 +33,21 @@ const { Title } = Typography;
 
 class HomePage extends PureComponent {
   componentDidMount() {
-    const {
-      loginFromStorage,
-      fetchRecommendBookList,
-      fetchBestsellBookList,
-      fetchGenres,
-    } = this.props;
-    loginFromStorage();
+    const { fetchRecommendBookList, fetchBestsellBookList } = this.props;
     fetchRecommendBookList();
     fetchBestsellBookList();
-    fetchGenres();
   }
 
-  menuClickHandler = url => {
-    const { history } = this.props;
-    history.push(url);
-  };
-
   render() {
-    const { recommendBooks, bestsellBooks, genres } = this.props;
+    const { recommendBooks, bestsellBooks } = this.props;
 
     return (
-      <div className="home-page__main-container">
-        <Layout className="home-page__container">
-          <HeaderMenu genres={genres} menuClickHandler={this.menuClickHandler} />
-          <Content className="home-page__content">
-            <Title className="home-page-greeting__header">Good Morning, Friend</Title>
-            <FilterBar />
-            <BookDisplay title="just for you" rows={1} books={recommendBooks} />
-            <BookDisplay title="best sellers" rows={1} books={bestsellBooks} />
-          </Content>
-        </Layout>
-      </div>
+      <Content className="home-page__container">
+        <Title className="home-page-greeting__header">Good Morning, Friend</Title>
+        <FilterBar />
+        <BookDisplay title="just for you" rows={1} books={recommendBooks} />
+        <BookDisplay title="best sellers" rows={1} books={bestsellBooks} />
+      </Content>
     );
   }
 }
@@ -86,28 +55,21 @@ class HomePage extends PureComponent {
 HomePage.propTypes = {
   recommendBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
   bestsellBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
-  genres: PropTypes.arrayOf(PropTypes.object).isRequired,
 
-  loginFromStorage: PropTypes.func.isRequired,
   fetchRecommendBookList: PropTypes.func.isRequired,
   fetchBestsellBookList: PropTypes.func.isRequired,
-  fetchGenres: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  loggedIn: selectLoggedIn,
   loading: selectLoading,
   error: selectError,
   recommendBooks: selectRecommendBooks,
   bestsellBooks: selectBestsellBooks,
-  genres: selectGenres,
 });
 
 const mapDispatchToProps = {
-  loginFromStorage,
   fetchRecommendBookList,
   fetchBestsellBookList,
-  fetchGenres,
 };
 
 const withReducer = injectReducer({ key: 'HomePage', reducer });
@@ -121,6 +83,5 @@ const withConnect = connect(
 export default compose(
   withReducer,
   withSaga,
-  withRouter,
   withConnect,
 )(HomePage);

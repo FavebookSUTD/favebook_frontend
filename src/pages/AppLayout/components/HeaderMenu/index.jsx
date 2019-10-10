@@ -17,7 +17,7 @@ const { Text } = Typography;
 
 const HeaderMenu = ({ genres, menuClickHandler }) => {
   return (
-    <header className="home-page-header__container">
+    <header className="header-menu__container">
       <Menu
         className="menu__container"
         mode="horizontal"
@@ -29,7 +29,7 @@ const HeaderMenu = ({ genres, menuClickHandler }) => {
         <Menu.Item key="home">HOME</Menu.Item>
         <Menu.Item key="mybooks">MY BOOKS</Menu.Item>
         <SubMenu
-          popupClassName="home-page-submenu__container"
+          popupClassName="submenu__container"
           title={
             <>
               <span className="submenu-title__container">BROWSE</span>
