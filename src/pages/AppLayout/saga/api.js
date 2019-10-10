@@ -10,7 +10,7 @@ export function loginFromStorage() {
     const userCredentials = JSON.parse(user);
     return userCredentials;
   }
-  return new Error('User credential not found!');
+  throw new Error('User credential not found!');
 }
 
 export function fetchGenres() {
