@@ -6,15 +6,11 @@ import StoreContext from './storeContext';
 
 export default ({ key, saga, mode }) => WrappedComponent => {
   class InjectSaga extends React.Component {
-    static WrappedComponent = WrappedComponent;
-
-    static contextType = StoreContext;
+    injectors = getInjector(this.context);
 
     static displayName = `withSaga(${WrappedComponent.displayName ||
       WrappedComponent.name ||
       'Component'})`;
-
-    injectors = getInjector(this.context);
 
     componentWillMount() {
       const { injectSaga } = this.injectors;
@@ -27,6 +23,10 @@ export default ({ key, saga, mode }) => WrappedComponent => {
 
       ejectSaga(key);
     }
+
+    static WrappedComponent = WrappedComponent;
+
+    static contextType = StoreContext;
 
     render() {
       return <WrappedComponent {...this.props} />;
