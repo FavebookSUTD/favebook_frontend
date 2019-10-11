@@ -13,10 +13,13 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import { setPageNum, fetchBookResults } from './actions';
+import { fetchBookResults } from './actions';
 
 // import selector
-import { selectPageNum, selectBookResults } from './selectors';
+import { selectPageSize, selectTotal, selectBookResults } from './selectors';
+
+// import lodash
+import isEmpty from 'lodash/isEmpty';
 
 // import local components
 import BookInfo from './components/BookInfo';
@@ -32,35 +35,42 @@ import { Layout, Pagination } from 'antd';
 const { Content } = Layout;
 
 class BrowseResultsPage extends PureComponent {
-  componentDidMount() {
-    const { setPageNum, fetchBookResults } = this.props;
-    fetchBookResults();
+  constructor(props) {
+    super(props);
+    this.state = {
+      pageNum: 1,
+    };
   }
 
-  menuClickHandler = url => {
-    const { history } = this.props;
-    history.push(url);
-  };
+  componentDidMount() {
+    const { pageSize, fetchBookResults } = this.props;
+    const { pageNum } = this.state;
+    fetchBookResults(pageNum, pageSize);
+  }
 
   onPageChange = (current, pageSize) => {
-    setPageNum(current);
+    const { fetchBookResults } = this.props;
+    this.setState({
+      pageNum: current,
+    });
+    fetchBookResults(current, pageSize);
   };
 
   render() {
-    const { books } = this.props;
-
+    const { pageSize, total, books } = this.props;
+    const { pageNum } = this.state;
     return (
       <Layout className="results-page__main-container">
         <FilterBar className="results-page__filter" />
         <Content className="results-page__content">
-          <BookInfo books={books} />
+          {!isEmpty(books) ? <BookInfo books={books[pageNum]} /> : null}
         </Content>
         <Pagination
           className="results-page__pagination"
+          current={pageNum}
+          pageSize={pageSize}
+          total={total}
           onChange={this.onPageChange}
-          defaultCurrent={1}
-          defaultPageSize={5}
-          total={books.data.length}
         />
       </Layout>
     );
@@ -68,19 +78,20 @@ class BrowseResultsPage extends PureComponent {
 }
 
 BrowseResultsPage.propTypes = {
-  books: PropTypes.arrayOf(PropTypes.object).isRequired,
+  pageSize: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+  books: PropTypes.shape({}).isRequired,
 
-  setPageNum: PropTypes.func.isRequired,
   fetchBookResults: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  pageNum: selectPageNum,
+  pageSize: selectPageSize,
+  total: selectTotal,
   books: selectBookResults,
 });
 
 const mapDispatchToProps = {
-  setPageNum,
   fetchBookResults,
 };
 

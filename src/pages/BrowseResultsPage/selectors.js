@@ -3,8 +3,14 @@ import { initialState } from './reducers';
 
 const selectBrowseResultsPage = state => state.get('BrowseResultsPage', initialState);
 
-const selectPageNum = select(selectBrowseResultsPage, 'pageNum');
+const selectLoading = select(selectBrowseResultsPage, 'loading');
 
-const selectBookResults = select(selectBrowseResultsPage, 'books');
+const selectError = select(selectBrowseResultsPage, 'error');
 
-export { selectPageNum, selectBookResults };
+const selectPageSize = select(selectBrowseResultsPage, 'pageSize');
+
+const selectTotal = select(selectBrowseResultsPage, 'total');
+
+const selectBookResults = selectToJS(selectBrowseResultsPage, 'books');
+
+export { selectLoading, selectError, selectPageSize, selectTotal, selectBookResults };
