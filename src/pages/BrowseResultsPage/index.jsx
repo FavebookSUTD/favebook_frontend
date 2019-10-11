@@ -1,31 +1,41 @@
 // import React
 import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 
-// import Antd
-import { Layout, Pagination } from 'antd';
+// import reducer and saga
+import reducer from './reducers';
+import saga from './saga';
+import injectReducer from '@utils/core/injectReducer';
+import injectSaga from '@utils/core/injectSaga';
+
+// import actions
+import { fetchPageNum, fetchBookResults } from './actions';
+
+// import selector
+import { selectPageNum, selectBookResults } from './selectors';
+
+// import local components
+import BookInfo from './components/BookInfo';
+import FilterBar from '@containers/FilterBar';
 
 // import local styling
 import './index.scss';
 
-// import components
-import HeaderMenu from '../HomePage/components/HeaderMenu';
-import BookInfo from './components/BookInfo';
-import FilterBar from '@containers/FilterBar';
+// import Antd
+import { Layout, Pagination } from 'antd';
 
 // Extract antd components
 const { Content } = Layout;
 
 class BrowseResultsPage extends PureComponent {
   // ComponentDidMount here?
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      pageNum: 1,
-      pageSize: 5,
-    };
+  componentDidMount() {
+    const { fetchPageNum, fetchBookResults } = this.props;
+    fetchBookResults();
+    fetchPageNum();
   }
 
   menuClickHandler = url => {
@@ -42,46 +52,47 @@ class BrowseResultsPage extends PureComponent {
   };
 
   render() {
-    // const { books } = this.props;
-    const { pageNum, pageSize } = this.state;
-
-    // Mock Data
-    const books = {
-      data: [
-        { id: '1', title: 'Book 1', imgURL: '', author: 'Lionell Loh' },
-        { id: '2', title: 'Book 2', imgURL: '', author: 'Lionell Loh' },
-        { id: '3', title: 'Book 3', imgURL: '', author: 'Lionell Loh' },
-        { id: '4', title: 'Book 4', imgURL: '', author: 'Lionell Loh' },
-        { id: '5', title: 'Book 5', imgURL: '', author: 'Lionell Loh' },
-        { id: '6', title: 'Book 6', imgURL: '', author: 'Lionell Loh' },
-        { id: '7', title: 'Book 7', imgURL: '', author: 'Lionell Loh' },
-        { id: '8', title: 'Book 8', imgURL: '', author: 'Lionell Loh' },
-        { id: '9', title: 'Book 9', imgURL: '', author: 'Lionell Loh' },
-        { id: '10', title: 'Book 10', imgURL: '', author: 'Lionell Loh' },
-      ],
-    };
+    const { books, pageNum } = this.props;
 
     return (
-      <div className="results-page__main-container">
-        <Layout className="results-page__container">
-          <HeaderMenu menuClickHandler={this.menuClickHandler} />
-          <div className="results-page__filter">
-            <FilterBar />
-          </div>
-          <Content className="results-page__content">
-            <BookInfo books={books.data} pageNum={pageNum} pageSize={pageSize} />
-            <Pagination
-              className="results-page__pagination"
-              onChange={this.onPageChange}
-              defaultCurrent={1}
-              defaultPageSize={5}
-              total={books.data.length}
-            />
-          </Content>
-        </Layout>
-      </div>
+      <Layout className="results-page__main-container">
+        <FilterBar className="results-page__filter" />
+        <Content className="results-page__content">
+          <BookInfo books={books.data} pageNum={pageNum} />
+        </Content>
+        <Pagination
+          className="results-page__pagination"
+          onChange={this.onPageChange}
+          defaultCurrent={1}
+          defaultPageSize={5}
+          total={books.data.length}
+        />
+      </Layout>
     );
   }
 }
 
-export default compose(withRouter)(BrowseResultsPage);
+const mapStateToProps = createStructuredSelector({
+  pageNum: selectPageNum,
+  books: selectBookResults,
+});
+
+const mapDispatchToProps = {
+  fetchPageNum,
+  fetchBookResults,
+};
+
+const withReducer = injectReducer({ key: 'BrowseResultsPage', reducer });
+const withSaga = injectSaga({ key: 'BrowseResultsPage', saga });
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withRouter,
+  withConnect,
+  withReducer,
+  withSaga,
+)(BrowseResultsPage);

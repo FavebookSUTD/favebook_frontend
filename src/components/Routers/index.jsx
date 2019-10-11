@@ -11,7 +11,7 @@ const Routers = () => {
     <Switch>
       <Route exact path="/" render={() => <AppLayout />} />
       <Route exact path="/authenticate" render={() => <AuthenticatePage />} />
-      <Route exact path="/browseresults" render={() => <BrowseResultsPage />} />
+      <Route exact path="/browseresults" render={() => <AppLayout />} />
     </Switch>
   );
 };

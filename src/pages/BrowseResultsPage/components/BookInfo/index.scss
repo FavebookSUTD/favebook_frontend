@@ -1,18 +1,32 @@
 @import '@themes/themeMixins.scss';
 @import '@themes/themeVariables.scss';
 
-.book-row__container{
-    margin: 2rem 0;
+.book-info__container{
+    .book-row__container{
+        margin: 2rem 0;
 
-    .book-image{
-        text-align: 'center';
-        height: 100px;
-        width: 80px;
-        background: $primary-color;
-        margin-right: 4rem;
-    }
+        .book-image{
+            text-align: 'center';
+            height: 100px;
+            width: 80px;
+            background: $primary-color;
+            margin-right: 4rem;
 
-    .book-info__container {
+            .book-rating{
+                height: 30px;
+                width: 78px;
+                border-radius: 30px 30px 30px 5px;
+                text-align: center;
+                padding: 5px 0;
+                font-weight: 500;
+                color: #FFF;
+                background: #0db8bf;
+                position: absolute;
+                left: 35%;
+                bottom: 0px;
+            }
+        }
+
         .book-title {
             font-size: 18px;
             font-weight: 400;
