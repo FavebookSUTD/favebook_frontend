@@ -5,8 +5,8 @@ import { withRouter } from 'react-router-dom';
 
 import { ConnectedRouter } from 'connected-react-router/immutable';
 import configureStore from './store';
-import history from '@utils/history';
-import StoreContext from '@utils/storeContext';
+import history from '@utils/core/history';
+import StoreContext from '@utils/core/storeContext';
 
 // import local styling
 import './App.scss';

@@ -3,7 +3,7 @@
 .book-carousel__main-container {
   width: 100%;
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 1rem auto;
 
   .book-carousel__header {
     font-weight: 300 !important;
@@ -34,7 +34,7 @@
             width: 80px;
             min-width: 80px;
             display: inline-block;
-            margin: 0 2rem;
+            margin: 0.5rem 2rem;
             background: $primary-color;
           }
         }
