@@ -17,15 +17,16 @@ import { Row, Col } from 'antd';
 // const { Text } = Typography;
 
 const BookInfo = props => {
-  const { books, pageNum } = props;
-  const bookinfo = books;
+  const { books } = props;
+  const { pageNum } = books;
+  const bookinfo = books.data;
   const PAGE_MAX_BOOKS = 5;
-  let startIdx = (pageNum - 1) * PAGE_MAX_BOOKS;
+  const startIdx = (pageNum - 1) * PAGE_MAX_BOOKS;
 
   return (
-    <>
+    <div className="book-info__container">
       {!isEmpty(bookinfo) ? (
-        <div className="book-info__container">
+        <>
           {map(slice(bookinfo, startIdx, startIdx + PAGE_MAX_BOOKS), book => (
             <Row key={book.id} className="book-row__container" type="flex" justify="center">
               <Col span={4} className="book-image">
@@ -38,18 +39,17 @@ const BookInfo = props => {
               </Col>
             </Row>
           ))}
-        </div>
+        </>
       ) : (
         <div>Nothing to see here.</div>
       )}
-    </>
+    </div>
   );
 };
 
 BookInfo.propTypes = {
   books: PropTypes.arrayOf(PropTypes.object).isRequired,
   pageNum: PropTypes.number.isRequired,
-  pageSize: PropTypes.number.isRequired,
 };
 
 export default BookInfo;

@@ -5,6 +5,6 @@ const selectBrowseResultsPage = state => state.get('BrowseResultsPage', initialS
 
 const selectPageNum = select(selectBrowseResultsPage, 'pageNum');
 
-const selectBookResults = selectToJS(selectBrowseResultsPage, 'bookResults');
+const selectBookResults = select(selectBrowseResultsPage, 'books');
 
 export { selectPageNum, selectBookResults };

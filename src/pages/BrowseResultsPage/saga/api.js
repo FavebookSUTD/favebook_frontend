@@ -7,8 +7,8 @@ export function fetchBookResults() {
   return bookList.data;
 }
 
-export function fetchPageNum() {
+export function setPageNum() {
   // TODO: Connect to real api
   const bookList = require('./mock/mockBookList.json');
-  return bookList.data;
+  return bookList.pageNum;
 }

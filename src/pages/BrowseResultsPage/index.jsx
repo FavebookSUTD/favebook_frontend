@@ -1,5 +1,6 @@
 // import React
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
@@ -12,7 +13,7 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import { fetchPageNum, fetchBookResults } from './actions';
+import { setPageNum, fetchBookResults } from './actions';
 
 // import selector
 import { selectPageNum, selectBookResults } from './selectors';
@@ -31,11 +32,9 @@ import { Layout, Pagination } from 'antd';
 const { Content } = Layout;
 
 class BrowseResultsPage extends PureComponent {
-  // ComponentDidMount here?
   componentDidMount() {
-    const { fetchPageNum, fetchBookResults } = this.props;
+    const { setPageNum, fetchBookResults } = this.props;
     fetchBookResults();
-    fetchPageNum();
   }
 
   menuClickHandler = url => {
@@ -44,21 +43,17 @@ class BrowseResultsPage extends PureComponent {
   };
 
   onPageChange = (current, pageSize) => {
-    this.setState(() => {
-      return {
-        pageNum: current,
-      };
-    });
+    setPageNum(current);
   };
 
   render() {
-    const { books, pageNum } = this.props;
+    const { books } = this.props;
 
     return (
       <Layout className="results-page__main-container">
         <FilterBar className="results-page__filter" />
         <Content className="results-page__content">
-          <BookInfo books={books.data} pageNum={pageNum} />
+          <BookInfo books={books} />
         </Content>
         <Pagination
           className="results-page__pagination"
@@ -72,13 +67,20 @@ class BrowseResultsPage extends PureComponent {
   }
 }
 
+BrowseResultsPage.propTypes = {
+  books: PropTypes.arrayOf(PropTypes.object).isRequired,
+
+  setPageNum: PropTypes.func.isRequired,
+  fetchBookResults: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = createStructuredSelector({
   pageNum: selectPageNum,
   books: selectBookResults,
 });
 
 const mapDispatchToProps = {
-  fetchPageNum,
+  setPageNum,
   fetchBookResults,
 };
 

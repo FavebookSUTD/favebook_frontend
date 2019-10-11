@@ -4,7 +4,7 @@ import ACTIONS from './actions';
 export const initialState = fromJS({
   pageNum: 1,
   pageSize: 5,
-  books: {},
+  books: [],
 });
 
 export default function reducer(state = initialState, action) {
@@ -12,7 +12,7 @@ export default function reducer(state = initialState, action) {
     case ACTIONS.FETCH_BOOK_RESULTS_SUCCESS:
       return state.set('books', fromJS(action.payload));
 
-    case ACTIONS.FETCH_PAGENUM_SUCCESS:
+    case ACTIONS.SET_PAGENUM_SUCCESS:
       return state.set('pageNum', fromJS(action.payload));
 
     default:

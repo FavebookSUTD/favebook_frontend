@@ -3,9 +3,9 @@ import { all, takeLatest } from 'redux-saga/effects';
 import saga from '@sagas/commonSagas';
 
 import ACTIONS from '../actions';
-import { fetchBookResults, fetchPageNum } from './api';
+import { fetchBookResults, setPageNum } from './api';
 
-export default function* watcherHome() {
+export default function* watcherBrowseResults() {
   yield all([
     takeLatest(
       ACTIONS.FETCH_BOOK_RESULTS,
@@ -15,11 +15,11 @@ export default function* watcherHome() {
       fetchBookResults,
     ),
     takeLatest(
-      ACTIONS.FETCH_PAGENUM,
+      ACTIONS.SET_PAGENUM,
       saga,
-      ACTIONS.FETCH_PAGENUM_SUCCESS,
-      ACTIONS.FETCH_PAGENUM_FAILURE,
-      fetchPageNum,
+      ACTIONS.SET_PAGENUM_SUCCESS,
+      ACTIONS.SET_PAGENUM_FAILURE,
+      setPageNum,
     ),
   ]);
 }

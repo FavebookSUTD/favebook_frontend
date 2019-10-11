@@ -10,5 +10,6 @@
     { "id": "8", "title": "Book 8", "imgURL": "", "author": "Lionell Loh" },
     { "id": "9", "title": "Book 9", "imgURL": "", "author": "Lionell Loh" },
     { "id": "10", "title": "Book 10", "imgURL": "", "author": "Lionell Loh" }
-  ]
+  ],
+  "pageNum": "1"
 }
