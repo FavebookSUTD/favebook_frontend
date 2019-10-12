@@ -9,8 +9,8 @@ import AppLayout from '@pages/AppLayout';
 const Routers = () => {
   return (
     <Switch>
-      <Route exact path="/" render={() => <AppLayout />} />
       <Route exact path="/authenticate" render={() => <AuthenticatePage />} />
+      <Route path="/" render={() => <AppLayout />} />
     </Switch>
   );
 };
