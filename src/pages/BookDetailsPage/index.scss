@@ -1,0 +1,10 @@
+.book-details__main-container {
+  height: 100%;
+  width: 100%;
+  padding: 2rem 1rem;
+
+  .book-details__filterbar__wrapper {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
