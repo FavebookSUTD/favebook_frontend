@@ -19,11 +19,14 @@ import {} from './selectors';
 
 // import local components
 import FilterBar from '@containers/FilterBar';
+import BookCover from './components/BookCover';
+import BookDescriptions from './components/BookDescriptions';
 
 // import local styling
 import './index.scss';
 
 // import Antd
+import { Row, Col } from 'antd';
 
 // Extract antd components
 
@@ -34,9 +37,16 @@ class BookDetailsPage extends PureComponent {
     const {} = this.props;
 
     return (
-      <div className="book-details__main-container">
+      <div className="book-details-page__main-container">
         <FilterBar position="right" />
-        Book details page
+        <Row className="book-details-page__content-container">
+          <Col className="book-details-page__misc-details-container" span={8}>
+            <BookCover />
+          </Col>
+          <Col className="book-details-page__main-details-container" span={16}>
+            <BookDescriptions />
+          </Col>
+        </Row>
       </div>
     );
   }

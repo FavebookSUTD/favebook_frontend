@@ -43,7 +43,9 @@ class HomePage extends PureComponent {
 
     return (
       <Content className="home-page__container">
-        <Title className="home-page-greeting__header">Good Morning, Friend</Title>
+        <Title className="home-page-greeting__header" level={1}>
+          Good Morning, Friend
+        </Title>
         <FilterBar position="center" />
         <BookDisplay title="just for you" rows={1} books={recommendBooks} />
         <BookDisplay title="best sellers" rows={1} books={bestsellBooks} />
