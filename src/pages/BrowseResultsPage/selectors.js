@@ -1,5 +1,10 @@
 import { select, selectToJS } from '@utils/selectorUtils';
 import { initialState } from './reducers';
+import { initialState as FilterBarState } from '@containers/FilterBar/reducers';
+
+const selectFilterBar = state => state.get('FilterBar', FilterBarState);
+
+const selectSearchResults = select(selectFilterBar, 'searchResults');
 
 const selectBrowseResultsPage = state => state.get('BrowseResultsPage', initialState);
 
@@ -11,6 +16,13 @@ const selectPageSize = select(selectBrowseResultsPage, 'pageSize');
 
 const selectTotal = select(selectBrowseResultsPage, 'total');
 
-const selectBookResults = selectToJS(selectBrowseResultsPage, 'books');
+const selectNextPage = selectToJS(selectBrowseResultsPage, 'books');
 
-export { selectLoading, selectError, selectPageSize, selectTotal, selectBookResults };
+export {
+  selectLoading,
+  selectError,
+  selectPageSize,
+  selectTotal,
+  selectNextPage,
+  selectSearchResults,
+};

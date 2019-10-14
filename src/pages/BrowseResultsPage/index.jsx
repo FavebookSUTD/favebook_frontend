@@ -13,10 +13,10 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import { fetchBookResults } from './actions';
+import { fetchNextPage } from './actions';
 
 // import selector
-import { selectPageSize, selectTotal, selectBookResults } from './selectors';
+import { selectPageSize, selectTotal, selectNextPage } from './selectors';
 
 // import lodash
 import isEmpty from 'lodash/isEmpty';
@@ -43,17 +43,17 @@ class BrowseResultsPage extends PureComponent {
   }
 
   componentDidMount() {
-    const { pageSize, fetchBookResults } = this.props;
+    const { pageSize, fetchNextPage } = this.props;
     const { pageNum } = this.state;
-    fetchBookResults(pageNum, pageSize);
+    fetchNextPage(pageNum, pageSize);
   }
 
   onPageChange = (current, pageSize) => {
-    const { fetchBookResults } = this.props;
+    const { fetchNextPage } = this.props;
     this.setState({
       pageNum: current,
     });
-    fetchBookResults(current, pageSize);
+    fetchNextPage(current, pageSize);
   };
 
   render() {
@@ -82,17 +82,17 @@ BrowseResultsPage.propTypes = {
   total: PropTypes.number.isRequired,
   books: PropTypes.shape({}).isRequired,
 
-  fetchBookResults: PropTypes.func.isRequired,
+  fetchNextPage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   pageSize: selectPageSize,
   total: selectTotal,
-  books: selectBookResults,
+  books: selectNextPage,
 });
 
 const mapDispatchToProps = {
-  fetchBookResults,
+  fetchNextPage,
 };
 
 const withReducer = injectReducer({ key: 'BrowseResultsPage', reducer });

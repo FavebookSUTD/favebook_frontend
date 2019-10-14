@@ -11,16 +11,16 @@ export const initialState = fromJS({
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case ACTIONS.FETCH_BOOK_RESULTS:
+    case ACTIONS.FETCH_NEXT_PAGE:
       return state.set('loading', false);
 
-    case ACTIONS.FETCH_BOOK_RESULTS_SUCCESS:
+    case ACTIONS.FETCH_NEXT_PAGE_SUCCESS:
       return state
         .setIn(['books', action.payload.pageNum], fromJS(action.payload.books))
         .set('total', action.payload.total)
         .set('loading', false);
 
-    case ACTIONS.FETCH_BOOK_RESULTS_FAILURE:
+    case ACTIONS.FETCH_NEXT_PAGE_FAILURE:
       return state.set('error', action.payload.stringify()).set('loading', false);
 
     default:
