@@ -3,37 +3,36 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // import local components
+import BookRatingStar from '../BookRatingStar';
 
 // import lodash
+import map from 'lodash/map';
 
 // import local styling
 import './index.scss';
 
 // import Antd
-import { Typography, Rate, Icon, Button, Tag } from 'antd';
+import { Typography, Icon, Button, Tag } from 'antd';
 
 // Extract antd components
 const { Title, Text } = Typography;
 
-const BookDescriptions = ({}) => {
-  const value = 3.5;
-  const reviewCount = 148;
+const BookDescriptions = ({ title, author, ratingValue, commentCount, purchaseLinks, genres }) => {
   return (
     <div className="book-descriptions__main-container">
       <div className="book-description__basic-details">
         <Title className="book-descriptions__title" level={3}>
-          Pocket Full of Colors: The Magical World of Mary Blair, Disney Artist Extraordinaire
+          {title}
         </Title>
         <Text className="book-descriptions__author" ellipsis>
-          By Amy Guglielmo, Jacqueline Tourville and illustrated by Brigette Barrager
+          {author}
         </Text>
       </div>
       <div className="book-rating__container">
-        <Rate className="rating-star" allowHalf disabled value={value} />
-        <Text className="rating-value-text" strong>{`${value}`}</Text>
+        <BookRatingStar ratingValue={ratingValue} />
         <Text className="review-count" strong>
           <Icon className="comment-icon" type="message" />
-          {`${reviewCount}`}
+          {`${commentCount}`}
         </Text>
       </div>
       <div className="book-purchase__btn-group">
@@ -48,15 +47,24 @@ const BookDescriptions = ({}) => {
         </Button>
       </div>
       <div className="book-genre-tags__container">
-        <Tag className="book-genre-tag">Non-fiction</Tag>
-        <Tag className="book-genre-tag">Children</Tag>
-        <Tag className="book-genre-tag">Picture</Tag>
+        {map(genres, genre => (
+          <Tag key={genre} className="book-genre-tag">
+            {genre}
+          </Tag>
+        ))}
       </div>
     </div>
   );
 };
 
-BookDescriptions.propTypes = {};
+BookDescriptions.propTypes = {
+  title: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  ratingValue: PropTypes.number.isRequired,
+  commentCount: PropTypes.number.isRequired,
+  purchaseLinks: PropTypes.shape({}).isRequired,
+  genres: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 BookDescriptions.defaultProps = {};
 

@@ -34,4 +34,41 @@
       }
     }
   }
+
+  .interest-status__container {
+    margin-top: 2rem;
+
+    .faveit-btn {
+      height: 40px;
+      width: 150px;
+      margin: 1rem auto;
+      display: block;
+      background: $red-orange;
+      border: none;
+
+      &:hover {
+        background: lighten($red-orange, 5%);
+      }
+
+      & > * {
+        color: white;
+        font-weight: 800;
+      }
+
+      i {
+        font-size: 14px;
+      }
+    }
+
+    .interest-status__statistic-container {
+      text-align: center;
+
+      .people-count {
+        margin-right: 0.5rem;
+        color: $primary-color;
+        font-weight: 800;
+        font-size: 16px;
+      }
+    }
+  }
 }
