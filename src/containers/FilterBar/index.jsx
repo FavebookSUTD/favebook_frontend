@@ -50,11 +50,11 @@ class FilterBar extends PureComponent {
   }
 
   render() {
-    const { fetching, searchResults } = this.props;
+    const { position, fetching, searchResults } = this.props;
     const { dropdownOpened, searchVal } = this.state;
 
     return (
-      <div className="filter-bar">
+      <div className={`filter-bar ${position}`}>
         <Select
           className="filter-select__container"
           showSearch
@@ -87,9 +87,14 @@ class FilterBar extends PureComponent {
 }
 
 FilterBar.propTypes = {
+  position: PropTypes.oneOf(['left', 'center', 'right']),
   fetching: PropTypes.bool.isRequired,
   searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
   searchBooks: PropTypes.func.isRequired,
+};
+
+FilterBar.defaultProps = {
+  position: 'center',
 };
 
 const mapStateToProps = createStructuredSelector({

@@ -1,0 +1,41 @@
+@import '@themes/themeVariables.scss';
+
+.user-review__container {
+  margin: 2rem 0;
+
+  .user-review-rating__container {
+    margin-bottom: 1rem;
+
+    .user-review-rating-header {
+      font-size: 16px;
+    }
+  }
+
+  .user-review__input-container {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 23px;
+    border: solid 1px $secondary-border-color;
+    background: $form-background-color;
+    resize: none;
+
+    &:focus {
+      background: $secondary-color;
+    }
+  }
+
+  .user-review__submit-btn {
+    height: 45px;
+    width: 180px;
+    background: $primary-background-color;
+
+    & {
+      font-weight: 800;
+      color: white;
+    }
+
+    &:hover {
+      background: $primary-color;
+    }
+  }
+}
