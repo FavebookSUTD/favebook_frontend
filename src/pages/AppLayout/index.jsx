@@ -29,6 +29,7 @@ import { goto } from '@utils/goto';
 // import local components
 import HeaderMenu from './components/HeaderMenu';
 import Routers from './components/Routers';
+import FilterBar from '@containers/FilterBar';
 
 // import local styling
 import './index.scss';

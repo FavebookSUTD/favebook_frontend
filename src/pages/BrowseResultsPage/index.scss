@@ -1,0 +1,26 @@
+@import '@themes/themeMixins.scss';
+@import '@themes/themeVariables.scss';
+
+.results-page__main-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem 1rem 0;
+
+  .results-page__filter {
+    display: flex;
+    justify-content: right;
+  }
+
+  .results-page__content {
+    padding: 1rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+  }
+
+  .results-page__pagination {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+  }
+}
