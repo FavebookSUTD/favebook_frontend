@@ -8,10 +8,10 @@ import { fetchNextPage } from './api';
 export default function* watcherBrowseResultsPage() {
   yield all([
     takeLatest(
-      ACTIONS.FETCH_BOOK_RESULTS,
+      ACTIONS.FETCH_NEXT_PAGE,
       saga,
-      ACTIONS.FETCH_BOOK_RESULTS_SUCCESS,
-      ACTIONS.FETCH_BOOK_RESULTS_FAILURE,
+      ACTIONS.FETCH_NEXT_PAGE_SUCCESS,
+      ACTIONS.FETCH_NEXT_PAGE_FAILURE,
       fetchNextPage,
     ),
   ]);
