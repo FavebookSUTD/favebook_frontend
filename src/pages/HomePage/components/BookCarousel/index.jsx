@@ -33,7 +33,7 @@ const renderBookList = (rows, books) => {
         <div key={j} className="book-rows__container">
           {map(slice(books, startIdx, startIdx + ROW_MAX_COUNT), book => (
             <div key={book.id} className="book-card">
-              {book.title}
+              <img className="book-img" src={book.imUrl} alt="book" />
             </div>
           ))}
         </div>,
@@ -85,7 +85,12 @@ const BookCarousel = ({ title, rows, books }) => {
 BookCarousel.propTypes = {
   title: PropTypes.string.isRequired,
   rows: PropTypes.number,
-  books: PropTypes.arrayOf(PropTypes.object).isRequired,
+  books: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      imUrl: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };
 
 BookCarousel.defaultProps = {
