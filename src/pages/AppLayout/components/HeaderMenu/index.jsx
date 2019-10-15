@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 // import lodash
 import map from 'lodash/map';
 
+// import utils
+import { goto } from '@utils/goto';
+
 // import local styling
 import './index.scss';
 
@@ -15,20 +18,32 @@ import { Typography, Icon, Menu } from 'antd';
 const { SubMenu } = Menu;
 const { Text } = Typography;
 
-const HeaderMenu = ({ genres, menuClickHandler }) => {
+const menuClickHandler = key => {
+  switch (key) {
+    case 'home':
+      return goto('/');
+
+    default:
+      return null;
+  }
+};
+
+const HeaderMenu = ({ genres }) => {
   return (
     <header className="header-menu__container">
       <Menu
         className="menu__container"
         mode="horizontal"
         selectable={false}
-        onClick={(item, key, keyPath) => {
-          console.log(item, key, keyPath);
+        openKeys={['browse']}
+        onClick={({ key }) => {
+          menuClickHandler(key);
         }}
       >
         <Menu.Item key="home">HOME</Menu.Item>
         <Menu.Item key="mybooks">MY BOOKS</Menu.Item>
         <SubMenu
+          key="browse"
           popupClassName="submenu__container"
           title={
             <>
@@ -46,7 +61,7 @@ const HeaderMenu = ({ genres, menuClickHandler }) => {
           </Menu.ItemGroup>
           <Menu.ItemGroup className="menu-item-group__genres-container" title="GENRES">
             {map(genres, genre => (
-              <Menu.Item key={genre.id} title={genre.title}>
+              <Menu.Item key={genre.title} title={genre.title}>
                 {genre.title}
               </Menu.Item>
             ))}
@@ -54,7 +69,7 @@ const HeaderMenu = ({ genres, menuClickHandler }) => {
         </SubMenu>
         <Menu.Item key="newsfeed">NEWSFEED</Menu.Item>
       </Menu>
-      <div className="signin__container" onClick={() => menuClickHandler('/authenticate')}>
+      <div className="signin__container" onClick={() => goto('/authenticate')}>
         <Icon className="user-icon" type="user" />
         <Text className="signin-text" strong>
           SIGN IN
@@ -66,7 +81,6 @@ const HeaderMenu = ({ genres, menuClickHandler }) => {
 
 HeaderMenu.propTypes = {
   genres: PropTypes.arrayOf(PropTypes.object).isRequired,
-  menuClickHandler: PropTypes.func.isRequired,
 };
 
 export default HeaderMenu;

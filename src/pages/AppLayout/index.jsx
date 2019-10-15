@@ -23,9 +23,6 @@ import {
   selectGenres,
 } from './selectors';
 
-// import utils
-import { goto } from '@utils/goto';
-
 // import local components
 import HeaderMenu from './components/HeaderMenu';
 import Routers from './components/Routers';
@@ -43,17 +40,13 @@ class AppLayout extends PureComponent {
     fetchGenres();
   }
 
-  menuClickHandler = url => {
-    goto(url);
-  };
-
   render() {
     const { genres } = this.props;
 
     return (
       <div className="app-layout__main-container">
         <Layout className="app-layout__container">
-          <HeaderMenu genres={genres} menuClickHandler={this.menuClickHandler} />
+          <HeaderMenu genres={genres} />
           <Routers />
         </Layout>
       </div>
