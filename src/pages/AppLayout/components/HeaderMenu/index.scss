@@ -3,6 +3,7 @@
 .header-menu__container {
   border-bottom: 1px solid $primary-border-color;
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
 
   .menu__container {
