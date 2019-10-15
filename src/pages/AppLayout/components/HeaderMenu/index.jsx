@@ -35,7 +35,6 @@ const HeaderMenu = ({ genres }) => {
         className="menu__container"
         mode="horizontal"
         selectable={false}
-        openKeys={['browse']}
         onClick={({ key }) => {
           menuClickHandler(key);
         }}
