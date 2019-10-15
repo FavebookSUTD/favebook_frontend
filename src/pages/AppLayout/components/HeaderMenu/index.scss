@@ -46,6 +46,11 @@
   .ant-menu:not(.ant-menu-hidden) {
     display: flex;
 
+    &:before,
+    &:after {
+      display: none;
+    }
+
     .ant-menu-item-active {
       color: $primary-background-color;
     }
