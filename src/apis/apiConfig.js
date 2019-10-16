@@ -6,8 +6,16 @@ if (process && process.env) {
       apiConfig = require('./api.prod.json');
       break;
 
-    default:
+    case 'development':
       apiConfig = require('./api.dev.json');
+      break;
+
+    case 'local':
+      apiConfig = require('./api.local.json');
+      break;
+
+    default:
+      apiConfig = require('./api.local.json');
       break;
   }
 }
