@@ -1,5 +1,5 @@
 // import React
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 // import actions
@@ -12,10 +12,7 @@ import UserAvatar from '../UserAvatar';
 import './index.scss';
 
 // import Antd
-import { Layout, Icon, Button, Typography } from 'antd';
-
-// Extract antd components
-const { Content } = Layout;
+import { Layout, Button, Typography } from 'antd';
 
 const UserInfo = props => {
   const { userinfo } = props;
@@ -37,6 +34,8 @@ const UserInfo = props => {
   );
 };
 
-UserInfo.propTypes = {};
+UserInfo.propTypes = {
+  userinfo: PropTypes.arrayOf(PropTypes.object).isRequired, 
+};
 
 export default UserInfo;

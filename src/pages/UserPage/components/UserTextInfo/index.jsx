@@ -1,5 +1,5 @@
 // import React
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 // import actions
@@ -8,10 +8,7 @@ import PropTypes from 'prop-types';
 import './index.scss';
 
 // import Antd
-import { Layout, Icon, Button, Typography } from 'antd';
-
-// Extract antd components
-const { Content } = Layout;
+import { Layout, Typography } from 'antd';
 
 const UserTextInfo = props => {
   const { userinfo } = props;
@@ -38,6 +35,8 @@ const UserTextInfo = props => {
   );
 };
 
-UserTextInfo.propTypes = {};
+UserTextInfo.propTypes = {
+  userinfo: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default UserTextInfo;
