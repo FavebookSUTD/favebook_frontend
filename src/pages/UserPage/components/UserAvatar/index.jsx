@@ -1,28 +1,35 @@
 // import React
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-
-// import actions
 
 // import local styling
 import './index.scss';
 
 // import Antd
-import { Layout, Icon, Button, Typography, Avatar } from 'antd';
+import { Avatar, Typography } from 'antd';
 
 // Extract antd components
-const { Content } = Layout;
+const { Title, Text } = Typography;
 
-const UserInfo = props => {
-  const { usericon } = props;
-
+const UserAvatar = ({ username, joinDate }) => {
   return (
-    <span className="avatar-circle">
-      <Avatar className="user-icon" icon="user" size={128} />
-    </span>
+    <div className="user-avatar__container">
+      <span className="avatar-circle">
+        <Avatar className="user-icon" icon="user" size={128} />
+      </span>
+      <div className="user-membership-details__container">
+        <Title className="username" level={3}>
+          {username.toUpperCase()}
+        </Title>
+        <Text className="user-join-date">{`Joined on ${joinDate}`}</Text>
+      </div>
+    </div>
   );
 };
 
-UserInfo.propTypes = {};
+UserAvatar.propTypes = {
+  username: PropTypes.string.isRequired,
+  joinDate: PropTypes.string.isRequired,
+};
 
-export default UserInfo;
+export default UserAvatar;

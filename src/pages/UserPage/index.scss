@@ -2,14 +2,18 @@
 @import '@themes/themeVariables.scss';
 
 .user-page__container {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  position: relative;
 
-  .user-page-book-list{
-    margin-top: 2rem;
-    position: absolute;
+  .user-info-wrapper {
+    width: 100%;
+  }
+
+  .user-book-list-wrapper {
+    display: flex;
+    flex: 1 0;
+    @include overflowScrollY();
+    @include chromeCustomScrollbar();
   }
 }

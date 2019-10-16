@@ -2,41 +2,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-// import actions
-
 // import local styling
 import './index.scss';
 
 // import Antd
-import { Layout, Typography } from 'antd';
+import { Typography } from 'antd';
 
-const UserTextInfo = props => {
-  const { userinfo } = props;
+// Extract antd components
+const { Text } = Typography;
+
+const UserTextInfo = ({ userInfo }) => {
+  const { username, followers, commonBooks, commonPercent } = userInfo;
 
   return (
-    <Layout className="user-info__container">
-      <Typography className="user-followers">
-        <div className="user-name">{userinfo.name.toUpperCase()}</div>
-        has
-        <div className="user-followernumber">{userinfo.followers}</div>
-        followers
-      </Typography>
-      <Typography className="user-commonbooks">
-        You have
-        <div className="user-input-commonbooks">{userinfo.commonbooks}</div>
-        common favebooks
-      </Typography>
-      <Typography className="user-commonpercent">
-        Your tastes are
-        <div className="user-input-commonpercent">{userinfo.commonpercent}</div>% similar for a book
-        you both rated.
-      </Typography>
-    </Layout>
+    <div className="user-text-info__container">
+      <div className="user-followers">
+        <Text className="user-name">{username.toUpperCase()}</Text>
+        <Text>has</Text>
+        <Text className="user-followernumber">{followers}</Text>
+        <Text>followers</Text>
+      </div>
+      <div className="user-commonbooks">
+        <Text>You have</Text>
+        <Text className="user-input-commonbooks">{commonBooks}</Text>
+        <Text>common favebooks</Text>
+      </div>
+      <div className="user-commonpercent">
+        <Text>Your tastes are</Text>
+        <Text className="user-input-commonpercent">{`${commonPercent}%`}</Text>
+        <Text>similar for a book you both rated.</Text>
+      </div>
+    </div>
   );
 };
 
 UserTextInfo.propTypes = {
-  userinfo: PropTypes.arrayOf(PropTypes.object).isRequired,
+  userInfo: PropTypes.shape({
+    username: PropTypes.string,
+    followers: PropTypes.number,
+    commonBooks: PropTypes.number,
+    commonPercent: PropTypes.number,
+  }).isRequired,
 };
 
 export default UserTextInfo;

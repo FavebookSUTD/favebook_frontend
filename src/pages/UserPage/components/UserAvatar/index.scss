@@ -1,21 +1,45 @@
-@import '@themes/themeMixins.scss';
 @import '@themes/themeVariables.scss';
 
-.avatar-circle{
-    width: 148px;
-    height: 148px;
-    border: 10px solid;
-    border-radius: 50%;
-    border-color: #d3e2fd #d3e2fd #4889fe #4889fe;
-    transform: rotate(-45deg);
-    position: relative;
-    margin-right: 2rem;
-
-    .user-icon{
-        color: #87b1fd;
-        background-color: #FFF;
-        transform: rotate(45deg);
-        position: absolute;
-
+.user-avatar__container {
+  display: inline-block;
+  .avatar-circle {
+    &:before {
+      content: '';
+      height: 100%;
+      width: 100%;
+      display: block;
+      position: absolute;
+      border: 10px solid;
+      border-radius: 50%;
+      border-color: $secondary-color $secondary-color $primary-background-color
+        $primary-background-color;
+      transform: rotate(-45deg);
     }
+
+    height: 148px;
+    width: 148px;
+    margin: 0 2rem 1rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .user-icon {
+      color: $primary-color;
+      background-color: transparent;
+    }
+  }
+
+  .user-membership-details__container {
+    .username {
+      margin-bottom: 0;
+      text-align: center;
+      color: $primary-color;
+    }
+
+    .user-join-date {
+      display: block;
+      text-align: center;
+    }
+  }
 }

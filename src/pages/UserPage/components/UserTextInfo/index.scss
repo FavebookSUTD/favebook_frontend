@@ -1,37 +1,43 @@
-@import '@themes/themeMixins.scss';
 @import '@themes/themeVariables.scss';
 
-.user-info__container {
-  .user-followers {
-    display: flex;
-    margin-bottom: 1rem;
-    .user-name{
-        color: $primary-color;
-        font-weight: 500;
-        margin-right: 3px;
-    }
-    .user-followernumber{
-        font-weight: 600;
-        margin-left: 3px;
-        margin-right: 3px;
-    }
+$custom-fontsize: 16px;
+
+.user-text-info__container {
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  & span {
+    margin: 0 3px;
   }
-  .user-commonpercent{
-    display: flex;
+
+  .user-followers {
     margin-bottom: 1rem;
-    .user-input-commonpercent{
-      font-weight: 600;
-      margin-left: 3px;
+    .user-name {
+      color: $primary-color;
+      font-weight: 800;
+      font-size: $custom-fontsize;
+    }
+    .user-followernumber {
+      font-weight: 800;
+      font-size: $custom-fontsize;
     }
   }
 
-  .user-commonbooks{
-    display: flex;
+  .user-commonbooks {
     margin-bottom: 1rem;
-    .user-input-commonbooks{
-      font-weight: 600;
-      margin-left: 3px;
-      margin-right: 3px;
+    .user-input-commonbooks {
+      font-weight: 800;
+      font-size: $custom-fontsize;
+    }
+  }
+
+  .user-commonpercent {
+    margin-bottom: 1rem;
+    .user-input-commonpercent {
+      font-weight: 800;
+      font-size: $custom-fontsize;
     }
   }
 }

@@ -45,24 +45,28 @@ class UserPage extends PureComponent {
   }
 
   onChange(activeKey) {
-    //this.setState({ tabNum: activeKey });
+    // this.setState({ tabNum: activeKey });
   }
 
   render() {
     const { books } = this.props;
     return (
-      <Layout className="user-page__container">
+      <Content className="user-page__container">
+        {/* <div className="user-info-wrapper"> */}
         <UserInfo
-          userinfo={{
-            name: 'Eda',
+          userInfo={{
+            username: 'Eda',
             followers: 64,
-            commonbooks: 5,
-            commonpercent: 3,
-            joindate: '3 Nov 2019',
+            commonBooks: 5,
+            commonPercent: 3,
+            joinDate: '3 Nov 2019',
           }}
         />
-        <BookRow className="user-page-book-list" books={books} />
-      </Layout>
+        {/* </div> */}
+        <div className="user-book-list-wrapper">
+          <BookRow books={books} />
+        </div>
+      </Content>
     );
   }
 }

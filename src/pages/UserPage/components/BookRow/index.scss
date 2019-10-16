@@ -2,8 +2,8 @@
 @import '@themes/themeVariables.scss';
 
 .book-row__main-container {
+  height: 100%;
   width: 100%;
-  overflow-y: scroll;
   .book-row__container {
     margin: 2rem 0;
 
