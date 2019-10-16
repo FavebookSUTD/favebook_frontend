@@ -27,15 +27,28 @@
         .book-rows__container {
           width: 100%;
           margin: 0.5rem 0;
+          display: flex;
+          justify-content: center;
           text-align: center;
 
           .book-card {
-            height: 100px;
-            width: 80px;
+            height: 150px;
+            width: 150px;
             min-width: 80px;
             display: inline-block;
-            margin: 0.5rem 2rem;
-            background: $primary-color;
+            margin: 0.5rem auto;
+            transition: all 0.2s ease-in;
+
+            &:hover {
+              transform: scale(1.3);
+            }
+
+            .book-img {
+              height: 100%;
+              width: 100%;
+              object-fit: cover;
+              cursor: pointer;
+            }
           }
         }
       }

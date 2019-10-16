@@ -1,1 +1,6 @@
-{}
+{
+  "books": {
+    "bookList": "http://localhost:5000/books/",
+    "recommendation": "http://localhost:5000/books/recommended"
+  }
+}
