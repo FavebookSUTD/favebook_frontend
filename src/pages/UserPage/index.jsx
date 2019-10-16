@@ -13,17 +13,25 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
+import { fetchBooksInCommon } from './actions';
 
 // import selector
-import {} from './selectors';
+import { selectBooksInCommon } from './selectors';
+
+// import lodash
 
 // import local components
 import UserInfo from './components/UserInfo';
 
 // import local styling
 import './index.scss';
+import BookRow from './components/BookRow';
 
 // import Antd
+import { Layout } from 'antd';
+
+// Extract antd components
+const { Content } = Layout;
 
 class UserPage extends PureComponent {
   constructor(props) {
@@ -31,15 +39,19 @@ class UserPage extends PureComponent {
     this.state = {};
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const { fetchBooksInCommon } = this.props;
+    fetchBooksInCommon();
+  }
 
   onChange(activeKey) {
     //this.setState({ tabNum: activeKey });
   }
 
   render() {
+    const { books } = this.props;
     return (
-      <div className="user-page__container">
+      <Layout className="user-page__container">
         <UserInfo
           userinfo={{
             name: 'Eda',
@@ -49,16 +61,25 @@ class UserPage extends PureComponent {
             joindate: '3 Nov 2019',
           }}
         />
-      </div>
+        <BookRow className="user-page-book-list" books={books} />
+      </Layout>
     );
   }
 }
 
-UserPage.propTypes = {};
+UserPage.propTypes = {
+  books: PropTypes.shape({}).isRequired,
 
-const mapStateToProps = createStructuredSelector({});
+  fetchBooksInCommon: PropTypes.func.isRequired,
+};
 
-const mapDispatchToProps = {};
+const mapStateToProps = createStructuredSelector({
+  books: selectBooksInCommon,
+});
+
+const mapDispatchToProps = {
+  fetchBooksInCommon,
+};
 
 const withReducer = injectReducer({ key: 'UserPage', reducer });
 const withSaga = injectSaga({ key: 'UserPage', saga });

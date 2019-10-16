@@ -2,25 +2,18 @@ import { fromJS } from 'immutable';
 import ACTIONS from './actions';
 
 export const initialState = fromJS({
-  loading: false,
-  error: '',
-  pageSize: 5,
-  total: 0,
   books: {},
 });
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case ACTIONS.FETCH_NEXT_PAGE:
+    case ACTIONS.FETCH_BOOKS_IN_COMMON:
       return state.set('loading', false);
 
-    case ACTIONS.FETCH_NEXT_PAGE_SUCCESS:
-      return state
-        .setIn(['books', action.payload.pageNum], fromJS(action.payload.books))
-        .set('total', action.payload.total)
-        .set('loading', false);
+    case ACTIONS.FETCH_BOOKS_IN_COMMON_SUCCESS:
+      return state.setIn(['commonBooks'], fromJS(action.payload.books)).set('loading', false);
 
-    case ACTIONS.FETCH_NEXT_PAGE_FAILURE:
+    case ACTIONS.FETCH_BOOKS_IN_COMMON_FAILURE:
       return state.set('error', action.payload.stringify()).set('loading', false);
 
     default:
