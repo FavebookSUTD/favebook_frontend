@@ -10,6 +10,9 @@ import map from 'lodash/map';
 import slice from 'lodash/slice';
 import isEmpty from 'lodash/isEmpty';
 
+// import utils
+import { goto } from '@utils/goto';
+
 // import local styling
 import './index.scss';
 
@@ -32,8 +35,13 @@ const renderBookList = (rows, books) => {
       bookRows.push(
         <div key={j} className="book-rows__container">
           {map(slice(books, startIdx, startIdx + ROW_MAX_COUNT), book => (
-            <div key={book.id} className="book-card">
-              <img className="book-img" src={book.imUrl} alt="book" />
+            <div key={book._id} className="book-card">
+              <img
+                className="book-img"
+                src={book.imUrl}
+                alt="book"
+                onClick={() => goto(`/book/${book._id}`)}
+              />
             </div>
           ))}
         </div>,
@@ -87,7 +95,7 @@ BookCarousel.propTypes = {
   rows: PropTypes.number,
   books: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      _id: PropTypes.string.isRequired,
       imUrl: PropTypes.string.isRequired,
     }),
   ).isRequired,
