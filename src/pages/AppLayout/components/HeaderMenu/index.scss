@@ -3,6 +3,7 @@
 .header-menu__container {
   border-bottom: 1px solid $primary-border-color;
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
 
   .menu__container {
@@ -44,6 +45,11 @@
 
   .ant-menu:not(.ant-menu-hidden) {
     display: flex;
+
+    &:before,
+    &:after {
+      display: none;
+    }
 
     .ant-menu-item-active {
       color: $primary-background-color;
