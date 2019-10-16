@@ -1,0 +1,34 @@
+@import '@themes/themeMixins.scss';
+@import '@themes/themeVariables.scss';
+
+.user-info__container {
+  .user-followers {
+    display: flex;
+    .user-name{
+        color: $primary-color;
+        font-weight: 500;
+        margin-right: 3px;
+    }
+    .user-followernumber{
+        font-weight: 600;
+        margin-left: 3px;
+        margin-right: 3px;
+    }
+  }
+  .user-commonpercent{
+    display: flex;
+    .user-input-commonpercent{
+      font-weight: 600;
+      margin-left: 3px;
+    }
+  }
+
+  .user-commonbooks{
+    display: flex;
+    .user-input-commonbooks{
+      font-weight: 600;
+      margin-left: 3px;
+      margin-right: 3px;
+    }
+  }
+}

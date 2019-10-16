@@ -1,0 +1,21 @@
+@import '@themes/themeMixins.scss';
+@import '@themes/themeVariables.scss';
+
+.avatar-circle{
+    width: 148px;
+    height: 148px;
+    border: 10px solid;
+    border-radius: 50%;
+    border-color: #d3e2fd #d3e2fd #4889fe #4889fe;
+    transform: rotate(-45deg);
+    position: relative;
+    margin-right: 2rem;
+
+    .user-icon{
+        color: #87b1fd;
+        background-color: #FFF;
+        transform: rotate(45deg);
+        position: absolute;
+
+    }
+}
