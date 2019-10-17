@@ -44,10 +44,6 @@ class UserPage extends PureComponent {
     fetchBooksInCommon();
   }
 
-  onChange(activeKey) {
-    // this.setState({ tabNum: activeKey });
-  }
-
   render() {
     const { books } = this.props;
     return (
