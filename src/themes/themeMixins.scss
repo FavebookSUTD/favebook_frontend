@@ -19,13 +19,33 @@
   overflow-y: auto;
 }
 
+@mixin noScrollBar() {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @mixin chromeCustomScrollbar() {
+  & {
+    scroll-behavior: smooth;
+  }
+
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: $primary-border-color;
+    }
+  }
+
   &::-webkit-scrollbar {
     width: 8px;
-    background: transparent;
+  }
+
+  &::-webkit-scrollbar {
+    transition: all 0.5s linear;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $primary-border-color;
+    border-radius: 4px;
+    background: transparent;
   }
 }
