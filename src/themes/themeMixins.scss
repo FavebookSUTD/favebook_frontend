@@ -40,10 +40,6 @@
     width: 8px;
   }
 
-  &::-webkit-scrollbar {
-    transition: all 0.5s linear;
-  }
-
   &::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background: transparent;

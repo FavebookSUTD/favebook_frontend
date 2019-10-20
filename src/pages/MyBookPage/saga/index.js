@@ -18,8 +18,8 @@ export default function* watcherHome() {
     takeLatest(
       ACTIONS.FETCH_READING,
       saga,
-      ACTIONS.FETCH_MY_REVIEWS_SUCCESS,
-      ACTIONS.FETCH_MY_REVIEWS_FAILURE,
+      ACTIONS.FETCH_READING_SUCCESS,
+      ACTIONS.FETCH_READING_FAILURE,
       fetchReading,
     ),
     takeLatest(

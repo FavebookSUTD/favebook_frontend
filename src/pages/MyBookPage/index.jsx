@@ -12,41 +12,123 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import {} from './actions';
+import { fetchWantToRead, fetchReading, fetchMyReviews } from './actions';
 
 // import selector
-import {} from './selectors';
+import { selectLoading, selectWantToRead, selectReading, selectMyReviews } from './selectors';
 
 // import local components
 import TabMenuContainer from '@components/TabMenuContainer';
+import BookInfo from '@components/BookInfo';
 
 // import local styling
 import './index.scss';
 
 // import Antd
-import { Layout, Typography } from 'antd';
+import { Layout, Skeleton } from 'antd';
 
 // Extract antd components
 const { Content } = Layout;
-const { Title } = Typography;
+
+const renderBookList = (books, loading) => (
+  <Skeleton active loading={loading}>
+    <BookInfo books={books} />
+  </Skeleton>
+);
 
 class MyBookPage extends PureComponent {
-  componentDidMount() {}
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedMenu: 'Want To Read',
+    };
+  }
+
+  componentDidMount() {
+    const { fetchWantToRead, fetchReading, fetchMyReviews } = this.props;
+    fetchWantToRead();
+    fetchReading();
+    fetchMyReviews();
+  }
+
+  setMenuHandler = key => {
+    this.setState({
+      selectedMenu: key,
+    });
+  };
 
   render() {
+    const { loading, wantToRead, reading, review } = this.props;
+    const { selectedMenu } = this.state;
+
     return (
       <Content className="my-book-page__container">
-        <TabMenuContainer />
+        <TabMenuContainer
+          menuObj={[
+            {
+              title: 'Want To Read',
+              reactNode: renderBookList(wantToRead, loading.wantToRead),
+            },
+            {
+              title: 'Reading',
+              reactNode: renderBookList(reading, loading.reading),
+            },
+            {
+              title: 'Book In Common',
+              reactNode: <div>testing3</div>,
+            },
+          ]}
+          selectedMenu={selectedMenu}
+          setMenuHandler={this.setMenuHandler}
+          autoFit
+        />
       </Content>
     );
   }
 }
 
-MyBookPage.propTypes = {};
+MyBookPage.propTypes = {
+  loading: PropTypes.shape({
+    wantToRead: PropTypes.bool.isRequired,
+    reading: PropTypes.bool.isRequired,
+    myReviews: PropTypes.bool.isRequired,
+  }).isRequired,
+  wantToRead: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      title: PropTypes.string,
+      imgURL: PropTypes.string,
+      author: PropTypes.string,
+      rating: PropTypes.number,
+    }),
+  ).isRequired,
+  reading: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      title: PropTypes.string,
+      imgURL: PropTypes.string,
+      author: PropTypes.string,
+      rating: PropTypes.number,
+    }),
+  ).isRequired,
 
-const mapStateToProps = createStructuredSelector({});
+  fetchWantToRead: PropTypes.func.isRequired,
+  fetchReading: PropTypes.func.isRequired,
+  fetchMyReviews: PropTypes.func.isRequired,
+};
 
-const mapDispatchToProps = {};
+const mapStateToProps = createStructuredSelector({
+  loading: selectLoading,
+  wantToRead: selectWantToRead,
+  reading: selectReading,
+  myReviews: selectMyReviews,
+});
+
+const mapDispatchToProps = {
+  fetchWantToRead,
+  fetchReading,
+  fetchMyReviews,
+};
 
 const withReducer = injectReducer({ key: 'MyBookPage', reducer });
 const withSaga = injectSaga({ key: 'MyBookPage', saga });
