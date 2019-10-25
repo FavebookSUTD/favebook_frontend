@@ -8,13 +8,19 @@ import BookReview from '../BookReview';
 // import lodash
 import isEmpty from 'lodash/isEmpty';
 
-// import local styling
-import './index.scss';
-
 // import Antd
 import { List, Empty, Skeleton } from 'antd';
 
-const BookReviewsList = ({ bookReviews, loading, showBookImg, showAuthor, showTimestamp }) => {
+const BookReviewsList = ({
+  bookReviews,
+  loading,
+  showBookImg,
+  showAuthor,
+  showTimestamp,
+  pageSize,
+}) => {
+  const DEFAULT_PAGE_SIZE = 8;
+
   return (
     <div className="book-reviews-list__container">
       <Skeleton loading={loading} active>
@@ -23,6 +29,12 @@ const BookReviewsList = ({ bookReviews, loading, showBookImg, showAuthor, showTi
         ) : (
           <List
             dataSource={bookReviews}
+            rowKey={data => data.id}
+            pagination={{
+              position: 'both',
+              hideOnSinglePage: true,
+              pageSize: pageSize || DEFAULT_PAGE_SIZE,
+            }}
             renderItem={bookReview => (
               <List.Item>
                 <BookReview
@@ -46,12 +58,14 @@ BookReviewsList.propTypes = {
   showBookImg: PropTypes.bool,
   showAuthor: PropTypes.bool,
   showTimestamp: PropTypes.bool,
+  pageSize: PropTypes.number,
 };
 
 BookReviewsList.defaultProps = {
   showBookImg: true,
   showAuthor: true,
   showTimestamp: true,
+  pageSize: null,
 };
 
 export default BookReviewsList;
