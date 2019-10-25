@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+// import lodash
+import isEmpty from 'lodash/isEmpty';
+
 // import local styling
 import './index.scss';
 
@@ -16,6 +19,8 @@ const BookCover = ({ bookCoverURL, interestStatus }) => {
 
   const { wantToReadCount, readingCount } = interestStatus;
 
+  const disabledBtn = isEmpty(interestStatus);
+
   return (
     <div className="book-cover__container">
       <div className="backdrop-pattern" />
@@ -24,10 +29,20 @@ const BookCover = ({ bookCoverURL, interestStatus }) => {
       </div>
       {showOptions ? (
         <div className="interest-btn-group">
-          <Button className="interest-btn" shape="round" onClick={() => setShowOption(false)}>
+          <Button
+            className="interest-btn"
+            shape="round"
+            disabled={disabledBtn}
+            onClick={() => setShowOption(false)}
+          >
             I want to read
           </Button>
-          <Button className="interest-btn" shape="round" onClick={() => setShowOption(false)}>
+          <Button
+            className="interest-btn"
+            shape="round"
+            disabled={disabledBtn}
+            onClick={() => setShowOption(false)}
+          >
             I am reading
           </Button>
         </div>
@@ -37,16 +52,17 @@ const BookCover = ({ bookCoverURL, interestStatus }) => {
             className="faveit-btn"
             icon="heart"
             shape="round"
+            disabled={disabledBtn}
             onClick={() => setShowOption(true)}
           >
             FAVE IT!
           </Button>
           <div className="interest-status__statistic-container">
-            <Text className="people-count">{wantToReadCount}</Text>
+            <Text className="people-count">{!!wantToReadCount || 0}</Text>
             <Text>want to read</Text>
           </div>
           <div className="interest-status__statistic-container">
-            <Text className="people-count">{readingCount}</Text>
+            <Text className="people-count">{!!readingCount || 0}</Text>
             <Text>reading</Text>
           </div>
         </div>
