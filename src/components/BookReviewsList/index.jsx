@@ -8,6 +8,9 @@ import BookReview from '../BookReview';
 // import lodash
 import isEmpty from 'lodash/isEmpty';
 
+// import local styling
+import './index.scss';
+
 // import Antd
 import { List, Empty, Skeleton } from 'antd';
 

@@ -9,7 +9,7 @@ import ImageWrapper from '../ImageWrapper';
 import './index.scss';
 
 // import Antd
-import { List, Typography } from 'antd';
+import { List, Typography, Skeleton } from 'antd';
 
 // Extract antd components
 const { Title, Paragraph } = Typography;
@@ -21,42 +21,44 @@ const getBookImage = (imgURL, rating) => (
   </div>
 );
 
-const BookInfo = ({ books, pageSize }) => {
+const BookInfo = ({ books, pageSize, loading }) => {
   const DEFAULT_PAGE_SIZE = 8;
 
   return (
     <div className="book-info__container">
-      <List
-        className="book-info__list-container"
-        itemLayout="vertical"
-        split={false}
-        dataSource={books}
-        rowKey={data => data.id}
-        pagination={{
-          position: 'both',
-          hideOnSinglePage: true,
-          pageSize: pageSize || DEFAULT_PAGE_SIZE,
-        }}
-        renderItem={book => (
-          <List.Item key={book.id}>
-            <List.Item.Meta
-              avatar={getBookImage(book.imgURL, book.rating)}
-              title={
-                <span>
-                  <Title className="book-title" level={4} ellipsis={{ rows: 2 }}>
-                    {book.title}
-                  </Title>
-                </span>
-              }
-              description={
-                <Paragraph className="book-author" ellipsis={{ rows: 2 }}>
-                  {`By ${book.author}`}
-                </Paragraph>
-              }
-            />
-          </List.Item>
-        )}
-      />
+      <Skeleton loading={loading} active>
+        <List
+          className="book-info__list-container"
+          itemLayout="vertical"
+          split={false}
+          dataSource={books}
+          rowKey={data => data.id}
+          pagination={{
+            position: 'both',
+            hideOnSinglePage: true,
+            pageSize: pageSize || DEFAULT_PAGE_SIZE,
+          }}
+          renderItem={book => (
+            <List.Item key={book.id}>
+              <List.Item.Meta
+                avatar={getBookImage(book.imgURL, book.rating)}
+                title={
+                  <span>
+                    <Title className="book-title" level={4} ellipsis={{ rows: 2 }}>
+                      {book.title}
+                    </Title>
+                  </span>
+                }
+                description={
+                  <Paragraph className="book-author" ellipsis={{ rows: 2 }}>
+                    {`By ${book.author}`}
+                  </Paragraph>
+                }
+              />
+            </List.Item>
+          )}
+        />
+      </Skeleton>
     </div>
   );
 };
@@ -72,6 +74,7 @@ BookInfo.propTypes = {
     }),
   ).isRequired,
   pageSize: PropTypes.number,
+  loading: PropTypes.bool.isRequired,
 };
 
 BookInfo.defaultProps = {
