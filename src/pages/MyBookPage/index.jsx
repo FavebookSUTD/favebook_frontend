@@ -76,7 +76,13 @@ class MyBookPage extends PureComponent {
             },
             {
               title: 'Book In Common',
-              reactNode: <BookReviewsList bookReviews={myReviews} showAuthor={false} />,
+              reactNode: (
+                <BookReviewsList
+                  loading={loading.myReviews}
+                  bookReviews={myReviews}
+                  showAuthor={false}
+                />
+              ),
             },
           ]}
           selectedMenu={selectedMenu}
