@@ -19,9 +19,9 @@ const renderTabMenuContent = (menuObj, selectedMenu) => {
   return menu.reactNode ? menu.reactNode : <Empty className="tab-menu__empty-placeholder" />;
 };
 
-const renderTabMenu = (menuObj, setSelectedMenu) => (
+const renderTabMenu = (menuObj, menuPosition, setSelectedMenu) => (
   <Menu
-    className="tab-menu"
+    className={`tab-menu ${menuPosition}`}
     mode="horizontal"
     defaultSelectedKeys={[menuObj[0].title]}
     onSelect={({ selectedKeys }) => {
@@ -38,14 +38,10 @@ const TabMenuContainer = ({ menuObj, menuPosition, selectedMenu, setMenuHandler,
   const [internalSelectedMenu, setInternalSelectedMenu] = useState(menuObj[0].title);
 
   return (
-    <div
-      className={`tab-menu__container ${
-        autoFit ? 'tab-menu__autofit-container' : ''
-      } ${menuPosition}`}
-    >
+    <div className={`tab-menu__container ${autoFit ? 'tab-menu__autofit-container' : ''}`}>
       {!isEmpty(menuObj) ? (
         <>
-          {renderTabMenu(menuObj, setMenuHandler || setInternalSelectedMenu)}
+          {renderTabMenu(menuObj, menuPosition, setMenuHandler || setInternalSelectedMenu)}
           <div
             className={`tab-menu__content-container ${
               autoFit ? 'tab-menu__autofit-content-container' : ''
