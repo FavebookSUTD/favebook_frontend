@@ -41,7 +41,7 @@ const BookReviewsList = ({ bookReviews, loading, showBookImg, showAuthor, showTi
 };
 
 BookReviewsList.propTypes = {
-  bookReviews: PropTypes.shape({}).isRequired,
+  bookReviews: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   loading: PropTypes.bool.isRequired,
   showBookImg: PropTypes.bool,
   showAuthor: PropTypes.bool,
