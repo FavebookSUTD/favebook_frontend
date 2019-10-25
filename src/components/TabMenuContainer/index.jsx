@@ -71,7 +71,7 @@ TabMenuContainer.propTypes = {
 TabMenuContainer.defaultProps = {
   menuPosition: 'center',
   selectedMenu: '',
-  setMenuHandler: () => {},
+  setMenuHandler: null,
   autoFit: false,
 };
 
