@@ -25,10 +25,7 @@ export default function reducer(state = initialState, action) {
         .set('error', '');
 
     case ACTIONS.FETCH_WANT_TO_READ_FAILURE:
-      return state
-        .set('wantToRead', fromJS([]))
-        .setIn(['loading', 'wantToRead'], false)
-        .set('error', action.payload.toString());
+      return state.setIn(['loading', 'wantToRead'], false).set('error', action.payload.toString());
 
     case ACTIONS.FETCH_READING:
       return state.setIn(['loading', 'reading'], true);
@@ -40,10 +37,7 @@ export default function reducer(state = initialState, action) {
         .set('error', '');
 
     case ACTIONS.FETCH_READING_FAILURE:
-      return state
-        .set('reading', fromJS([]))
-        .setIn(['loading', 'reading'], false)
-        .set('error', action.payload.toString());
+      return state.setIn(['loading', 'reading'], false).set('error', action.payload.toString());
 
     case ACTIONS.FETCH_MY_REVIEWS:
       return state.setIn(['loading', 'myReviews'], true);
@@ -55,10 +49,7 @@ export default function reducer(state = initialState, action) {
         .set('error', '');
 
     case ACTIONS.FETCH_MY_REVIEWS_FAILURE:
-      return state
-        .set('myReviews', fromJS([]))
-        .setIn(['loading', 'myReviews'], false)
-        .set('error', action.payload.toString());
+      return state.setIn(['loading', 'myReviews'], false).set('error', action.payload.toString());
 
     default:
       return state;

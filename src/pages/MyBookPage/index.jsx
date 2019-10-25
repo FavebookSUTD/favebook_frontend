@@ -20,6 +20,7 @@ import { selectLoading, selectWantToRead, selectReading, selectMyReviews } from 
 // import local components
 import TabMenuContainer from '@components/TabMenuContainer';
 import BookInfo from '@components/BookInfo';
+import BookReviewsList from '@components/BookReviewsList';
 
 // import local styling
 import './index.scss';
@@ -58,7 +59,7 @@ class MyBookPage extends PureComponent {
   };
 
   render() {
-    const { loading, wantToRead, reading, review } = this.props;
+    const { loading, wantToRead, reading, myReviews } = this.props;
     const { selectedMenu } = this.state;
 
     return (
@@ -75,7 +76,7 @@ class MyBookPage extends PureComponent {
             },
             {
               title: 'Book In Common',
-              reactNode: <div>testing3</div>,
+              reactNode: <BookReviewsList bookReviews={myReviews} showAuthor={false} />,
             },
           ]}
           selectedMenu={selectedMenu}
@@ -111,6 +112,7 @@ MyBookPage.propTypes = {
       rating: PropTypes.number,
     }),
   ).isRequired,
+  myReviews: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 
   fetchWantToRead: PropTypes.func.isRequired,
   fetchReading: PropTypes.func.isRequired,

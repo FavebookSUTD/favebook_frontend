@@ -14,5 +14,7 @@ export function fetchReading() {
 }
 
 export function fetchMyReviews() {
-  return {};
+  const mockData = require('./mock/mockReviewList.json');
+
+  return new Promise(resolve => setTimeout(() => resolve(mockData), 2000));
 }
