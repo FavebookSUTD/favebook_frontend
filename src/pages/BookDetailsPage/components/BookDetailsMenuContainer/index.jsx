@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 // import local components
 import BookSummaryContent from '../BookSummaryContent';
 import BookDetailsContent from '../BookDetailsContent';
-import BookReviewsList from '../BookReviewsList';
+import BookReviewsList from '@components/BookReviewsList';
 
 // import local styling
 import './index.scss';

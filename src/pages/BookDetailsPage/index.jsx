@@ -12,31 +12,41 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import {} from './actions';
+import { fetchBookDetails, fetchBookReviews } from './actions';
 
 // import selector
-import { selectBook, selectLoading, selectError } from './selectors';
+import { selectBook, selectReviews, selectLoading, selectError } from './selectors';
 
 // import local components
 import FilterBar from '@containers/FilterBar';
 import BookCover from './components/BookCover';
 import BookDescriptions from './components/BookDescriptions';
-import BookDetailsMenuContainer from './components/BookDetailsMenuContainer';
+import TabMenuContainer from '@components/TabMenuContainer';
+import BookSummaryContent from './components/BookSummaryContent';
+import BookDetailsContent from './components/BookDetailsContent';
+import BookReviewsList from '@components/BookReviewsList';
+import UserReview from './containers/UserReview';
 
 // import local styling
 import './index.scss';
 
 // import Antd
-import { Row, Col } from 'antd';
-import UserReview from './containers/UserReview';
+import { Row, Col, Result } from 'antd';
 
 // Extract antd components
 
 class BookDetailsPage extends PureComponent {
-  componentDidMount() {}
+  componentDidMount() {
+    const { fetchBookDetails, fetchBookReviews } = this.props;
+    // TODO: Get the book ID
+    // TODO: Refine the rendering and data retrieval once FilterBar is done integrate with saga
+    fetchBookDetails();
+    fetchBookReviews();
+  }
 
   render() {
-    const { book } = this.props;
+    const { book, reviews, loading, error } = this.props;
+
     const {
       title,
       author,
@@ -46,7 +56,6 @@ class BookDetailsPage extends PureComponent {
       genres,
       summary,
       details,
-      reviews,
       bookCoverURL,
       interestStatus,
     } = book;
@@ -54,23 +63,59 @@ class BookDetailsPage extends PureComponent {
     return (
       <div className="book-details-page__main-container">
         <FilterBar position="right" />
-        <Row className="book-details-page__content-container">
-          <Col className="book-details-page__misc-details-container" span={8}>
-            <BookCover bookCoverURL={bookCoverURL} interestStatus={interestStatus} />
-          </Col>
-          <Col className="book-details-page__main-details-container" span={16}>
-            <BookDescriptions
-              title={title}
-              author={author}
-              ratingValue={ratingValue}
-              commentCount={commentCount}
-              purchaseLinks={purchaseLinks}
-              genres={genres}
-            />
-            <BookDetailsMenuContainer summary={summary} details={details} reviews={reviews} />
-            <UserReview />
-          </Col>
-        </Row>
+        {error.book ? (
+          <Result
+            title="Something went wrong with the server. Please try again later."
+            status="error"
+          />
+        ) : (
+          <Row className="book-details-page__content-container">
+            <Col className="book-details-page__misc-details-container" span={8}>
+              <BookCover bookCoverURL={bookCoverURL} interestStatus={interestStatus || {}} />
+            </Col>
+            <Col className="book-details-page__main-details-container" span={16}>
+              <BookDescriptions
+                loading={loading.book}
+                title={title || ''}
+                author={author || ''}
+                ratingValue={ratingValue || 0}
+                commentCount={commentCount || 0}
+                purchaseLinks={purchaseLinks || {}}
+                genres={genres || []}
+              />
+              <TabMenuContainer
+                menuObj={[
+                  {
+                    title: 'Summary',
+                    reactNode: (
+                      <BookSummaryContent summary={summary || ''} loading={loading.book} />
+                    ),
+                  },
+                  {
+                    title: 'Details',
+                    reactNode: (
+                      <BookDetailsContent bookDetails={details || {}} loading={loading.book} />
+                    ),
+                  },
+                  {
+                    title: 'Reviews',
+                    reactNode: (
+                      <BookReviewsList
+                        loading={loading.reviews}
+                        bookReviews={reviews || []}
+                        showBookImg={false}
+                        showTimestamp={false}
+                      />
+                    ),
+                  },
+                ]}
+                menuPosition="left"
+                autoFit
+              />
+              <UserReview />
+            </Col>
+          </Row>
+        )}
       </div>
     );
   }
@@ -86,21 +131,34 @@ BookDetailsPage.propTypes = {
     genres: PropTypes.arrayOf(PropTypes.string),
     summary: PropTypes.string,
     details: PropTypes.shape({}),
-    reviews: PropTypes.arrayOf(PropTypes.object),
     bookCoverURL: PropTypes.string,
     interestStatus: PropTypes.shape({}),
   }).isRequired,
-  loading: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  loading: PropTypes.shape({
+    book: PropTypes.bool.isRequired,
+    reviews: PropTypes.bool.isRequired,
+  }).isRequired,
+  error: PropTypes.shape({
+    book: PropTypes.string.isRequired,
+    reviews: PropTypes.string.isRequired,
+  }).isRequired,
+
+  fetchBookDetails: PropTypes.func.isRequired,
+  fetchBookReviews: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   book: selectBook,
+  reviews: selectReviews,
   loading: selectLoading,
   error: selectError,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  fetchBookDetails,
+  fetchBookReviews,
+};
 
 const withReducer = injectReducer({ key: 'BookDetailsPage', reducer });
 const withSaga = injectSaga({ key: 'BookDetailsPage', saga });
