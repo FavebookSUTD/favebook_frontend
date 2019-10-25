@@ -2,6 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// import local components
+import ImageWrapper from '../ImageWrapper';
+
 // import local styling
 import './index.scss';
 
@@ -13,7 +16,7 @@ const { Title, Paragraph } = Typography;
 
 const getBookImage = (imgURL, rating) => (
   <div className="book-image__container">
-    <img className="book-image" src={imgURL} alt="" />
+    <ImageWrapper imgSrc={imgURL} imgAltText="" />
     <span className="book-rating">{rating}</span>
   </div>
 );

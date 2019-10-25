@@ -2,6 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// import local components
+import ImageWrapper from '../ImageWrapper';
+
 // import local styling
 import './index.scss';
 
@@ -18,7 +21,7 @@ const BookReview = ({ bookReview, showBookImg, showAuthor, showTimestamp }) => {
     <div className="book-review__container">
       {showBookImg ? (
         <div className="book-review__image-container">
-          <img className="book-image" src={imgURL} alt={title} />
+          <ImageWrapper imgSrc={imgURL} imgAltText={title} />
         </div>
       ) : null}
       <div className="book-review-content__container">

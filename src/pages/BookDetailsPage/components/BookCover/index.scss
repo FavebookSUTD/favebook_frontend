@@ -1,16 +1,15 @@
 @import '@themes/themeVariables.scss';
 
 .book-cover__container {
+  padding: 1.5rem;
+
   .book-cover-img__container {
-    .book-cover-img {
-      height: 350px;
-      width: 350px;
-      display: block;
-      margin: 0 auto;
-      box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.16);
-      border: solid 6px #ffffff;
-      object-fit: cover;
-    }
+    height: 300px;
+    width: 250px;
+    margin: 0 auto;
+    display: block;
+    box-shadow: 0 3px 30px 0 rgba(0, 0, 0, 0.16);
+    border: solid 6px #ffffff;
   }
 
   .interest-btn-group {

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 // import local components
 import NavigatioButton from '../NavigationButton';
+import ImageWrapper from '@components/ImageWrapper';
 
 // import lodash
 import map from 'lodash/map';
@@ -17,7 +18,7 @@ import { goto } from '@utils/goto';
 import './index.scss';
 
 // import Antd
-import { Carousel, Typography } from 'antd';
+import { Carousel, Typography, Empty } from 'antd';
 
 // Extract antd components
 const { Title } = Typography;
@@ -35,13 +36,8 @@ const renderBookList = (rows, books) => {
       bookRows.push(
         <div key={j} className="book-rows__container">
           {map(slice(books, startIdx, startIdx + ROW_MAX_COUNT), book => (
-            <div key={book._id} className="book-card">
-              <img
-                className="book-img"
-                src={book.imUrl}
-                alt="book"
-                onClick={() => goto(`/book/${book._id}`)}
-              />
+            <div key={book._id} className="book-card" onClick={() => goto(`/book/${book._id}`)}>
+              <ImageWrapper imgSrc={book.imUrl} imgAltText={book.title} />
             </div>
           ))}
         </div>,
@@ -68,6 +64,7 @@ const BookCarousel = ({ title, rows, books }) => {
       </Title>
       <div className="book-carousel__container">
         <NavigatioButton
+          disabled={isEmpty(books)}
           onClickHandler={() => {
             carouselEl.current.prev();
           }}
@@ -81,10 +78,14 @@ const BookCarousel = ({ title, rows, books }) => {
             autoplaySpeed={4000}
             easing="ease-in-out"
           >
-            {!isEmpty(books) ? renderBookList(rows, books) : null}
+            {!isEmpty(books) ? renderBookList(rows, books) : <Empty />}
           </Carousel>
         </div>
-        <NavigatioButton left={false} onClickHandler={() => carouselEl.current.next()} />
+        <NavigatioButton
+          left={false}
+          disabled={isEmpty(books)}
+          onClickHandler={() => carouselEl.current.next()}
+        />
       </div>
     </div>
   );

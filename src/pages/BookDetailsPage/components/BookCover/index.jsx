@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+// import local components
+import ImageWrapper from '@components/ImageWrapper';
+
 // import lodash
 import isEmpty from 'lodash/isEmpty';
 
@@ -25,7 +28,7 @@ const BookCover = ({ bookCoverURL, interestStatus }) => {
     <div className="book-cover__container">
       <div className="backdrop-pattern" />
       <div className="book-cover-img__container">
-        <img className="book-cover-img" src={bookCoverURL} alt="Book" />
+        <ImageWrapper imgSrc={bookCoverURL} imgAltText="Book" />
       </div>
       {showOptions ? (
         <div className="interest-btn-group">
