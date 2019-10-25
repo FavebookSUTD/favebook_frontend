@@ -23,6 +23,9 @@ const menuClickHandler = key => {
     case 'home':
       return goto('/');
 
+    case 'mybooks':
+      return goto('/mybooks');
+
     default:
       return null;
   }

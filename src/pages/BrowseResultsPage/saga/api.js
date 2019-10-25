@@ -6,6 +6,7 @@ export function fetchNextPage({ payload: { pageNum, pageSize } }) {
 
   const bookList = require('./mock/mockBookList.json');
   const newBookList = { ...bookList.data, pageNum };
-
-  return newBookList;
+  return new Promise(resolve => {
+    setTimeout(() => resolve(newBookList), 2000);
+  });
 }
