@@ -26,16 +26,12 @@ import BookReviewsList from '@components/BookReviewsList';
 import './index.scss';
 
 // import Antd
-import { Layout, Skeleton } from 'antd';
+import { Layout } from 'antd';
 
 // Extract antd components
 const { Content } = Layout;
 
-const renderBookList = (books, loading) => (
-  <Skeleton active loading={loading}>
-    <BookInfo books={books} />
-  </Skeleton>
-);
+const renderBookList = (books, loading) => <BookInfo loading={loading} books={books} />;
 
 class MyBookPage extends PureComponent {
   constructor(props) {
