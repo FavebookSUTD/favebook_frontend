@@ -1,0 +1,9 @@
+{
+  "data": {
+    "username": "John Doe",
+    "followers": 64,
+    "commonBooks": 5,
+    "commonPercent": 3,
+    "joinDate": "3 Nov 2019"
+  }
+}

@@ -61,6 +61,7 @@ class MyBookPage extends PureComponent {
     return (
       <Content className="my-book-page__container">
         <TabMenuContainer
+          className="my-book-page__tab-menu-container"
           menuObj={[
             {
               title: 'Want To Read',
@@ -71,7 +72,7 @@ class MyBookPage extends PureComponent {
               reactNode: renderBookList(reading, loading.reading),
             },
             {
-              title: 'Book In Common',
+              title: 'My Reviews',
               reactNode: (
                 <BookReviewsList
                   loading={loading.myReviews}

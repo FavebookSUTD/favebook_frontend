@@ -71,7 +71,11 @@ class BookDetailsPage extends PureComponent {
         ) : (
           <Row className="book-details-page__content-container">
             <Col className="book-details-page__misc-details-container" span={8}>
-              <BookCover bookCoverURL={bookCoverURL} interestStatus={interestStatus || {}} />
+              <BookCover
+                bookCoverURL={bookCoverURL}
+                bookTitle={title}
+                interestStatus={interestStatus || {}}
+              />
             </Col>
             <Col className="book-details-page__main-details-container" span={16}>
               <BookDescriptions
@@ -84,6 +88,7 @@ class BookDetailsPage extends PureComponent {
                 genres={genres || []}
               />
               <TabMenuContainer
+                className="book-details-page__tab-menu-container"
                 menuObj={[
                   {
                     title: 'Summary',

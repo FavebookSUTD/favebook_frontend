@@ -46,7 +46,11 @@
 
       .author-name {
         @include hightlight();
+        &:hover {
+          color: $primary-color;
+        }
         margin: 0 0.5rem;
+        cursor: pointer;
       }
 
       .book-review-details-divider {

@@ -3,7 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // import local components
-import ImageWrapper from '../ImageWrapper';
+import ImageWrapper from '@components/ImageWrapper';
+import BookRatingBubble from '../BookRatingBubble';
 
 // import lodash
 import isEmpty from 'lodash/isEmpty';
@@ -15,27 +16,31 @@ import { goto } from '@utils/goto';
 import './index.scss';
 
 // import Antd
-import { List, Typography, Skeleton, Empty } from 'antd';
+import { Skeleton, List, Typography, Empty } from 'antd';
 
 // Extract antd components
 const { Title, Paragraph } = Typography;
 
-const getBookImage = (imgURL, rating) => (
+const getBookImage = imgURL => (
   <div className="book-image__container">
     <ImageWrapper imgSrc={imgURL} imgAltText="" />
-    <span className="book-rating">{rating}</span>
   </div>
 );
 
-const BookInfo = ({ books, pageSize, loading }) => {
-  const DEFAULT_PAGE_SIZE = 8;
+const getRatingComparison = (rating, userRating) => (
+  <div className="book-rating-comparison__container">
+    <BookRatingBubble ratingValue={userRating} userRating />
+    <BookRatingBubble ratingValue={rating} />
+  </div>
+);
 
+const BookInCommon = ({ loading, books }) => {
   return (
-    <div className="book-info__container">
+    <div className="book-in-common__main-container">
       <Skeleton loading={loading} active>
         {!isEmpty(books) ? (
           <List
-            className="book-info__list-container"
+            className="book-in-common__list-container"
             itemLayout="vertical"
             split={false}
             dataSource={books}
@@ -43,10 +48,10 @@ const BookInfo = ({ books, pageSize, loading }) => {
             pagination={{
               position: 'both',
               hideOnSinglePage: true,
-              pageSize: pageSize || DEFAULT_PAGE_SIZE,
+              pageSize: 5,
             }}
             renderItem={book => (
-              <List.Item key={book.id}>
+              <List.Item key={book.id} extra={getRatingComparison(book.rating, book.userRating)}>
                 <List.Item.Meta
                   avatar={getBookImage(book.imgURL, book.rating)}
                   title={
@@ -71,29 +76,16 @@ const BookInfo = ({ books, pageSize, loading }) => {
             )}
           />
         ) : (
-          <Empty description="No book found" />
+          <Empty description="No book in common." />
         )}
       </Skeleton>
     </div>
   );
 };
 
-BookInfo.propTypes = {
-  books: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-      imgURL: PropTypes.string,
-      author: PropTypes.string,
-      rating: PropTypes.number,
-    }),
-  ).isRequired,
-  pageSize: PropTypes.number,
+BookInCommon.propTypes = {
   loading: PropTypes.bool.isRequired,
+  books: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-BookInfo.defaultProps = {
-  pageSize: null,
-};
-
-export default BookInfo;
+export default BookInCommon;

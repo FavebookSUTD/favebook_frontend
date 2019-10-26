@@ -9,7 +9,14 @@
     padding-bottom: 1.5rem;
 
     .book-title {
+      &:hover {
+        color: $primary-color;
+      }
+      margin: 0;
+      display: inline-block;
+      vertical-align: bottom;
       color: $subheading-text-color1;
+      cursor: pointer;
     }
 
     .book-author {

@@ -34,11 +34,20 @@ const renderTabMenu = (menuObj, menuPosition, setSelectedMenu) => (
   </Menu>
 );
 
-const TabMenuContainer = ({ menuObj, menuPosition, selectedMenu, setMenuHandler, autoFit }) => {
-  const [internalSelectedMenu, setInternalSelectedMenu] = useState(menuObj[0].title);
+const TabMenuContainer = ({
+  className,
+  menuObj,
+  menuPosition,
+  selectedMenu,
+  setMenuHandler,
+  autoFit,
+}) => {
+  const [internalSelectedMenu, setInternalSelectedMenu] = useState(menuObj ? menuObj[0].title : '');
 
   return (
-    <div className={`tab-menu__container ${autoFit ? 'tab-menu__autofit-container' : ''}`}>
+    <div
+      className={`tab-menu__container ${autoFit ? 'tab-menu__autofit-container' : ''} ${className}`}
+    >
       {!isEmpty(menuObj) ? (
         <>
           {renderTabMenu(menuObj, menuPosition, setMenuHandler || setInternalSelectedMenu)}
@@ -56,6 +65,7 @@ const TabMenuContainer = ({ menuObj, menuPosition, selectedMenu, setMenuHandler,
 };
 
 TabMenuContainer.propTypes = {
+  className: PropTypes.string,
   menuObj: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string,
@@ -69,6 +79,7 @@ TabMenuContainer.propTypes = {
 };
 
 TabMenuContainer.defaultProps = {
+  className: '',
   menuPosition: 'center',
   selectedMenu: '',
   setMenuHandler: null,

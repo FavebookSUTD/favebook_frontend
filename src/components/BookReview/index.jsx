@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 // import local components
 import ImageWrapper from '../ImageWrapper';
 
+// import utils
+import { goto } from '@utils/goto';
+
 // import local styling
 import './index.scss';
 
@@ -15,7 +18,14 @@ import { Typography, Divider, Rate } from 'antd';
 const { Text, Paragraph } = Typography;
 
 const BookReview = ({ bookReview, showBookImg, showAuthor, showTimestamp }) => {
-  const { title, imgURL, content, author, timestamp, rating } = bookReview;
+  const {
+    title,
+    imgURL,
+    content,
+    author: { id, authorName },
+    timestamp,
+    rating,
+  } = bookReview;
 
   return (
     <div className="book-review__container">
@@ -38,8 +48,8 @@ const BookReview = ({ bookReview, showBookImg, showAuthor, showTimestamp }) => {
           {showAuthor ? (
             <>
               <Text>By </Text>
-              <Text className="author-name" strong>
-                {author}
+              <Text className="author-name" strong onClick={() => goto(`/user/${id}`)}>
+                {authorName}
               </Text>
             </>
           ) : null}
@@ -68,7 +78,10 @@ BookReview.propTypes = {
     title: PropTypes.string,
     imgURL: PropTypes.string,
     content: PropTypes.string,
-    author: PropTypes.string,
+    author: PropTypes.shape({
+      id: PropTypes.string,
+      authorName: PropTypes.string,
+    }),
     timestamp: PropTypes.string,
     rating: PropTypes.number,
   }).isRequired,
