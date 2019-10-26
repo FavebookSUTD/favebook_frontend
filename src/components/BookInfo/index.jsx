@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 // import local components
 import ImageWrapper from '../ImageWrapper';
 
+// import lodash
+import isEmpty from 'lodash/isEmpty';
+
 // import utils
 import { goto } from '@utils/goto';
 
@@ -12,7 +15,7 @@ import { goto } from '@utils/goto';
 import './index.scss';
 
 // import Antd
-import { List, Typography, Skeleton } from 'antd';
+import { List, Typography, Skeleton, Empty } from 'antd';
 
 // Extract antd components
 const { Title, Paragraph } = Typography;
@@ -30,42 +33,46 @@ const BookInfo = ({ books, pageSize, loading }) => {
   return (
     <div className="book-info__container">
       <Skeleton loading={loading} active>
-        <List
-          className="book-info__list-container"
-          itemLayout="vertical"
-          split={false}
-          dataSource={books}
-          rowKey={data => data.id}
-          pagination={{
-            position: 'both',
-            hideOnSinglePage: true,
-            pageSize: pageSize || DEFAULT_PAGE_SIZE,
-          }}
-          renderItem={book => (
-            <List.Item key={book.id}>
-              <List.Item.Meta
-                avatar={getBookImage(book.imgURL, book.rating)}
-                title={
-                  <span>
-                    <Title
-                      className="book-title"
-                      level={4}
-                      ellipsis={{ rows: 2 }}
-                      onClick={() => goto(`/book/${book.id}`)}
-                    >
-                      {book.title}
-                    </Title>
-                  </span>
-                }
-                description={
-                  <Paragraph className="book-author" ellipsis={{ rows: 2 }}>
-                    {`By ${book.author}`}
-                  </Paragraph>
-                }
-              />
-            </List.Item>
-          )}
-        />
+        {!isEmpty(books) ? (
+          <List
+            className="book-info__list-container"
+            itemLayout="vertical"
+            split={false}
+            dataSource={books}
+            rowKey={data => data.id}
+            pagination={{
+              position: 'both',
+              hideOnSinglePage: true,
+              pageSize: pageSize || DEFAULT_PAGE_SIZE,
+            }}
+            renderItem={book => (
+              <List.Item key={book.id}>
+                <List.Item.Meta
+                  avatar={getBookImage(book.imgURL, book.rating)}
+                  title={
+                    <span>
+                      <Title
+                        className="book-title"
+                        level={4}
+                        ellipsis={{ rows: 2 }}
+                        onClick={() => goto(`/book/${book.id}`)}
+                      >
+                        {book.title}
+                      </Title>
+                    </span>
+                  }
+                  description={
+                    <Paragraph className="book-author" ellipsis={{ rows: 2 }}>
+                      {`By ${book.author}`}
+                    </Paragraph>
+                  }
+                />
+              </List.Item>
+            )}
+          />
+        ) : (
+          <Empty description="No book found" />
+        )}
       </Skeleton>
     </div>
   );
