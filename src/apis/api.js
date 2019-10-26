@@ -18,8 +18,10 @@ const request = (props, method) => {
     timestamp: date.getTime(),
   };
 
-  const strQuery = queryString.stringify(queryWithTimestamp);
-  const apiURL = `${url}?${strQuery}`;
+  // Disable query timestamp
+  // const strQuery = queryString.stringify(queryWithTimestamp);
+  // const apiURL = `${url}?${strQuery}`;
+  const apiURL = `${url}`;
 
   const configureJWT = headers => {
     if (needAuthenticate) {

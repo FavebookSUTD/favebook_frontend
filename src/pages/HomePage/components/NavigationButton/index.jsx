@@ -8,7 +8,7 @@ import './index.scss';
 // import Antd
 import { Button } from 'antd';
 
-const NavigationButton = ({ left, onClickHandler }) => {
+const NavigationButton = ({ left, disabled, onClickHandler }) => {
   return (
     <div className="navigation-btn__container">
       <Button
@@ -16,6 +16,7 @@ const NavigationButton = ({ left, onClickHandler }) => {
         type="primary"
         shape="circle"
         icon={left ? 'caret-left' : 'caret-right'}
+        disabled={disabled}
         onClick={onClickHandler}
       />
     </div>
@@ -24,11 +25,13 @@ const NavigationButton = ({ left, onClickHandler }) => {
 
 NavigationButton.propTypes = {
   left: PropTypes.bool,
+  disabled: PropTypes.bool,
   onClickHandler: PropTypes.func.isRequired,
 };
 
 NavigationButton.defaultProps = {
   left: true,
+  disabled: false,
 };
 
 export default NavigationButton;

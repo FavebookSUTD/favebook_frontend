@@ -11,10 +11,10 @@ export const initialState = fromJS({
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case ACTIONS.FETCH_RECOMMEND_BOOKLIST_SUCCESS:
-      return state.set('recommendBooks', fromJS(action.payload));
+      return state.set('recommendBooks', fromJS(action.payload.data));
 
     case ACTIONS.FETCH_BESTSELL_BOOKLIST_SUCCESS:
-      return state.set('bestsellBooks', fromJS(action.payload));
+      return state.set('bestsellBooks', fromJS(action.payload.data));
 
     default:
       return state;
