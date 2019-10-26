@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 // import local components
 import ImageWrapper from '../ImageWrapper';
 
+// import utils
+import { goto } from '@utils/goto';
+
 // import local styling
 import './index.scss';
 
@@ -44,7 +47,12 @@ const BookInfo = ({ books, pageSize, loading }) => {
                 avatar={getBookImage(book.imgURL, book.rating)}
                 title={
                   <span>
-                    <Title className="book-title" level={4} ellipsis={{ rows: 2 }}>
+                    <Title
+                      className="book-title"
+                      level={4}
+                      ellipsis={{ rows: 2 }}
+                      onClick={() => goto(`/book/${book.id}`)}
+                    >
                       {book.title}
                     </Title>
                   </span>
