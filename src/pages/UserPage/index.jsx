@@ -13,19 +13,33 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import { fetchBooksInCommon } from './actions';
+import {
+  fetchUserDetails,
+  fetchWantToReadBooks,
+  fetchReadingBooks,
+  fetchBooksInCommon,
+} from './actions';
 
 // import selector
-import { selectBooksInCommon } from './selectors';
+import {
+  selectUserDetails,
+  selectWantToRead,
+  selectReading,
+  selectBooksInCommon,
+  selectLoading,
+  selectError,
+} from './selectors';
 
 // import lodash
 
 // import local components
 import UserInfo from './components/UserInfo';
+import TabMenuContainer from '@components/TabMenuContainer';
+import BookInfo from '@components/BookInfo';
+import BookInCommonList from './components/BookInCommonList';
 
 // import local styling
 import './index.scss';
-import BookRow from './components/BookRow';
 
 // import Antd
 import { Layout } from 'antd';
@@ -34,50 +48,84 @@ import { Layout } from 'antd';
 const { Content } = Layout;
 
 class UserPage extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   componentDidMount() {
-    const { fetchBooksInCommon } = this.props;
+    const {
+      fetchUserDetails,
+      fetchWantToReadBooks,
+      fetchReadingBooks,
+      fetchBooksInCommon,
+    } = this.props;
+    fetchUserDetails();
+    fetchWantToReadBooks();
+    fetchReadingBooks();
     fetchBooksInCommon();
   }
 
   render() {
-    const { books } = this.props;
+    const { userDetails, wantToRead, reading, booksInCommon, loading, error } = this.props;
+
     return (
       <Content className="user-page__container">
-        {/* <div className="user-info-wrapper"> */}
-        <UserInfo
-          userInfo={{
-            username: 'Eda',
-            followers: 64,
-            commonBooks: 5,
-            commonPercent: 3,
-            joinDate: '3 Nov 2019',
-          }}
+        <UserInfo loading={loading.userDetails} userInfo={userDetails} />
+        <TabMenuContainer
+          menuObj={[
+            {
+              title: 'Want To Read',
+              reactNode: <BookInfo books={wantToRead} loading={loading.wantToRead} />,
+            },
+            {
+              title: 'Reading',
+              reactNode: <BookInfo books={reading} loading={loading.wantToRead} />,
+            },
+            {
+              title: 'Book In Common',
+              reactNode: <BookInCommonList loading={loading.booksInCommon} books={booksInCommon} />,
+            },
+          ]}
+          autoFit
         />
-        {/* </div> */}
-        <div className="user-book-list-wrapper">
-          <BookRow books={books} />
-        </div>
       </Content>
     );
   }
 }
 
 UserPage.propTypes = {
-  books: PropTypes.shape({}).isRequired,
+  userDetails: PropTypes.shape({}).isRequired,
+  wantToRead: PropTypes.arrayOf(PropTypes.object).isRequired,
+  reading: PropTypes.arrayOf(PropTypes.object).isRequired,
+  booksInCommon: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loading: PropTypes.shape({
+    userDetails: PropTypes.bool.isRequired,
+    wantToRead: PropTypes.bool.isRequired,
+    reading: PropTypes.bool.isRequired,
+    booksInCommon: PropTypes.bool.isRequired,
+  }).isRequired,
+  error: PropTypes.shape({
+    userDetails: PropTypes.string.isRequired,
+    wantToRead: PropTypes.string.isRequired,
+    reading: PropTypes.string.isRequired,
+    booksInCommon: PropTypes.string.isRequired,
+  }).isRequired,
 
+  fetchUserDetails: PropTypes.func.isRequired,
+  fetchWantToReadBooks: PropTypes.func.isRequired,
+  fetchReadingBooks: PropTypes.func.isRequired,
   fetchBooksInCommon: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  books: selectBooksInCommon,
+  userDetails: selectUserDetails,
+  wantToRead: selectWantToRead,
+  reading: selectReading,
+  booksInCommon: selectBooksInCommon,
+  loading: selectLoading,
+  error: selectError,
 });
 
 const mapDispatchToProps = {
+  fetchUserDetails,
+  fetchWantToReadBooks,
+  fetchReadingBooks,
   fetchBooksInCommon,
 };
 

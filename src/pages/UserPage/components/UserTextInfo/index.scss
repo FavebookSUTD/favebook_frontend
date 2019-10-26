@@ -14,10 +14,13 @@ $custom-fontsize: 16px;
 
   .user-followers {
     margin-bottom: 1rem;
+
     .user-name {
+      max-width: 215px;
       color: $primary-color;
       font-weight: 800;
       font-size: $custom-fontsize;
+      vertical-align: bottom;
     }
     .user-followernumber {
       font-weight: 800;

@@ -1,11 +1,26 @@
 import api from '@apis/api';
 import apiConfig from '@apis/apiConfig';
 
-export function fetchBooksInCommon({}) {
-  // TODO: Connect to real api
+export function fetchUserDetails({ payload }) {
+  const mockData = require('./mock/mockUserDetails.json');
 
-  const bookList = require('./mock/mockBookList.json');
-  const newBookList = { ...bookList.data };
+  return new Promise(resolve => setTimeout(() => resolve(mockData), 1000));
+}
 
-  return newBookList;
+export function fetchWantToRead({ payload }) {
+  const mockData = require('./mock/mockBookList.json');
+
+  return new Promise(resolve => setTimeout(() => resolve(mockData), 1000));
+}
+
+export function fetchReading({ payload }) {
+  const mockData = require('./mock/mockBookList.json');
+
+  return new Promise(resolve => setTimeout(() => resolve(mockData), 1000));
+}
+
+export function fetchBooksInCommon({ payload }) {
+  const mockData = require('./mock/mockBookInCommon.json');
+
+  return new Promise(resolve => setTimeout(() => resolve(mockData), 1000));
 }

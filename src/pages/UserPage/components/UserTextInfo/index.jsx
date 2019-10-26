@@ -17,7 +17,9 @@ const UserTextInfo = ({ userInfo }) => {
   return (
     <div className="user-text-info__container">
       <div className="user-followers">
-        <Text className="user-name">{username.toUpperCase()}</Text>
+        <Text className="user-name" ellipsis>
+          {username.toUpperCase()}
+        </Text>
         <Text>has</Text>
         <Text className="user-followernumber">{followers}</Text>
         <Text>followers</Text>

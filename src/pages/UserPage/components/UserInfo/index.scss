@@ -9,12 +9,14 @@
   flex-wrap: wrap;
 
   .user-info__membership-container {
-    margin: 0 2rem;
+    height: 220px;
+    padding: 0 2rem;
   }
 
   .user-info__relation-container {
     height: 100%;
-    margin: 0 2rem;
+    min-width: 440px;
+    padding: 0 2rem;
 
     .user-info-username {
       color: $primary-color;
