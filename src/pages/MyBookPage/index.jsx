@@ -61,6 +61,7 @@ class MyBookPage extends PureComponent {
     return (
       <Content className="my-book-page__container">
         <TabMenuContainer
+          className="my-book-page__tab-menu-container"
           menuObj={[
             {
               title: 'Want To Read',

@@ -84,6 +84,7 @@ class BookDetailsPage extends PureComponent {
                 genres={genres || []}
               />
               <TabMenuContainer
+                className="book-details-page__tab-menu-container"
                 menuObj={[
                   {
                     title: 'Summary',
