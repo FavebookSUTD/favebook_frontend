@@ -7,7 +7,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 3.5,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 2,
@@ -16,7 +19,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 4.5,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 3,
@@ -25,7 +31,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 5.0,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 4,
@@ -34,7 +43,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 3.5,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 5,
@@ -43,7 +55,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 3.5,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 6,
@@ -52,7 +67,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 2.5,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 7,
@@ -61,7 +79,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 1.5,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 8,
@@ -70,7 +91,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 0.5,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 9,
@@ -79,7 +103,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 1.5,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 10,
@@ -88,7 +115,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 2.0,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 11,
@@ -97,7 +127,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 2.5,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 12,
@@ -106,7 +139,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 3.0,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 13,
@@ -115,7 +151,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 3.5,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 14,
@@ -124,7 +163,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 4.0,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 15,
@@ -133,7 +175,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 5.0,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 16,
@@ -142,7 +187,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 3.0,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 17,
@@ -151,7 +199,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 1.5,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 18,
@@ -160,7 +211,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 2.0,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 19,
@@ -169,7 +223,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 1.0,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     },
     {
       "id": 20,
@@ -178,7 +235,10 @@
       "imgURL": "https://covers.openlibrary.org/b/id/109034-M.jpg",
       "timestamp": "17 Nov 2019",
       "rating": 3.5,
-      "author": "John Doe"
+      "author": {
+        "id": "0f0dc740-f7fd-11e9-8f0b-362b9e155667",
+        "authorName": "John Doe"
+      }
     }
   ]
 }
