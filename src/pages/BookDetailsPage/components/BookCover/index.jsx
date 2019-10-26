@@ -17,7 +17,7 @@ import { Button, Typography } from 'antd';
 // Extract antd components
 const { Text } = Typography;
 
-const BookCover = ({ bookCoverURL, interestStatus }) => {
+const BookCover = ({ bookCoverURL, bookTitle, interestStatus }) => {
   const [showOptions, setShowOption] = useState(false);
 
   const { wantToReadCount, readingCount } = interestStatus;
@@ -28,7 +28,7 @@ const BookCover = ({ bookCoverURL, interestStatus }) => {
     <div className="book-cover__container">
       <div className="backdrop-pattern" />
       <div className="book-cover-img__container">
-        <ImageWrapper imgSrc={bookCoverURL} imgAltText="Book" />
+        <ImageWrapper imgSrc={bookCoverURL} imgAltText={bookTitle} />
       </div>
       {showOptions ? (
         <div className="interest-btn-group">
@@ -76,6 +76,7 @@ const BookCover = ({ bookCoverURL, interestStatus }) => {
 
 BookCover.propTypes = {
   bookCoverURL: PropTypes.string.isRequired,
+  bookTitle: PropTypes.string.isRequired,
   interestStatus: PropTypes.shape({
     wantToReadCount: PropTypes.number,
     readingCount: PropTypes.number,
