@@ -72,7 +72,7 @@ class MyBookPage extends PureComponent {
               reactNode: renderBookList(reading, loading.reading),
             },
             {
-              title: 'Book In Common',
+              title: 'My Reviews',
               reactNode: (
                 <BookReviewsList
                   loading={loading.myReviews}
