@@ -15,7 +15,7 @@ const Routers = () => {
       <Route exact path="/" render={() => <HomePage />} />
       <Route exact path="/mybooks" render={() => <MyBookPage />} />
       <Route exact path="/browseresults" render={() => <BrowseResultsPage />} />
-      <Route exact path="/user" render={() => <UserPage />} />
+      <Route exact path="/user/:id" render={() => <UserPage />} />
       <Route exact path="/book/:id" render={() => <BookDetailsPage />} />
     </Switch>
   );
