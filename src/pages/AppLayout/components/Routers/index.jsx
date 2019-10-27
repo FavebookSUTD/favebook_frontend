@@ -1,5 +1,6 @@
 // import React
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Switch, withRouter } from 'react-router-dom';
 import { RouterGuard } from 'react-router-guard';
 import { connect } from 'react-redux';
@@ -80,6 +81,11 @@ const Routers = ({ history, loadPrevPath, clearPrevPath }) => {
       />
     </Switch>
   );
+};
+
+Routers.propTypes = {
+  loadPrevPath: PropTypes.func.isRequired,
+  clearPrevPath: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
