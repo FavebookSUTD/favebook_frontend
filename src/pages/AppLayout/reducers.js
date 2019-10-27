@@ -6,6 +6,7 @@ export const initialState = fromJS({
   loading: false,
   error: '',
   genres: [],
+  prevPath: '',
 });
 
 export default function reducer(state = initialState, action) {
@@ -24,6 +25,12 @@ export default function reducer(state = initialState, action) {
 
     case ACTIONS.LOGOUT_SUCCESS:
       return state.set('user', fromJS({}));
+
+    case ACTIONS.LOAD_PREV_PATH:
+      return state.set('prevPath', action.payload);
+
+    case ACTIONS.CLEAR_PREV_PATH:
+      return state.set('prevPath', '');
 
     default:
       return state;

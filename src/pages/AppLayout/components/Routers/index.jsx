@@ -2,6 +2,11 @@
 import React from 'react';
 import { Switch, withRouter } from 'react-router-dom';
 import { RouterGuard } from 'react-router-guard';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+
+// import actions
+import { loadPrevPath, clearPrevPath } from '../../actions';
 
 // import page component
 import HomePage from '@pages/HomePage';
@@ -10,23 +15,30 @@ import BrowseResultsPage from '@pages/BrowseResultsPage';
 import UserPage from '@pages/UserPage';
 import BookDetailsPage from '@pages/BookDetailsPage';
 
-// import utils
-import { goto } from '@utils/goto';
+const Routers = ({ history, loadPrevPath, clearPrevPath }) => {
+  const savePrevPath = () => {
+    const {
+      location: { pathname },
+    } = history;
+    loadPrevPath(pathname);
+    return Promise.resolve();
+  };
 
-const Routers = ({ history }) => {
   const shouldRoute = () => {
     const { sessionStorage } = window;
     const user = sessionStorage.getItem('user');
     if (user) {
       const { username, access_token } = JSON.parse(sessionStorage.getItem('user'));
-      return new Promise(resolve => {
+      return new Promise((resolve, reject) => {
         if (username && access_token) {
+          clearPrevPath();
           return resolve();
         }
-        return goto('/authenticate');
+        return reject(new Error('/authenticate'));
       });
     }
-    return goto('/authenticate');
+
+    return Promise.reject(new Error('/authenticate'));
   };
 
   return (
@@ -42,7 +54,7 @@ const Routers = ({ history }) => {
             path: '/mybooks',
             exact: true,
             component: MyBookPage,
-            canActivate: [shouldRoute],
+            canActivate: [savePrevPath, shouldRoute],
           },
           {
             path: '/browseresults',
@@ -52,7 +64,7 @@ const Routers = ({ history }) => {
             path: '/user/:id',
             exact: true,
             component: UserPage,
-            canActivate: [shouldRoute],
+            canActivate: [savePrevPath, shouldRoute],
           },
           {
             path: '/book/:id',
@@ -70,4 +82,17 @@ const Routers = ({ history }) => {
   );
 };
 
-export default withRouter(Routers);
+const mapDispatchToProps = {
+  loadPrevPath,
+  clearPrevPath,
+};
+
+const withConnect = connect(
+  null,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withRouter,
+  withConnect,
+)(Routers);

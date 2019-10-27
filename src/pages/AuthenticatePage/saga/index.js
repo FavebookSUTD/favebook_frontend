@@ -1,10 +1,11 @@
-import { all, takeLatest, takeLeading } from 'redux-saga/effects';
+import { all, takeLatest } from 'redux-saga/effects';
 
 import saga from '@sagas/commonSagas';
 import notificationHandler from '@sagas/notificationsHandler';
 import { authSuccessHandler } from './sagas';
 
 import ACTIONS from '../actions';
+import AppLayoutActions from '@pages/AppLayout/actions';
 import { signInFromAPI, signUpFromAPI } from './api';
 
 export default function* watcherAuthForm() {
@@ -38,6 +39,7 @@ export default function* watcherAuthForm() {
     takeLatest(
       [ACTIONS.SIGNIN_FROM_API_SUCCESS, ACTIONS.SIGNUP_FROM_API_SUCCESS],
       authSuccessHandler,
+      AppLayoutActions.CLEAR_PREV_PATH,
     ),
   ]);
 }

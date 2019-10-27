@@ -8,6 +8,8 @@ const ACTIONS = {
   FETCH_GENRES: '@pages/AppLayout/FETCH_GENRES',
   FETCH_GENRES_SUCCESS: '@pages/AppLayout/FETCH_GENRES_SUCCESS',
   FETCH_GENRES_FAILURE: '@pages/AppLayout/FETCH_GENRES_FAILURE',
+  LOAD_PREV_PATH: '@pages/AppLayout/LOAD_PREV_PATH',
+  CLEAR_PREV_PATH: '@pages/AppLayout/CLEAR_PREV_PATH',
 };
 
 export default ACTIONS;
@@ -22,4 +24,13 @@ export const logout = () => ({
 
 export const fetchGenres = () => ({
   type: ACTIONS.FETCH_GENRES,
+});
+
+export const loadPrevPath = prevPath => ({
+  type: ACTIONS.LOAD_PREV_PATH,
+  payload: prevPath,
+});
+
+export const clearPrevPath = () => ({
+  type: ACTIONS.CLEAR_PREV_PATH,
 });
