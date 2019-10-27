@@ -16,7 +16,7 @@ import { fetchRecommendBookList, fetchBestsellBookList } from './actions';
 
 // import selector
 import { selectLoading, selectError, selectRecommendBooks, selectBestsellBooks } from './selectors';
-import { userInfo, selectUserInfo } from '@pages/AppLayout/selectors';
+import { selectUserInfo } from '@pages/AppLayout/selectors';
 
 // import local components
 import FilterBar from '@containers/FilterBar';
