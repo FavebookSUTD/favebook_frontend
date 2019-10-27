@@ -1,6 +1,10 @@
-import { select, selectToJS } from '@utils/selectorUtils';
+import { select } from '@utils/selectorUtils';
 import { initialState } from './reducers';
 
 const selectAuthenticatePage = state => state.get('AuthenticatePage', initialState);
 
-export {};
+const selectLoading = select(selectAuthenticatePage, 'loading');
+
+const selectError = select(selectAuthenticatePage, 'error');
+
+export { selectLoading, selectError };
