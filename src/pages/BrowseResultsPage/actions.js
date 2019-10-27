@@ -6,9 +6,10 @@ const ACTIONS = {
 
 export default ACTIONS;
 
-export const fetchNextPage = (pageNum, pageSize) => ({
+export const fetchNextPage = (searchResults, pageNum, pageSize) => ({
   type: ACTIONS.FETCH_NEXT_PAGE,
   payload: {
+    searchResults,
     pageNum,
     pageSize,
   },

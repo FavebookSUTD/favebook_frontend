@@ -17,6 +17,7 @@ import { fetchNextPage } from './actions';
 
 // import selector
 import { selectPageSize, selectTotal, selectNextPage } from './selectors';
+import { selectSearchResult } from '@containers/FilterBar/selectors';
 
 // import lodash
 import isEmpty from 'lodash/isEmpty';
@@ -48,22 +49,23 @@ class BrowseResultsPage extends PureComponent {
     fetchNextPage(pageNum, pageSize);
   }
 
-  onPageChange = (current, pageSize) => {
+  onPageChange = (books, current, pageSize) => {
     const { fetchNextPage } = this.props;
     this.setState({
       pageNum: current,
     });
-    fetchNextPage(current, pageSize);
+    fetchNextPage(books, current, pageSize);
   };
 
   render() {
     const { pageSize, total, books } = this.props;
     const { pageNum } = this.state;
+
     return (
       <Layout className="results-page__main-container">
         <FilterBar className="results-page__filter" />
         <Content className="results-page__content">
-          {!isEmpty(books) ? <BookInfo books={books[pageNum]} /> : null}
+          {!isEmpty(books) ? <BookInfo books={books} /> : null}
         </Content>
         <Pagination
           className="results-page__pagination"
@@ -80,7 +82,7 @@ class BrowseResultsPage extends PureComponent {
 BrowseResultsPage.propTypes = {
   pageSize: PropTypes.number.isRequired,
   total: PropTypes.number.isRequired,
-  books: PropTypes.shape({}).isRequired,
+  books: PropTypes.arrayOf(PropTypes.object).isRequired,
 
   fetchNextPage: PropTypes.func.isRequired,
 };
@@ -88,7 +90,7 @@ BrowseResultsPage.propTypes = {
 const mapStateToProps = createStructuredSelector({
   pageSize: selectPageSize,
   total: selectTotal,
-  books: selectNextPage,
+  books: selectSearchResult,
 });
 
 const mapDispatchToProps = {

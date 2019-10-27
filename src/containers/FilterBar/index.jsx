@@ -20,6 +20,7 @@ import { selectError, selectFetching, selectSearchResult } from './selectors';
 // import lodash
 import debounce from 'lodash/debounce';
 import map from 'lodash/map';
+import slice from 'lodash/slice';
 
 // import utils
 import { goto } from '@utils/goto';
@@ -35,7 +36,7 @@ const { Option } = AutoComplete;
 const { Text } = Typography;
 
 const renderOptions = options =>
-  map(options, option => (
+  map(slice(options, 0, 5), option => (
     <Option className="search-result__option" key={option.title} label={option.title}>
       <Icon className="search-result-icon" type="search" />
       <img className="book-cover-img" src={option.imgURL} alt="Book" />
@@ -61,7 +62,7 @@ class FilterBar extends PureComponent {
   render() {
     const { position, fetching, searchResults } = this.props;
     const { dropdownOpened, searchVal } = this.state;
-
+    
     return (
       <div className={`filter-bar ${position}`}>
         <AutoComplete
