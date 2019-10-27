@@ -1,6 +1,7 @@
 import { all, takeLatest } from 'redux-saga/effects';
 
 import saga from '@sagas/commonSagas';
+import { logoutSuccessHandler } from './sagas';
 
 import ACTIONS from '../actions';
 import { loginFromStorage, logout, fetchGenres } from './api';
@@ -22,5 +23,6 @@ export default function* watcherAppLayout() {
       ACTIONS.FETCH_GENRES_FAILURE,
       fetchGenres,
     ),
+    takeLatest(ACTIONS.LOGOUT_SUCCESS, logoutSuccessHandler),
   ]);
 }

@@ -1,6 +1,7 @@
 // import React
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, withRouter } from 'react-router-dom';
+import { RouterGuard } from 'react-router-guard';
 
 // import page component
 import HomePage from '@pages/HomePage';
@@ -9,16 +10,64 @@ import BrowseResultsPage from '@pages/BrowseResultsPage';
 import UserPage from '@pages/UserPage';
 import BookDetailsPage from '@pages/BookDetailsPage';
 
-const Routers = () => {
+// import utils
+import { goto } from '@utils/goto';
+
+const Routers = ({ history }) => {
+  const shouldRoute = () => {
+    const { sessionStorage } = window;
+    const user = sessionStorage.getItem('user');
+    if (user) {
+      const { username, access_token } = JSON.parse(sessionStorage.getItem('user'));
+      return new Promise(resolve => {
+        if (username && access_token) {
+          return resolve();
+        }
+        return goto('/authenticate');
+      });
+    }
+    return goto('/authenticate');
+  };
+
   return (
     <Switch>
-      <Route exact path="/" render={() => <HomePage />} />
-      <Route exact path="/mybooks" render={() => <MyBookPage />} />
-      <Route exact path="/browseresults" render={() => <BrowseResultsPage />} />
-      <Route exact path="/user/:id" render={() => <UserPage />} />
-      <Route exact path="/book/:id" render={() => <BookDetailsPage />} />
+      <RouterGuard
+        config={[
+          {
+            path: '/',
+            exact: true,
+            component: HomePage,
+          },
+          {
+            path: '/mybooks',
+            exact: true,
+            component: MyBookPage,
+            canActivate: [shouldRoute],
+          },
+          {
+            path: '/browseresults',
+            component: BrowseResultsPage,
+          },
+          {
+            path: '/user/:id',
+            exact: true,
+            component: UserPage,
+            canActivate: [shouldRoute],
+          },
+          {
+            path: '/book/:id',
+            exact: true,
+            component: BookDetailsPage,
+          },
+          {
+            path: '/*',
+            redirect: '/',
+          },
+        ]}
+        history={history}
+      />
     </Switch>
   );
 };
 
-export default Routers;
+export default withRouter(Routers);
