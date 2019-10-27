@@ -10,8 +10,8 @@ const selectLoggedIn = createSelector(
   selectAppLayout,
   state => {
     const user = state.get('user').toObject();
-    const { username, userID, token } = user;
-    return username && userID && token;
+    const { username, access_token } = user;
+    return !!username && !!access_token;
   },
 );
 
