@@ -1,11 +1,41 @@
 {
   "data": {
     "books": [
-      { "id": 1, "title": "Book 1", "imgURL": "", "author": "Lionell Loh" },
-      { "id": 2, "title": "Book 2", "imgURL": "", "author": "Lionell Loh" },
-      { "id": 3, "title": "Book 3", "imgURL": "", "author": "Lionell Loh" },
-      { "id": 4, "title": "Book 4", "imgURL": "", "author": "Lionell Loh" },
-      { "id": 5, "title": "Book 5", "imgURL": "", "author": "Lionell Loh" }
+      {
+        "id": 1,
+        "title": "Gulliver's travels",
+        "imgURL": "https://covers.openlibrary.org/b/id/109034-L.jpg",
+        "author": "Jonathan Swift",
+        "rating": 3.5
+      },
+      {
+        "id": 2,
+        "title": "Gulliver's travels",
+        "imgURL": "https://covers.openlibrary.org/b/id/109034-L.jpg",
+        "author": "Jonathan Swift",
+        "rating": 3.5
+      },
+      {
+        "id": 3,
+        "title": "Gulliver's travels",
+        "imgURL": "https://covers.openlibrary.org/b/id/109034-L.jpg",
+        "author": "Jonathan Swift",
+        "rating": 3.5
+      },
+      {
+        "id": 4,
+        "title": "Gulliver's travels",
+        "imgURL": "https://covers.openlibrary.org/b/id/109034-L.jpg",
+        "author": "Jonathan Swift",
+        "rating": 3.5
+      },
+      {
+        "id": 5,
+        "title": "Gulliver's travels",
+        "imgURL": "https://covers.openlibrary.org/b/id/109034-L.jpg",
+        "author": "Jonathan Swift",
+        "rating": 3.5
+      }
     ],
     "total": 40
   }

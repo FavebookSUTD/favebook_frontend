@@ -9,4 +9,9 @@ export function fetchNextPage({ payload: { searchResults, pageNum, pageSize } })
   const newBookList = searchResults;
 
   return newBookList;
+  // const bookList = require('./mock/mockBookList.json');
+  // const newBookList = { ...bookList.data, pageNum };
+  // return new Promise(resolve => {
+  //   setTimeout(() => resolve(newBookList), 2000);
+  // });
 }

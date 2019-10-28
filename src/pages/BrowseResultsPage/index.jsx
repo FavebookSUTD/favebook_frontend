@@ -16,21 +16,21 @@ import injectSaga from '@utils/core/injectSaga';
 import { fetchNextPage } from './actions';
 
 // import selector
-import { selectPageSize, selectTotal, selectNextPage } from './selectors';
 import { selectSearchResult } from '@containers/FilterBar/selectors';
+import { selectLoading, selectPageSize, selectTotal, selectNextPage } from './selectors';
 
 // import lodash
 import isEmpty from 'lodash/isEmpty';
 
 // import local components
-import BookInfo from './components/BookInfo';
+import BookInfo from '@components/BookInfo';
 import FilterBar from '@containers/FilterBar';
 
 // import local styling
 import './index.scss';
 
 // import Antd
-import { Layout, Pagination } from 'antd';
+import { Layout, Pagination, Skeleton, Empty } from 'antd';
 
 // Extract antd components
 const { Content } = Layout;
@@ -58,28 +58,32 @@ class BrowseResultsPage extends PureComponent {
   };
 
   render() {
-    const { pageSize, total, books } = this.props;
+    const { loading, pageSize, total, books } = this.props;
     const { pageNum } = this.state;
 
     return (
-      <Layout className="results-page__main-container">
-        <FilterBar className="results-page__filter" />
-        <Content className="results-page__content">
-          {!isEmpty(books) ? <BookInfo books={books} /> : null}
-        </Content>
+      <Content className="results-page__main-container">
+        <FilterBar position="right" />
+        <div className="results-page__content">
+          <Skeleton active loading={loading}>
+            {!isEmpty(books) && !loading ? <BookInfo books={books} /> : <Empty />}
+          </Skeleton>
+        </div>
         <Pagination
           className="results-page__pagination"
+          hideOnSinglePage
           current={pageNum}
           pageSize={pageSize}
           total={total}
           onChange={this.onPageChange}
         />
-      </Layout>
+      </Content>
     );
   }
 }
 
 BrowseResultsPage.propTypes = {
+  loading: PropTypes.bool.isRequired,
   pageSize: PropTypes.number.isRequired,
   total: PropTypes.number.isRequired,
   books: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -88,6 +92,7 @@ BrowseResultsPage.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  loading: selectLoading,
   pageSize: selectPageSize,
   total: selectTotal,
   books: selectSearchResult,
