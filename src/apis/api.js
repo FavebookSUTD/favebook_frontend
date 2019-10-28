@@ -1,10 +1,20 @@
 import axios from 'axios';
 import queryString from 'querystring';
+import { generateUUID } from '@utils/generateUUID';
 
 const buildHeader = headers => {
+  // Get session ID
+  let clientId = window.sessionStorage.getItem('clientId');
+
+  if (!clientId) {
+    clientId = generateUUID();
+    window.sessionStorage.setItem('clientId', clientId);
+  }
+
   return {
     Accept: 'application/json, text/html',
     'Content-Type': 'application/json',
+    'X-Client-ID': clientId,
     ...headers,
   };
 };
