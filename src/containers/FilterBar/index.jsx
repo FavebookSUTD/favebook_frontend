@@ -12,10 +12,17 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import { searchBooks } from './actions';
+import { searchBooks, autocompleteBooks } from './actions';
 
 // import selector
-import { selectError, selectFetching, selectSearchResult } from './selectors';
+import {
+  selectError,
+  selectFetching,
+  selectSearchResult,
+  selectErrorAuto,
+  selectFetchingAuto,
+  selectAutoResult,
+} from './selectors';
 
 // import lodash
 import debounce from 'lodash/debounce';
@@ -55,14 +62,15 @@ class FilterBar extends PureComponent {
       dropdownOpened: false,
       searchVal: '',
     };
-    const { searchBooks } = this.props;
+    const { searchBooks, autocompleteBooks } = this.props;
     this.deboucedSearchBooks = debounce(searchBooks, 500);
+    this.deboucedAutoBooks = debounce(autocompleteBooks, 500);
   }
 
   render() {
-    const { position, fetching, searchResults } = this.props;
+    const { position, fetching, searchResults, autocompleteResults } = this.props;
     const { dropdownOpened, searchVal } = this.state;
-    
+
     return (
       <div className={`filter-bar ${position}`}>
         <AutoComplete
@@ -75,13 +83,15 @@ class FilterBar extends PureComponent {
           placeholder={<Icon className="search-icon" type="search" />}
           dropdownClassName="filter-autocomplete-dropdown__container"
           onDropdownVisibleChange={open => this.setState({ dropdownOpened: open })}
-          dataSource={searchResults}
           onSearch={val => {
             this.setState({ searchVal: val });
             this.deboucedSearchBooks(val);
           }}
+          onChange={val => {
+            this.deboucedAutoBooks(val);
+          }}
         >
-          {renderOptions(searchResults)}
+          {renderOptions(autocompleteResults)}
         </AutoComplete>
         <Button
           className="filter-button"
@@ -100,7 +110,9 @@ FilterBar.propTypes = {
   position: PropTypes.oneOf(['left', 'center', 'right']),
   fetching: PropTypes.bool.isRequired,
   searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+  autocompleteResults: PropTypes.arrayOf(PropTypes.object).isRequired,
   searchBooks: PropTypes.func.isRequired,
+  autocompleteBooks: PropTypes.func.isRequired,
 };
 
 FilterBar.defaultProps = {
@@ -111,10 +123,14 @@ const mapStateToProps = createStructuredSelector({
   error: selectError,
   fetching: selectFetching,
   searchResults: selectSearchResult,
+  errorAuto: selectErrorAuto,
+  fetchingAuto: selectFetchingAuto,
+  autocompleteResults: selectAutoResult,
 });
 
 const mapDispatchToProps = {
   searchBooks,
+  autocompleteBooks,
 };
 
 const withReducer = injectReducer({ key: 'FilterBar', reducer });

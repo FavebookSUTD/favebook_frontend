@@ -9,4 +9,17 @@ const selectFetching = select(selectFilterBar, 'fetching');
 
 const selectSearchResult = selectToJS(selectFilterBar, 'searchResults');
 
-export { selectError, selectFetching, selectSearchResult };
+const selectErrorAuto = select(selectFilterBar, 'errorAuto');
+
+const selectFetchingAuto = select(selectFilterBar, 'fetchingautocomplete');
+
+const selectAutoResult = selectToJS(selectFilterBar, 'searchResults');
+
+export {
+  selectError,
+  selectFetching,
+  selectSearchResult,
+  selectErrorAuto,
+  selectFetchingAuto,
+  selectAutoResult,
+};
