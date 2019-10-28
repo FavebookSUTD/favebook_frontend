@@ -1,6 +1,8 @@
 {
   "books": {
-    "bookList": "http://localhost:5000/books/",
-    "recommendation": "http://localhost:5000/books/recommended"
+    "bookList": "http://192.168.99.100:5000/books/",
+    "recommendation": "http://192.168.99.100:5000/books/recommended",
+    "autocomplete": "http://192.168.99.100:5000/books/search/autocomplete",
+    "search": "http://192.168.99.100:5000/books/search"
   }
 }
