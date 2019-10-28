@@ -11,10 +11,12 @@ export default ACTIONS;
 
 export const searchBooks = searchVal => ({
   type: ACTIONS.SEARCH_BOOKS,
-  payload: searchVal,
+  payload: {
+    searchVal,
+  },
 });
 
 export const autocompleteBooks = autocompleteVal => ({
   type: ACTIONS.AUTOCOMPLETE_BOOKS,
-  payload: autocompleteVal,
+  payload: { autocompleteVal },
 });

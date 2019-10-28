@@ -18,10 +18,7 @@ import { searchBooks, autocompleteBooks } from './actions';
 import {
   selectError,
   selectFetching,
-  selectSearchResult,
-  selectErrorAuto,
-  selectFetchingAuto,
-  selectAutoResult,
+  selectResult,
 } from './selectors';
 
 // import lodash
@@ -43,7 +40,7 @@ const { Option } = AutoComplete;
 const { Text } = Typography;
 
 const renderOptions = options =>
-  map(slice(options, 0, 5), option => (
+  map(options.data, option => (
     <Option className="search-result__option" key={option.title} label={option.title}>
       <Icon className="search-result-icon" type="search" />
       <img className="book-cover-img" src={option.imgURL} alt="Book" />
@@ -61,6 +58,7 @@ class FilterBar extends PureComponent {
     this.state = {
       dropdownOpened: false,
       searchVal: '',
+      autocompleteVal: '',
     };
     const { searchBooks, autocompleteBooks } = this.props;
     this.deboucedSearchBooks = debounce(searchBooks, 500);
@@ -68,9 +66,12 @@ class FilterBar extends PureComponent {
   }
 
   render() {
-    const { position, fetching, searchResults, autocompleteResults } = this.props;
-    const { dropdownOpened, searchVal } = this.state;
-
+    const { position, fetching, results } = this.props;
+    const { autocomplete, search } = results;
+    const autocompleteResults = autocomplete;
+    const searchResults = search;
+    const { dropdownOpened, searchVal, autocompleteVal } = this.state;
+    console.log(searchResults);
     return (
       <div className={`filter-bar ${position}`}>
         <AutoComplete
@@ -88,6 +89,7 @@ class FilterBar extends PureComponent {
             this.deboucedSearchBooks(val);
           }}
           onChange={val => {
+            this.setState({ autocompleteVal: val });
             this.deboucedAutoBooks(val);
           }}
         >
@@ -109,8 +111,10 @@ class FilterBar extends PureComponent {
 FilterBar.propTypes = {
   position: PropTypes.oneOf(['left', 'center', 'right']),
   fetching: PropTypes.bool.isRequired,
-  searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
-  autocompleteResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+  results: PropTypes.shape({
+    search: PropTypes.arrayOf(PropTypes.object).isRequired,
+    autocomplete: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }).isRequired,
   searchBooks: PropTypes.func.isRequired,
   autocompleteBooks: PropTypes.func.isRequired,
 };
@@ -122,10 +126,7 @@ FilterBar.defaultProps = {
 const mapStateToProps = createStructuredSelector({
   error: selectError,
   fetching: selectFetching,
-  searchResults: selectSearchResult,
-  errorAuto: selectErrorAuto,
-  fetchingAuto: selectFetchingAuto,
-  autocompleteResults: selectAutoResult,
+  results: selectResult,
 });
 
 const mapDispatchToProps = {

@@ -16,7 +16,7 @@ import injectSaga from '@utils/core/injectSaga';
 import { fetchNextPage } from './actions';
 
 // import selector
-import { selectSearchResult } from '@containers/FilterBar/selectors';
+import { selectResult } from '@containers/FilterBar/selectors';
 import { selectLoading, selectPageSize, selectTotal, selectNextPage } from './selectors';
 
 // import lodash
@@ -54,19 +54,20 @@ class BrowseResultsPage extends PureComponent {
     this.setState({
       pageNum: current,
     });
-    fetchNextPage(books, current, pageSize);
+    fetchNextPage(books.search.data, current, pageSize);
   };
 
   render() {
     const { loading, pageSize, total, books } = this.props;
     const { pageNum } = this.state;
+    const { data } = books.search;
 
     return (
       <Content className="results-page__main-container">
-        <FilterBar position="right" />
+        <FilterBar position="center" />
         <div className="results-page__content">
           <Skeleton active loading={loading}>
-            {!isEmpty(books) && !loading ? <BookInfo books={books} /> : <Empty />}
+            {!isEmpty(data) && !loading ? <BookInfo books={data} /> : <Empty />}
           </Skeleton>
         </div>
         <Pagination
@@ -86,7 +87,10 @@ BrowseResultsPage.propTypes = {
   loading: PropTypes.bool.isRequired,
   pageSize: PropTypes.number.isRequired,
   total: PropTypes.number.isRequired,
-  books: PropTypes.arrayOf(PropTypes.object).isRequired,
+  books: PropTypes.shape({
+    search: PropTypes.arrayOf(PropTypes.object).isRequired,
+    autocomplete: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }).isRequired,
 
   fetchNextPage: PropTypes.func.isRequired,
 };
@@ -95,7 +99,7 @@ const mapStateToProps = createStructuredSelector({
   loading: selectLoading,
   pageSize: selectPageSize,
   total: selectTotal,
-  books: selectSearchResult,
+  books: selectResult,
 });
 
 const mapDispatchToProps = {
