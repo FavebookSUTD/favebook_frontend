@@ -2,20 +2,20 @@ import api from '@apis/api';
 import apiConfig from '@apis/apiConfig';
 
 export function searchBooks({ payload }) {
-  // TODO: Connect to real api
   if (payload) {
+    const { searchVal } = payload;
     return api.get({
-      url: `${apiConfig.books.search}/${payload.searchVal}`,
+      url: `${apiConfig.books.search}/"${searchVal}"`,
     });
   }
   return [];
 }
 
 export function autocompleteBooks({ payload }) {
-  // TODO: Connect to real api
   if (payload) {
+    const { autocompleteVal } = payload;
     return api.get({
-      url: `${apiConfig.books.autocomplete}/${payload.autocompleteVal}/5`,
+      url: `${apiConfig.books.autocomplete}/${autocompleteVal}/5`,
     });
   }
   return [];

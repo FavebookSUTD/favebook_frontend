@@ -7,10 +7,6 @@ const selectLoading = select(selectBrowseResultsPage, 'loading');
 
 const selectError = select(selectBrowseResultsPage, 'error');
 
-const selectPageSize = select(selectBrowseResultsPage, 'pageSize');
-
-const selectTotal = select(selectBrowseResultsPage, 'total');
-
 const selectNextPage = selectToJS(selectBrowseResultsPage, 'books');
 
-export { selectLoading, selectError, selectPageSize, selectTotal, selectNextPage };
+export { selectLoading, selectError, selectNextPage };
