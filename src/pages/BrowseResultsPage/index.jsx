@@ -54,20 +54,18 @@ class BrowseResultsPage extends PureComponent {
     this.setState({
       pageNum: current,
     });
-    fetchNextPage(books.search, current, pageSize);
+    fetchNextPage(books, current, pageSize);
   };
 
   render() {
     const { loading, books } = this.props;
     const { pageNum } = this.state;
-    const { search } = books;
-
     return (
       <Content className="results-page__main-container">
         <FilterBar position="center" />
         <div className="results-page__content">
           <Skeleton active loading={loading}>
-            {!isEmpty(search) && !loading ? <BookInfo books={search} /> : <Empty />}
+            {!isEmpty(books) && !loading ? <BookInfo books={books} /> : <Empty />}
           </Skeleton>
         </div>
       </Content>

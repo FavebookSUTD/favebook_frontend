@@ -42,6 +42,9 @@ $filter-bar-radius: calc(45px / 2);
         font-size: 21px;
         padding-left: 3rem;
         margin: 0;
+        ul{
+          width:100%;
+        }
         .ant-select-search__field{
           border: none;
         }
