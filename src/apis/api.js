@@ -12,16 +12,8 @@ const buildHeader = headers => {
 const request = (props, method) => {
   const { url, needAuthenticate, headers, query, body } = props;
 
-  const date = new Date();
-  const queryWithTimestamp = {
-    ...query,
-    timestamp: date.getTime(),
-  };
-
-  // Disable query timestamp
-  // const strQuery = queryString.stringify(queryWithTimestamp);
-  // const apiURL = `${url}?${strQuery}`;
-  const apiURL = `${url}`;
+  const strQuery = queryString.stringify(query);
+  const apiURL = `${url}?${strQuery}`;
 
   const configureJWT = headers => {
     if (needAuthenticate) {
