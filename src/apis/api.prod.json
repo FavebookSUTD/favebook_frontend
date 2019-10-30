@@ -1,5 +1,11 @@
 {
+  "auth": {
+    "signIn": "",
+    "signUp": "",
+    "logout": ""
+  },
   "books": {
+    "bookList": "",
     "recommendation": ""
   }
 }

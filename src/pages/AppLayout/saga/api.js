@@ -13,6 +13,18 @@ export function loginFromStorage() {
   throw new Error('User credential not found!');
 }
 
+export function logout() {
+  return api
+    .post({
+      url: apiConfig.auth.logout,
+      needAuthenticate: true,
+    })
+    .then(response => {
+      const { sessionStorage } = window;
+      sessionStorage.removeItem('user');
+    });
+}
+
 export function fetchGenres() {
   // TODO: Connect to real api
   const genres = require('./mock/mockGenres.json');

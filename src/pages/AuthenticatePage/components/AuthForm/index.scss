@@ -1,4 +1,3 @@
-@import '@themes/themeMixins.scss';
 @import '@themes/themeVariables.scss';
 
 $btn-radius: calc(45px / 2);
@@ -47,7 +46,6 @@ $btn-radius: calc(45px / 2);
 
   .form-submit-btn {
     height: 45px;
-    border-radius: $btn-radius;
     background: $primary-background-color;
     font-weight: 800;
 

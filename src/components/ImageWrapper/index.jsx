@@ -1,29 +1,31 @@
 // import React
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ProgressiveImage from 'react-progressive-image';
-
-// import local components
-import placeholder from './placeholder.png';
 
 // import local styling
 import './index.scss';
 
 const ImageWrapper = ({ imgSrc, imgAltText }) => {
+  const [hide, setHide] = useState(true);
+
   return (
-    <div className="progressive-image-wrapper">
-      <ProgressiveImage src={imgSrc} placeholder={placeholder} delay={3000}>
-        {(src, downloadingImg) => {
-          return (
-            <img
-              className={`progressive-image ${downloadingImg ? 'loading' : ''}`}
-              src={src}
-              alt={imgAltText}
-            />
-          );
-        }}
-      </ProgressiveImage>
-    </div>
+    <ProgressiveImage src={imgSrc}>
+      {(src, downloadingImg) => (
+        <div className="progressive-image-wrapper">
+          <div className={`progressive-image-placeholder ${hide ? 'hide' : ''}`}>
+            {downloadingImg ? null : (
+              <img
+                className={`progressive-image ${downloadingImg ? 'loading' : ''}`}
+                src={src}
+                alt={imgAltText}
+                onLoad={() => setHide(false)}
+              />
+            )}
+          </div>
+        </div>
+      )}
+    </ProgressiveImage>
   );
 };
 

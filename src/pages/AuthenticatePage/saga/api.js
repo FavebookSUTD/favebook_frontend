@@ -1,15 +1,30 @@
 import api from '@apis/api';
 import apiConfig from '@apis/apiConfig';
 
-export function loginFromAPI({ payload }) {
-  // TODO: Connect to real api
+export function signInFromAPI({ payload }) {
+  const { username, password } = payload;
+
   return api
     .post({
-      url: apiConfig.authentication,
-      body: { id_token: payload },
+      url: apiConfig.auth.signIn,
+      body: { username, password },
     })
-    .then(user => {
-      window.sessionStorage.setItem('user', JSON.stringify(user));
-      return user;
+    .then(response => {
+      window.sessionStorage.setItem('user', JSON.stringify(response.data));
+      return response;
+    });
+}
+
+export function signUpFromAPI({ payload }) {
+  const { username, password, email } = payload;
+
+  return api
+    .post({
+      url: apiConfig.auth.signUp,
+      body: { username, password, email },
+    })
+    .then(response => {
+      window.sessionStorage.setItem('user', JSON.stringify(response.data));
+      return response;
     });
 }

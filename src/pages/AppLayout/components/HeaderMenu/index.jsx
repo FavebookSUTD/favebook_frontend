@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 // import lodash
 import map from 'lodash/map';
+import toUpper from 'lodash/toUpper';
 
 // import utils
 import { goto } from '@utils/goto';
@@ -12,7 +13,7 @@ import { goto } from '@utils/goto';
 import './index.scss';
 
 // import Antd
-import { Typography, Icon, Menu } from 'antd';
+import { Typography, Icon, Menu, Popconfirm } from 'antd';
 
 // Extract antd components
 const { SubMenu } = Menu;
@@ -31,7 +32,18 @@ const menuClickHandler = key => {
   }
 };
 
-const HeaderMenu = ({ genres }) => {
+const HeaderMenu = ({ genres, username, logoutHandler }) => {
+  const signInHandler = () => {
+    if (!username) {
+      goto('/authenticate');
+    }
+  };
+  const signOutHandler = () => {
+    if (username) {
+      logoutHandler();
+    }
+  };
+
   return (
     <header className="header-menu__container">
       <Menu
@@ -71,18 +83,22 @@ const HeaderMenu = ({ genres }) => {
         </SubMenu>
         <Menu.Item key="newsfeed">NEWSFEED</Menu.Item>
       </Menu>
-      <div className="signin__container" onClick={() => goto('/authenticate')}>
-        <Icon className="user-icon" type="user" />
-        <Text className="signin-text" strong>
-          SIGN IN
-        </Text>
-      </div>
+      <Popconfirm title="Confirm Logout?" icon={<Icon type="logout" />} onConfirm={signOutHandler}>
+        <div className="signin__container" onClick={signInHandler}>
+          <Icon className="user-icon" type="user" />
+          <Text className="signin-text" strong ellipsis>
+            {toUpper(username) || 'SIGN IN'}
+          </Text>
+        </div>
+      </Popconfirm>
     </header>
   );
 };
 
 HeaderMenu.propTypes = {
   genres: PropTypes.arrayOf(PropTypes.object).isRequired,
+  username: PropTypes.string.isRequired,
+  logoutHandler: PropTypes.func.isRequired,
 };
 
 export default HeaderMenu;

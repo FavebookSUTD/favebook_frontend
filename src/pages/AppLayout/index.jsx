@@ -12,7 +12,7 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import { loginFromStorage, fetchGenres } from './actions';
+import { loginFromStorage, logout, fetchGenres } from './actions';
 
 // import selector
 import {
@@ -41,12 +41,16 @@ class AppLayout extends PureComponent {
   }
 
   render() {
-    const { genres } = this.props;
+    const { userInfo, loggedIn, logout, genres } = this.props;
 
     return (
       <div className="app-layout__main-container">
         <Layout className="app-layout__container">
-          <HeaderMenu genres={genres} />
+          <HeaderMenu
+            genres={genres}
+            username={loggedIn ? userInfo.username : ''}
+            logoutHandler={logout}
+          />
           <Routers />
         </Layout>
       </div>
@@ -55,9 +59,15 @@ class AppLayout extends PureComponent {
 }
 
 AppLayout.propTypes = {
+  userInfo: PropTypes.shape({
+    username: PropTypes.string,
+    access_token: PropTypes.string,
+  }).isRequired,
+  loggedIn: PropTypes.bool.isRequired,
   genres: PropTypes.arrayOf(PropTypes.object).isRequired,
 
   loginFromStorage: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
   fetchGenres: PropTypes.func.isRequired,
 };
 
@@ -71,6 +81,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = {
   loginFromStorage,
+  logout,
   fetchGenres,
 };
 

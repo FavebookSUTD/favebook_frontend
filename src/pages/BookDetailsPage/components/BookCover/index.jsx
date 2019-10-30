@@ -61,11 +61,11 @@ const BookCover = ({ bookCoverURL, bookTitle, interestStatus }) => {
             FAVE IT!
           </Button>
           <div className="interest-status__statistic-container">
-            <Text className="people-count">{!!wantToReadCount || 0}</Text>
+            <Text className="people-count">{wantToReadCount || 0}</Text>
             <Text>want to read</Text>
           </div>
           <div className="interest-status__statistic-container">
-            <Text className="people-count">{!!readingCount || 0}</Text>
+            <Text className="people-count">{readingCount || 0}</Text>
             <Text>reading</Text>
           </div>
         </div>

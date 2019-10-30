@@ -25,10 +25,10 @@ const request = (props, method) => {
 
   const configureJWT = headers => {
     if (needAuthenticate) {
-      const { token } = JSON.parse(window.localStorage.getItem('user'));
+      const { access_token } = JSON.parse(window.sessionStorage.getItem('user'));
       return {
         ...headers,
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${access_token}`,
       };
     }
     return headers;
