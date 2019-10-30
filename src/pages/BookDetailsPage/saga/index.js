@@ -15,10 +15,17 @@ export default function* watchBookDetailsPage() {
       fetchBookDetails,
     ),
     takeLatest(
-      ACTIONS.FETCH_BOOK_REVIEWS,
+      ACTIONS.FETCH_INIT_BOOK_REVIEWS,
       saga,
-      ACTIONS.FETCH_BOOK_REVIEWS_SUCCESS,
-      ACTIONS.FETCH_BOOK_REVIEWS_FAILURE,
+      ACTIONS.FETCH_INIT_BOOK_REVIEWS_SUCCESS,
+      ACTIONS.FETCH_INIT_BOOK_REVIEWS_FAILURE,
+      fetchBookReviews,
+    ),
+    takeLatest(
+      ACTIONS.FETCH_NEXT_BOOK_REVIEWS,
+      saga,
+      ACTIONS.FETCH_NEXT_BOOK_REVIEWS_SUCCESS,
+      ACTIONS.FETCH_NEXT_BOOK_REVIEWS_FAILURE,
       fetchBookReviews,
     ),
   ]);
