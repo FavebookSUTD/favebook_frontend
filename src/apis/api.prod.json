@@ -5,7 +5,9 @@
     "logout": ""
   },
   "books": {
+    "info": "",
     "bookList": "",
-    "recommendation": ""
+    "recommendation": "",
+    "reviews": ""
   }
 }
