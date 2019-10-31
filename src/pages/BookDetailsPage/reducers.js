@@ -4,7 +4,8 @@ import ACTIONS from './actions';
 export const initialState = fromJS({
   book: {},
   reviews: [],
-  reviewCount: 0,
+  totalReviewCount: 0,
+  currentReviewPageNum: 0,
   loading: {
     book: false,
     reviews: false,
@@ -38,7 +39,8 @@ export default function reducer(state = initialState, action) {
     case ACTIONS.FETCH_INIT_BOOK_REVIEWS_SUCCESS:
       return state
         .set('reviews', fromJS(action.payload.data.reviews))
-        .set('reviewCount', action.payload.data.num_reviews)
+        .set('totalReviewCount', action.payload.data.num_reviews)
+        .set('currentReviewPageNum', action.payload.pageNum)
         .setIn(['loading', 'reviews'], false)
         .setIn(['error', 'reviews'], '');
 
@@ -48,11 +50,19 @@ export default function reducer(state = initialState, action) {
         .setIn(['loading', 'reviews'], false)
         .setIn(['error', 'book'], action.payload.toString());
 
+    case ACTIONS.FETCH_NEXT_BOOK_REVIEWS:
+      return state.setIn(['loading', 'reviews'], true);
+
     case ACTIONS.FETCH_NEXT_BOOK_REVIEWS_SUCCESS:
       return state
         .update('reviews', reviews => reviews.merge(fromJS(action.payload.data.reviews)))
-        .set('reviewCount', action.payload.data.num_reviews)
+        .set('totalReviewCount', action.payload.data.num_reviews)
+        .set('currentReviewPageNum', action.payload.pageNum)
+        .setIn(['loading', 'reviews'], false)
         .setIn(['error', 'reviews'], '');
+
+    case ACTIONS.FETCH_NEXT_BOOK_REVIEWS_FAILURE:
+      return state.setIn(['loading', 'reviews'], false);
 
     default:
       return state;

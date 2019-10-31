@@ -18,7 +18,8 @@ import { fetchBookDetails, fetchInitBookReviews, fetchNextBookReviews } from './
 import {
   selectBook,
   selectReviews,
-  selectReviewCount,
+  selectTotalReviewCount,
+  selectCurrentReviewPageNum,
   selectLoading,
   selectError,
 } from './selectors';
@@ -41,8 +42,6 @@ import './index.scss';
 // import Antd
 import { Row, Col, Result } from 'antd';
 
-// Extract antd components
-
 class BookDetailsPage extends PureComponent {
   PAGE_SIZE = 100;
 
@@ -59,8 +58,20 @@ class BookDetailsPage extends PureComponent {
     fetchInitBookReviews(id, 1, this.PAGE_SIZE);
   }
 
+  fetchNextHandler = () => {
+    const {
+      match: { params: id },
+      loading,
+      currentReviewPageNum,
+      fetchNextBookReviews,
+    } = this.props;
+    if (!loading.reviews) {
+      fetchNextBookReviews(id, currentReviewPageNum + 1, this.PAGE_SIZE);
+    }
+  };
+
   render() {
-    const { book, reviews, reviewCount, loading, error } = this.props;
+    const { book, reviews, totalReviewCount, loading, error } = this.props;
 
     const { title, author, avg_rating, description, imUrl, genres } = book;
 
@@ -80,7 +91,7 @@ class BookDetailsPage extends PureComponent {
                 title={title || ''}
                 author={author || 'Lioneel & Glenn'}
                 ratingValue={avg_rating || 0}
-                reviewCount={reviewCount}
+                reviewCount={totalReviewCount}
                 purchaseLinks={{}}
                 genres={!isEmpty(genres) ? genres : []}
               />
@@ -101,6 +112,8 @@ class BookDetailsPage extends PureComponent {
                         bookReviews={reviews || []}
                         showBookImg={false}
                         showTimestamp={false}
+                        total={totalReviewCount || 0}
+                        fetchNextHandler={this.fetchNextHandler}
                       />
                     ),
                   },
@@ -121,12 +134,14 @@ BookDetailsPage.propTypes = {
   book: PropTypes.shape({
     title: PropTypes.string,
     author: PropTypes.string,
-    ratingValue: PropTypes.number,
+    avg_rating: PropTypes.number,
     description: PropTypes.string,
     imUrl: PropTypes.string,
+    genres: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  reviewCount: PropTypes.number.isRequired,
+  totalReviewCount: PropTypes.number.isRequired,
+  currentReviewPageNum: PropTypes.number.isRequired,
   loading: PropTypes.shape({
     book: PropTypes.bool.isRequired,
     reviews: PropTypes.bool.isRequired,
@@ -149,7 +164,8 @@ BookDetailsPage.propTypes = {
 const mapStateToProps = createStructuredSelector({
   book: selectBook,
   reviews: selectReviews,
-  reviewCount: selectReviewCount,
+  totalReviewCount: selectTotalReviewCount,
+  currentReviewPageNum: selectCurrentReviewPageNum,
   loading: selectLoading,
   error: selectError,
 });

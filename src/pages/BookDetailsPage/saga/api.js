@@ -10,11 +10,13 @@ export function fetchBookDetails({ payload }) {
 export function fetchBookReviews({ payload }) {
   const { bookId, pageNum, pageSize } = payload;
 
-  return api.get({
-    url: apiConfig.books.reviews.replace('{asin}', bookId),
-    query: {
-      'pg-num': pageNum,
-      'pg-size': pageSize,
-    },
-  });
+  return api
+    .get({
+      url: apiConfig.books.reviews.replace('{asin}', bookId),
+      query: {
+        'pg-num': pageNum,
+        'pg-size': pageSize,
+      },
+    })
+    .then(({ data }) => ({ data, pageNum }));
 }

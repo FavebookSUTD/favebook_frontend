@@ -7,10 +7,19 @@ const selectBook = selectToJS(selectBookDetailsPage, 'book');
 
 const selectReviews = selectToJS(selectBookDetailsPage, 'reviews');
 
-const selectReviewCount = select(selectBookDetailsPage, 'reviewCount');
+const selectTotalReviewCount = select(selectBookDetailsPage, 'totalReviewCount');
+
+const selectCurrentReviewPageNum = select(selectBookDetailsPage, 'currentReviewPageNum');
 
 const selectLoading = selectToJS(selectBookDetailsPage, 'loading');
 
 const selectError = selectToJS(selectBookDetailsPage, 'error');
 
-export { selectBook, selectReviews, selectReviewCount, selectLoading, selectError };
+export {
+  selectBook,
+  selectReviews,
+  selectTotalReviewCount,
+  selectCurrentReviewPageNum,
+  selectLoading,
+  selectError,
+};
