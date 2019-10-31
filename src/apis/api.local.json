@@ -8,6 +8,7 @@
     "info": "http://localhost:5000/books/{asin}",
     "bookList": "http://localhost:5000/books/",
     "recommendation": "http://localhost:5000/books/recommended",
-    "reviews": "http://localhost:5000/books/reviews/{asin}"
+    "reviews": "http://localhost:5000/books/reviews/{asin}",
+    "userReviews": "http://localhost:5000/books/reviews/user/{username}"
   }
 }
