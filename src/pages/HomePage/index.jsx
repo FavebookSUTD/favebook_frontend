@@ -30,7 +30,7 @@ import toUpper from 'lodash/toUpper';
 import './index.scss';
 
 // import Antd
-import { Layout, Typography, Spin, Icon } from 'antd';
+import { Layout, Typography, Icon } from 'antd';
 
 // Extract antd components
 const { Content } = Layout;
