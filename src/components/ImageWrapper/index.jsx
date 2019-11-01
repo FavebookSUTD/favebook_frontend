@@ -14,7 +14,9 @@ const ImageWrapper = ({ imgSrc, imgAltText }) => {
       {(src, downloadingImg) => (
         <div className="progressive-image-wrapper">
           <div className={`progressive-image-placeholder ${hide ? 'hide' : ''}`}>
-            {downloadingImg ? null : (
+            {downloadingImg ? (
+              setHide(downloadingImg)
+            ) : (
               <img
                 className={`progressive-image ${downloadingImg ? 'loading' : ''}`}
                 src={src}
