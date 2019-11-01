@@ -20,6 +20,7 @@ export const fetchReading = () => ({
   type: ACTIONS.FETCH_READING,
 });
 
-export const fetchMyReviews = () => ({
+export const fetchMyReviews = (username, pageNum, pageSize) => ({
   type: ACTIONS.FETCH_MY_REVIEWS,
+  payload: { username, pageNum, pageSize },
 });

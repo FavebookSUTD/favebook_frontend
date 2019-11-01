@@ -5,10 +5,24 @@ const selectMyBookPage = state => state.get('MyBookPage', initialState);
 
 const selectLoading = selectToJS(selectMyBookPage, 'loading');
 
+const selectError = selectToJS(selectMyBookPage, 'error');
+
 const selectWantToRead = selectToJS(selectMyBookPage, 'wantToRead');
 
 const selectReading = selectToJS(selectMyBookPage, 'reading');
 
 const selectMyReviews = selectToJS(selectMyBookPage, 'myReviews');
 
-export { selectLoading, selectWantToRead, selectReading, selectMyReviews };
+const selectTotalReviewCount = select(selectMyBookPage, 'totalReviewCount');
+
+const selectCurrentReviewPageNum = select(selectMyBookPage, 'currentReviewPageNum');
+
+export {
+  selectLoading,
+  selectError,
+  selectWantToRead,
+  selectReading,
+  selectMyReviews,
+  selectTotalReviewCount,
+  selectCurrentReviewPageNum,
+};
