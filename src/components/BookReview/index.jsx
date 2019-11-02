@@ -1,6 +1,7 @@
 // import React
 import React from 'react';
 import PropTypes from 'prop-types';
+import Moment from 'moment';
 
 // import local components
 import ImageWrapper from '../ImageWrapper';
@@ -18,20 +19,13 @@ import { Typography, Divider, Rate } from 'antd';
 const { Text, Paragraph } = Typography;
 
 const BookReview = ({ bookReview, showBookImg, showAuthor, showTimestamp }) => {
-  const {
-    title,
-    imgURL,
-    content,
-    author: { id, authorName },
-    timestamp,
-    rating,
-  } = bookReview;
+  const { title, imgURL, review_text, review_rating, username, timestamp } = bookReview;
 
   return (
     <div className="book-review__container">
       {showBookImg ? (
         <div className="book-review__image-container">
-          <ImageWrapper imgSrc={imgURL} imgAltText={title} />
+          <ImageWrapper imgSrc={imgURL || ''} imgAltText={title || ''} />
         </div>
       ) : null}
       <div className="book-review-content__container">
@@ -42,14 +36,14 @@ const BookReview = ({ bookReview, showBookImg, showAuthor, showTimestamp }) => {
             expandable: true,
           }}
         >
-          {content}
+          {review_text}
         </Paragraph>
         <div className="book-review-details__container">
           {showAuthor ? (
             <>
               <Text>By </Text>
-              <Text className="author-name" strong onClick={() => goto(`/user/${id}`)}>
-                {authorName}
+              <Text className="author-name" strong onClick={() => goto(`/user/${username}`)}>
+                {username}
               </Text>
             </>
           ) : null}
@@ -58,13 +52,18 @@ const BookReview = ({ bookReview, showBookImg, showAuthor, showTimestamp }) => {
           ) : null}
           {showTimestamp ? (
             <Text className="review-timestamp" strong>
-              {timestamp}
+              {Moment(timestamp).format('DD MMM YYYY')}
             </Text>
           ) : null}
           <span className="book-review-details-rating__container">
-            <Rate className="book-review-details-rating-star" allowHalf value={rating} disabled />
+            <Rate
+              className="book-review-details-rating-star"
+              allowHalf
+              value={review_rating}
+              disabled
+            />
             <Text className="book-review-detials-rating-value" strong>
-              {rating}
+              {review_rating}
             </Text>
           </span>
         </div>
@@ -77,13 +76,10 @@ BookReview.propTypes = {
   bookReview: PropTypes.shape({
     title: PropTypes.string,
     imgURL: PropTypes.string,
-    content: PropTypes.string,
-    author: PropTypes.shape({
-      id: PropTypes.string,
-      authorName: PropTypes.string,
-    }),
+    review_text: PropTypes.string,
+    review_rating: PropTypes.number,
+    username: PropTypes.string,
     timestamp: PropTypes.string,
-    rating: PropTypes.number,
   }).isRequired,
   showBookImg: PropTypes.bool,
   showAuthor: PropTypes.bool,
