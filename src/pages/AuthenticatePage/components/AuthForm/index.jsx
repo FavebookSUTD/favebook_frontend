@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable react/no-this-in-sfc */
 // import React
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
@@ -45,11 +47,17 @@ const AuthForm = ({ form, type, loading, submitHandler }) => {
     });
   };
 
+  const onEnterKeyDownHandler = event => {
+    if (isEqual(event.keyCode, 13)) {
+      handleSubmit(event);
+    }
+  };
+
   const { getFieldDecorator } = form;
   const isSignup = isEqual(type, 'signup');
 
   return (
-    <div className="auth-form__container">
+    <div className="auth-form__container" role="form" onKeyDown={onEnterKeyDownHandler}>
       <Form className="form__container" hideRequiredMark>
         <Form.Item label="NAME">
           {getFieldDecorator('username', {
