@@ -9,6 +9,7 @@
     "bookList": "",
     "recommendation": "",
     "reviews": "",
-    "userReviews": ""
+    "userReviews": "",
+    "userReviewsByBook": ""
   }
 }

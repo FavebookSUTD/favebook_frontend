@@ -4,23 +4,35 @@ import saga from '@sagas/commonSagas';
 import notificationsHandler from '@sagas/notificationsHandler';
 
 import ACTIONS from '../actions';
-import { fetchUserRating, updateUserRating, submitUserReview } from './api';
+import { fetchUserReview, updateUserReview, submitUserReview } from './api';
 
 export default function* watcherUserReview() {
   yield all([
     takeLatest(
-      ACTIONS.FETCH_USER_RATING,
+      ACTIONS.FETCH_USER_REVIEW,
       saga,
-      ACTIONS.FETCH_USER_RATING_SUCCESS,
-      ACTIONS.FETCH_USER_RATING_FAILURE,
-      fetchUserRating,
+      ACTIONS.FETCH_USER_REVIEW_SUCCESS,
+      ACTIONS.FETCH_USER_REVIEW_FAILURE,
+      fetchUserReview,
     ),
     takeLatest(
-      ACTIONS.UPDATE_USER_RATING,
+      ACTIONS.UPDATE_USER_REVIEW,
       saga,
-      ACTIONS.UPDATE_USER_RATING_SUCCESS,
-      ACTIONS.UPDATE_USER_RATING_FAILURE,
-      updateUserRating,
+      ACTIONS.UPDATE_USER_REVIEW_SUCCESS,
+      ACTIONS.UPDATE_USER_REVIEW_FAILURE,
+      updateUserReview,
+    ),
+    takeLatest(
+      ACTIONS.UPDATE_USER_REVIEW_SUCCESS,
+      notificationsHandler,
+      'success',
+      'Successfully updated the review.',
+    ),
+    takeLatest(
+      ACTIONS.UPDATE_USER_REVIEW_FAILURE,
+      notificationsHandler,
+      'error',
+      'Failed to update the review.',
     ),
     takeLatest(
       ACTIONS.SUBMIT_USER_REVIEW,

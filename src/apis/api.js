@@ -51,6 +51,7 @@ const API = {
   get: props => request(props, 'GET'),
   post: props => request(props, 'POST'),
   put: props => request(props, 'PUT'),
+  patch: props => request(props, 'PATCH'),
   delete: props => request(props, 'DELETE'),
 };
 

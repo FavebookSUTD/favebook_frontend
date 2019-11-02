@@ -4,7 +4,10 @@
   margin: 2rem 0;
 
   .user-review-rating__container {
+    height: 30px;
     margin-bottom: 1rem;
+    display: flex;
+    align-items: flex-end;
 
     .user-review-rating-header {
       font-size: 16px;
@@ -36,6 +39,26 @@
 
     &:hover {
       background: $primary-color;
+    }
+  }
+
+  .user-review__placeholder-container {
+    width: 100%;
+    padding: 2rem;
+    border: 1px solid $primary-border-color;
+    border-radius: 23px;
+
+    .user-review-placeholder-icon__container {
+      text-align: center;
+      margin-bottom: 0.5rem;
+      .user-review-placeholder-icon {
+        font-size: 40px;
+        color: $primary-background-color;
+      }
+    }
+
+    .user-review-placeholder-title {
+      text-align: center;
     }
   }
 }

@@ -71,7 +71,16 @@ class BookDetailsPage extends PureComponent {
   };
 
   render() {
-    const { book, reviews, totalReviewCount, loading, error } = this.props;
+    const {
+      match: {
+        params: { id },
+      },
+      book,
+      reviews,
+      totalReviewCount,
+      loading,
+      error,
+    } = this.props;
 
     const { title, author, avg_rating, description, imUrl, genres } = book;
 
@@ -121,7 +130,7 @@ class BookDetailsPage extends PureComponent {
                 menuPosition="left"
                 autoFit
               />
-              <UserReview />
+              <UserReview bookId={id} />
             </Col>
           </Row>
         )}
