@@ -1,6 +1,12 @@
 // import React
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+
+// import actions
+import { loadPrevPath } from '../../actions';
 
 // import lodash
 import map from 'lodash/map';
@@ -32,12 +38,17 @@ const menuClickHandler = key => {
   }
 };
 
-const HeaderMenu = ({ genres, username, logoutHandler }) => {
+const HeaderMenu = ({ history, genres, username, logoutHandler, loadPrevPath }) => {
   const signInHandler = () => {
     if (!username) {
+      const {
+        location: { pathname },
+      } = history;
+      loadPrevPath(pathname);
       goto('/authenticate');
     }
   };
+
   const signOutHandler = () => {
     if (username) {
       logoutHandler();
@@ -96,9 +107,27 @@ const HeaderMenu = ({ genres, username, logoutHandler }) => {
 };
 
 HeaderMenu.propTypes = {
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
+  }).isRequired,
   genres: PropTypes.arrayOf(PropTypes.object).isRequired,
   username: PropTypes.string.isRequired,
   logoutHandler: PropTypes.func.isRequired,
+  loadPrevPath: PropTypes.func.isRequired,
 };
 
-export default HeaderMenu;
+const mapDispatchToProps = {
+  loadPrevPath,
+};
+
+const withConnect = connect(
+  null,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withRouter,
+  withConnect,
+)(HeaderMenu);
