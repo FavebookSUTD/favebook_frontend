@@ -15,11 +15,18 @@ import injectSaga from '@utils/core/injectSaga';
 import { searchBooks, autocompleteBooks } from './actions';
 
 // import selector
-import { selectError, selectLoading, selectSearchResult, selectAutoResult } from './selectors';
+import {
+  selectError,
+  selectLoading,
+  selectSearchResult,
+  selectAutocompleteResultsPartial,
+  selectCurrentSearchVal,
+} from './selectors';
 
 // import lodash
 import debounce from 'lodash/debounce';
 import map from 'lodash/map';
+import isEmpty from 'lodash/isEmpty';
 
 // import utils
 import { goto } from '@utils/goto';
@@ -35,7 +42,7 @@ const { Option } = AutoComplete;
 
 const renderOptions = options =>
   map(options, option => (
-    <Option className="search-result__option" key={option.title} label={option.title}>
+    <Option className="search-result__option" key={option._id} value={option.title}>
       <Icon className="search-result-icon" type="search" />
       {option.title}
     </Option>
@@ -44,18 +51,12 @@ const renderOptions = options =>
 class FilterBar extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      dropdownOpened: false,
-      autocompleteVal: '',
-    };
-    const { searchBooks, autocompleteBooks } = this.props;
-    this.deboucedSearchBooks = debounce(searchBooks, 500);
-    this.deboucedAutoBooks = debounce(autocompleteBooks, 500);
+    const { autocompleteBooks } = this.props;
+    this.deboucedAutocompleteBooks = debounce(autocompleteBooks, 300);
   }
 
   render() {
-    const { position, loading, searchResults, autoResults } = this.props;
-    const { dropdownOpened, autocompleteVal } = this.state;
+    const { position, loading, autocompleteResults, searchBooks, currentSearchVal } = this.props;
 
     return (
       <div className={`filter-bar ${position}`}>
@@ -64,27 +65,19 @@ class FilterBar extends PureComponent {
           showArrow={false}
           filterOption={false}
           defaultActiveFirstOption={false}
-          notFoundContent={
-            loading && autocompleteVal ? <Spin className="filter-spining-icon" /> : null
-          }
-          optionLabelProp="label"
+          optionLabelProp="value"
+          defaultValue={currentSearchVal}
+          notFoundContent={loading.autocomplete ? <Spin className="filter-spining-icon" /> : null}
           placeholder={<Icon className="search-icon" type="search" />}
           dropdownClassName="filter-autocomplete-dropdown__container"
-          onDropdownVisibleChange={open => this.setState({ dropdownOpened: open })}
-          onSearch={val => {
-            this.setState({ autocompleteVal: val });
-            this.deboucedAutoBooks(val);
-          }}
-          onChange={val => {
-            this.deboucedSearchBooks(val);
-          }}
-        >
-          {renderOptions(autoResults)}
-        </AutoComplete>
+          dataSource={renderOptions(!loading.autocomplete ? autocompleteResults : [])}
+          onSearch={this.deboucedAutocompleteBooks}
+          onSelect={searchBooks}
+        />
         <Button
           className="filter-button"
           type="primary"
-          disabled={dropdownOpened}
+          disabled={isEmpty(autocompleteResults)}
           onClick={() => goto('/browseresults')}
         >
           FILTER
@@ -96,9 +89,13 @@ class FilterBar extends PureComponent {
 
 FilterBar.propTypes = {
   position: PropTypes.oneOf(['left', 'center', 'right']),
-  loading: PropTypes.bool.isRequired,
-  autoResults: PropTypes.arrayOf(PropTypes.object).isRequired,
-  searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loading: PropTypes.shape({
+    autocomplete: PropTypes.bool,
+    search: PropTypes.bool,
+  }).isRequired,
+  autocompleteResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currentSearchVal: PropTypes.string.isRequired,
+
   searchBooks: PropTypes.func.isRequired,
   autocompleteBooks: PropTypes.func.isRequired,
 };
@@ -111,7 +108,8 @@ const mapStateToProps = createStructuredSelector({
   error: selectError,
   loading: selectLoading,
   searchResults: selectSearchResult,
-  autoResults: selectAutoResult,
+  autocompleteResults: selectAutocompleteResultsPartial,
+  currentSearchVal: selectCurrentSearchVal,
 });
 
 const mapDispatchToProps = {

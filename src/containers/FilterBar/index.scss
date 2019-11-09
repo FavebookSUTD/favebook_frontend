@@ -89,7 +89,7 @@ $filter-bar-radius: calc(45px / 2);
   @include overflowScrollY();
 
   .ant-select-dropdown-menu {
-    .ant-select-dropdown-menu-item {
+    .ant-select-dropdown-menu-item-disabled {
       padding: 0;
     }
 

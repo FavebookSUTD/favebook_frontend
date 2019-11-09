@@ -3,15 +3,19 @@ import ACTIONS from './actions';
 
 export const initialState = fromJS({
   error: { search: '', autocomplete: '' },
-  loading: { autocomplete: true, search: true },
-  autoResults: [],
+  loading: { autocomplete: false, search: false },
+  autocompleteResults: [],
   searchResults: [],
+  currentSearchVal: '',
 });
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case ACTIONS.SEARCH_BOOKS:
-      return state.setIn(['loading', 'search'], true).set('searchResults', fromJS([]));
+      return state
+        .set('searchResults', fromJS([]))
+        .set('currentSearchVal', action.payload.searchVal)
+        .setIn(['loading', 'search'], true);
 
     case ACTIONS.SEARCH_BOOKS_SUCCESS:
       return state
@@ -20,20 +24,23 @@ export default function reducer(state = initialState, action) {
 
     case ACTIONS.SEARCH_BOOKS_FAILURE:
       return state
-        .setIn(['error', 'search'], action.payload.toString('Something went wrong.'))
+        .setIn(['error', 'search'], action.payload.toString())
         .setIn(['loading', 'search'], false);
 
     case ACTIONS.AUTOCOMPLETE_BOOKS:
-      return state.setIn(['loading', 'search'], true).set('autoResults', fromJS([]));
+      return state
+        .set('autocompleteResults', fromJS([]))
+        .set('currentSearchVal', action.payload.autocompleteVal)
+        .setIn(['loading', 'autocomplete'], true);
 
     case ACTIONS.AUTOCOMPLETE_BOOKS_SUCCESS:
       return state
-        .set('autoResults', fromJS(action.payload.data))
+        .set('autocompleteResults', fromJS(action.payload.data))
         .setIn(['loading', 'autocomplete'], false);
 
     case ACTIONS.AUTOCOMPLETE_BOOKS_FAILURE:
       return state
-        .setIn(['error', 'autocomplete'], action.payload.toString('Something went wrong.'))
+        .setIn(['error', 'autocomplete'], action.payload.toString())
         .setIn(['loading', 'autocomplete'], false);
 
     default:
