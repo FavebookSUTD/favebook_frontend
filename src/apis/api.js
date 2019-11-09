@@ -1,10 +1,20 @@
 import axios from 'axios';
 import queryString from 'querystring';
+import { generateUUID } from '@utils/generateUUID';
 
 const buildHeader = headers => {
+  // Get session ID
+  let clientId = window.sessionStorage.getItem('clientId');
+
+  if (!clientId) {
+    clientId = generateUUID();
+    window.sessionStorage.setItem('clientId', clientId);
+  }
+
   return {
     Accept: 'application/json, text/html',
     'Content-Type': 'application/json',
+    'X-Client-ID': clientId,
     ...headers,
   };
 };
@@ -12,23 +22,15 @@ const buildHeader = headers => {
 const request = (props, method) => {
   const { url, needAuthenticate, headers, query, body } = props;
 
-  const date = new Date();
-  const queryWithTimestamp = {
-    ...query,
-    timestamp: date.getTime(),
-  };
-
-  // Disable query timestamp
-  // const strQuery = queryString.stringify(queryWithTimestamp);
-  // const apiURL = `${url}?${strQuery}`;
-  const apiURL = `${url}`;
+  const strQuery = queryString.stringify(query);
+  const apiURL = `${url}?${strQuery}`;
 
   const configureJWT = headers => {
     if (needAuthenticate) {
-      const { token } = JSON.parse(window.localStorage.getItem('user'));
+      const { access_token } = JSON.parse(window.sessionStorage.getItem('user'));
       return {
         ...headers,
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${access_token}`,
       };
     }
     return headers;

@@ -1,6 +1,13 @@
 // import React
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Switch, withRouter } from 'react-router-dom';
+import { RouterGuard } from 'react-router-guard';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+
+// import actions
+import { loadPrevPath, clearPrevPath } from '../../actions';
 
 // import page component
 import HomePage from '@pages/HomePage';
@@ -9,16 +16,89 @@ import BrowseResultsPage from '@pages/BrowseResultsPage';
 import UserPage from '@pages/UserPage';
 import BookDetailsPage from '@pages/BookDetailsPage';
 
-const Routers = () => {
+const Routers = ({ history, loadPrevPath, clearPrevPath }) => {
+  const savePrevPath = () => {
+    const {
+      location: { pathname },
+    } = history;
+    loadPrevPath(pathname);
+    return Promise.resolve();
+  };
+
+  const shouldRoute = () => {
+    const { sessionStorage } = window;
+    const user = sessionStorage.getItem('user');
+    if (user) {
+      const { username, access_token } = JSON.parse(sessionStorage.getItem('user'));
+      return new Promise((resolve, reject) => {
+        if (username && access_token) {
+          clearPrevPath();
+          return resolve();
+        }
+        return reject(new Error('/authenticate'));
+      });
+    }
+
+    return Promise.reject(new Error('/authenticate'));
+  };
+
   return (
     <Switch>
-      <Route exact path="/" render={() => <HomePage />} />
-      <Route exact path="/mybooks" render={() => <MyBookPage />} />
-      <Route exact path="/browseresults" render={() => <BrowseResultsPage />} />
-      <Route exact path="/user/:id" render={() => <UserPage />} />
-      <Route exact path="/book/:id" render={() => <BookDetailsPage />} />
+      <RouterGuard
+        config={[
+          {
+            path: '/',
+            exact: true,
+            component: HomePage,
+          },
+          {
+            path: '/mybooks',
+            exact: true,
+            component: MyBookPage,
+            canActivate: [savePrevPath, shouldRoute],
+          },
+          {
+            path: '/browseresults',
+            component: BrowseResultsPage,
+          },
+          {
+            path: '/user/:id',
+            exact: true,
+            component: UserPage,
+            canActivate: [savePrevPath, shouldRoute],
+          },
+          {
+            path: '/book/:id',
+            exact: true,
+            component: BookDetailsPage,
+          },
+          {
+            path: '/*',
+            redirect: '/',
+          },
+        ]}
+        history={history}
+      />
     </Switch>
   );
 };
 
-export default Routers;
+Routers.propTypes = {
+  loadPrevPath: PropTypes.func.isRequired,
+  clearPrevPath: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+  loadPrevPath,
+  clearPrevPath,
+};
+
+const withConnect = connect(
+  null,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withRouter,
+  withConnect,
+)(Routers);

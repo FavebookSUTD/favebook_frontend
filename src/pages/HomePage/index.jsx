@@ -16,10 +16,15 @@ import { fetchRecommendBookList, fetchBestsellBookList } from './actions';
 
 // import selector
 import { selectLoading, selectError, selectRecommendBooks, selectBestsellBooks } from './selectors';
+import { selectUserInfo } from '@pages/AppLayout/selectors';
 
 // import local components
 import FilterBar from '@containers/FilterBar';
 import BookDisplay from './components/BookCarousel';
+
+// import lodash
+import isEmpty from 'lodash/isEmpty';
+import toUpper from 'lodash/toUpper';
 
 // import local styling
 import './index.scss';
@@ -39,12 +44,12 @@ class HomePage extends PureComponent {
   }
 
   render() {
-    const { recommendBooks, bestsellBooks } = this.props;
+    const { recommendBooks, bestsellBooks, userInfo } = this.props;
 
     return (
       <Content className="home-page__container">
-        <Title className="home-page-greeting__header" level={1}>
-          Good Morning, Friend
+        <Title className="home-page-greeting__header" level={1} ellipsis>
+          {`Good Morning, ${isEmpty(userInfo) ? 'Friend' : toUpper(userInfo.username)}`}
         </Title>
         <FilterBar position="center" />
         <BookDisplay title="just for you" rows={1} books={recommendBooks} />
@@ -57,6 +62,9 @@ class HomePage extends PureComponent {
 HomePage.propTypes = {
   recommendBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
   bestsellBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
+  userInfo: PropTypes.shape({
+    username: PropTypes.string,
+  }).isRequired,
 
   fetchRecommendBookList: PropTypes.func.isRequired,
   fetchBestsellBookList: PropTypes.func.isRequired,
@@ -67,6 +75,8 @@ const mapStateToProps = createStructuredSelector({
   error: selectError,
   recommendBooks: selectRecommendBooks,
   bestsellBooks: selectBestsellBooks,
+
+  userInfo: selectUserInfo,
 });
 
 const mapDispatchToProps = {

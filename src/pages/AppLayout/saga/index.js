@@ -1,9 +1,10 @@
 import { all, takeLatest } from 'redux-saga/effects';
 
 import saga from '@sagas/commonSagas';
+import { logoutSuccessHandler } from './sagas';
 
 import ACTIONS from '../actions';
-import { loginFromStorage, fetchGenres } from './api';
+import { loginFromStorage, logout, fetchGenres } from './api';
 
 export default function* watcherAppLayout() {
   yield all([
@@ -14,6 +15,7 @@ export default function* watcherAppLayout() {
       ACTIONS.LOGIN_FROM_STORAGE_FAILURE,
       loginFromStorage,
     ),
+    takeLatest(ACTIONS.LOGOUT, saga, ACTIONS.LOGOUT_SUCCESS, ACTIONS.LOGOUT_FAILURE, logout),
     takeLatest(
       ACTIONS.FETCH_GENRES,
       saga,
@@ -21,5 +23,6 @@ export default function* watcherAppLayout() {
       ACTIONS.FETCH_GENRES_FAILURE,
       fetchGenres,
     ),
+    takeLatest(ACTIONS.LOGOUT_SUCCESS, logoutSuccessHandler),
   ]);
 }

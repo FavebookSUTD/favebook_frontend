@@ -1,6 +1,13 @@
 {
+  "auth": {
+    "signIn": "http://localhost:5000/auth/login",
+    "signUp": "http://localhost:5000/auth/register",
+    "logout": "http://localhost:5000/auth/logout"
+  },
   "books": {
     "bookList": "http://localhost:5000/books/",
-    "recommendation": "http://localhost:5000/books/recommended"
+    "recommendation": "http://localhost:5000/books/recommended",
+    "autocomplete": "http://localhost:5000/books/search/autocomplete",
+    "search": "http://localhost:5000/books/search"
   }
 }
