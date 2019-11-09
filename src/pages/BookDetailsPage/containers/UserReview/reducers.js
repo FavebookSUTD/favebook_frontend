@@ -37,7 +37,6 @@ export default function reducer(state = initialState, action) {
       return state.set('loading', false).set('error', action.payload.toString());
 
     case ACTIONS.SUBMIT_USER_REVIEW_SUCCESS:
-      // TODO: merge with update user review when the backend has updated the data structure
       return state.set('loading', false).set('error', '');
 
     default:

@@ -1,5 +1,6 @@
 import { fromJS } from 'immutable';
 import ACTIONS from './actions';
+import isEqual from 'lodash/isEqual';
 
 export const initialState = fromJS({
   book: {},
@@ -63,6 +64,17 @@ export default function reducer(state = initialState, action) {
 
     case ACTIONS.FETCH_NEXT_BOOK_REVIEWS_FAILURE:
       return state.setIn(['loading', 'reviews'], false);
+
+    case ACTIONS.ADD_NEW_BOOK_REVIEW:
+      return state.update('reviews', reviews => reviews.insert(0, fromJS(action.payload.data)));
+
+    case ACTIONS.UPDATE_BOOK_REVIEW:
+      return state.update('reviews', reviews =>
+        reviews.update(
+          reviews.findIndex(review => isEqual(review.get('id'), action.payload.data.id)),
+          _ => fromJS(action.payload.data),
+        ),
+      );
 
     default:
       return state;
