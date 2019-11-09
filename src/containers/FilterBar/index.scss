@@ -16,6 +16,7 @@ $filter-bar-radius: calc(45px / 2);
   &.center {
     margin: 0 auto;
   }
+
   &.right {
     margin: 0 0 0 auto;
   }
@@ -30,10 +31,7 @@ $filter-bar-radius: calc(45px / 2);
 
     .ant-select-selection {
       height: 100%;
-      border: none;
-      box-shadow: none;
       background: transparent;
-      border: none;
 
       .ant-select-selection__rendered {
         height: 100%;
@@ -42,14 +40,11 @@ $filter-bar-radius: calc(45px / 2);
         font-size: 21px;
         padding-left: 3rem;
         margin: 0;
-        ul{
-          width:100%;
-        }
-        .ant-select-search__field{
-          border: none;
-        }
 
         .ant-select-selection__placeholder {
+          width: 100%;
+          margin-left: 0;
+          margin-right: 0;
           display: block !important;
 
           .search-icon {
@@ -62,8 +57,16 @@ $filter-bar-radius: calc(45px / 2);
           }
         }
 
-        .ant-select-search {
-          padding-right: 3.5rem;
+        ul {
+          height: 100%;
+          width: 100%;
+
+          .ant-select-search__field {
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            border: none;
+          }
         }
       }
     }
@@ -82,43 +85,33 @@ $filter-bar-radius: calc(45px / 2);
 .filter-autocomplete-dropdown__container {
   width: 60% !important;
   max-width: 680px !important;
-  padding: 0 1rem;
   border-radius: $filter-bar-radius;
+  @include overflowScrollY();
 
-  .ant-select-dropdown-menu{
-    @include chromeCustomScrollbar();
+  .ant-select-dropdown-menu {
+    .ant-select-dropdown-menu-item {
+      padding: 0;
+    }
+
+    .search-result__option {
+      height: 45px;
+      padding-left: 1rem;
+      font-size: 21px;
+      line-height: 35px;
+
+      .search-result-icon {
+        margin-right: 0.5rem;
+        color: $primary-background-color;
+      }
+    }
   }
 
   .filter-spining-icon {
     display: flex;
-    margin: 7px 0;
+    padding: 12px 1rem;
 
     span {
       font-size: 21px;
-    }
-  }
-
-  .search-result__option {
-    height: 80px;
-    padding-left: 0;
-    font-size: 21px;
-    line-height: 35px;
-    display: flex;
-    align-items: center;
-
-    .search-result-icon {
-      margin-right: 0.5rem;
-      color: $primary-background-color;
-    }
-
-    .search-result-info {
-      display: flex;
-      flex-direction: column;
-      padding-left: 1rem;
-
-      .search-result-info-author{
-        font-size: 16px;
-      }
     }
   }
 }
