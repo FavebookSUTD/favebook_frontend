@@ -42,7 +42,7 @@ const { Option } = AutoComplete;
 
 const renderOptions = options =>
   map(options, option => (
-    <Option className="search-result__option" key={option._id} value={option.title}>
+    <Option className="search-result__option" key={option._id} label={option.title}>
       <Icon className="search-result-icon" type="search" />
       {option.title}
     </Option>
@@ -65,14 +65,16 @@ class FilterBar extends PureComponent {
           showArrow={false}
           filterOption={false}
           defaultActiveFirstOption={false}
-          optionLabelProp="value"
+          optionLabelProp="label"
           defaultValue={currentSearchVal}
           notFoundContent={loading.autocomplete ? <Spin className="filter-spining-icon" /> : null}
           placeholder={<Icon className="search-icon" type="search" />}
           dropdownClassName="filter-autocomplete-dropdown__container"
           dataSource={renderOptions(!loading.autocomplete ? autocompleteResults : [])}
           onSearch={this.deboucedAutocompleteBooks}
-          onSelect={searchBooks}
+          onSelect={(_, option) => {
+            searchBooks(option.props.label);
+          }}
         />
         <Button
           className="filter-button"
