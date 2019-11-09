@@ -13,16 +13,13 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import { fetchNextPage } from './actions';
 
 // import selector
-import { selectSearchResult, selectAutoResult } from '@containers/FilterBar/selectors';
-import { selectLoading, selectNextPage } from './selectors';
+import { selectSearchResults, selectAllResults } from '@containers/FilterBar/selectors';
+import { selectLoading } from './selectors';
 
 // import lodash
 import isEmpty from 'lodash/isEmpty';
-import concat from 'lodash/concat';
-import uniqBy from 'lodash/uniqBy';
 
 // import local components
 import BookInfo from '@components/BookInfo';
@@ -38,38 +35,15 @@ import { Layout, Skeleton, Empty } from 'antd';
 const { Content } = Layout;
 
 class BrowseResultsPage extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pageNum: 1,
-    };
-  }
-
-  componentDidMount() {
-    const { pageSize, fetchNextPage } = this.props;
-    const { pageNum } = this.state;
-    fetchNextPage(pageNum, pageSize);
-  }
-
-  onPageChange = (books, current, pageSize) => {
-    const { fetchNextPage } = this.props;
-    this.setState({
-      pageNum: current,
-    });
-    fetchNextPage(books, current, pageSize);
-  };
-
   render() {
-    const { loading, books, auto } = this.props;
-    const { pageNum } = this.state;
-    const searchResults = uniqBy(concat(books, auto), 'asin');
+    const { loading, searchResults, browseResult } = this.props;
 
     return (
       <Content className="results-page__main-container">
         <FilterBar position="center" />
         <div className="results-page__content">
           <Skeleton active loading={loading}>
-            {!isEmpty(searchResults) && !loading ? <BookInfo books={searchResults} /> : <Empty />}
+            {!isEmpty(searchResults) && !loading ? <BookInfo books={browseResult} /> : <Empty />}
           </Skeleton>
         </div>
       </Content>
@@ -79,20 +53,17 @@ class BrowseResultsPage extends PureComponent {
 
 BrowseResultsPage.propTypes = {
   loading: PropTypes.bool.isRequired,
-  books: PropTypes.arrayOf(PropTypes.object).isRequired,
-  auto: PropTypes.arrayOf(PropTypes.object).isRequired,
-  fetchNextPage: PropTypes.func.isRequired,
+  searchResults: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  browseResult: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   loading: selectLoading,
-  books: selectSearchResult,
-  auto: selectAutoResult,
+  searchResults: selectSearchResults,
+  browseResult: selectAllResults,
 });
 
-const mapDispatchToProps = {
-  fetchNextPage,
-};
+const mapDispatchToProps = {};
 
 const withReducer = injectReducer({ key: 'BrowseResultsPage', reducer });
 const withSaga = injectSaga({ key: 'BrowseResultsPage', saga });
