@@ -7,7 +7,7 @@
   "books": {
     "bookList": "http://localhost:5000/books/",
     "recommendation": "http://localhost:5000/books/recommended",
-    "autocomplete": "http://localhost:5000/books/search/autocomplete",
-    "search": "http://localhost:5000/books/search"
+    "autocomplete": "http://localhost:5000/books/search/autocomplete/{prefix}",
+    "search": "http://localhost:5000/books/search/{query}"
   }
 }
