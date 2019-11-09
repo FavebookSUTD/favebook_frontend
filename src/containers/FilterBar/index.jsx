@@ -18,7 +18,6 @@ import { searchBooks, autocompleteBooks } from './actions';
 import {
   selectError,
   selectLoading,
-  selectSearchResult,
   selectAutocompleteResultsPartial,
   selectCurrentSearchVal,
 } from './selectors';
@@ -109,7 +108,6 @@ FilterBar.defaultProps = {
 const mapStateToProps = createStructuredSelector({
   error: selectError,
   loading: selectLoading,
-  searchResults: selectSearchResult,
   autocompleteResults: selectAutocompleteResultsPartial,
   currentSearchVal: selectCurrentSearchVal,
 });
