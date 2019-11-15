@@ -13,7 +13,7 @@ const request = (props, method) => {
   const { url, needAuthenticate, headers, query, body } = props;
 
   const strQuery = queryString.stringify(query);
-  const apiURL = `${url}?${strQuery}`;
+  const apiURL = `${url}${strQuery ? `?${strQuery}` : ''}`;
 
   const configureJWT = headers => {
     if (needAuthenticate) {
