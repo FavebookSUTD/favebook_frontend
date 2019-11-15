@@ -66,7 +66,9 @@ export default function reducer(state = initialState, action) {
       return state.setIn(['loading', 'reviews'], false);
 
     case ACTIONS.ADD_NEW_BOOK_REVIEW:
-      return state.update('reviews', reviews => reviews.insert(0, fromJS(action.payload.data)));
+      return state
+        .update('reviews', reviews => reviews.insert(0, fromJS(action.payload.data)))
+        .update('totalReviewCount', count => count + 1);
 
     case ACTIONS.UPDATE_BOOK_REVIEW:
       return state.update('reviews', reviews =>
