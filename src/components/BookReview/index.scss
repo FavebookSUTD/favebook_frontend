@@ -56,6 +56,11 @@
           color: $primary-color;
         }
         margin: 0 0.5rem;
+
+        cursor: not-allowed;
+      }
+
+      .author-name:not(.author-name-disabled) {
         cursor: pointer;
       }
 
