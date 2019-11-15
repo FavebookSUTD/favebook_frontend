@@ -15,12 +15,23 @@ import injectSaga from '@utils/core/injectSaga';
 import { fetchWantToRead, fetchReading, fetchMyReviews } from './actions';
 
 // import selector
-import { selectLoading, selectWantToRead, selectReading, selectMyReviews } from './selectors';
+import {
+  selectLoading,
+  selectWantToRead,
+  selectReading,
+  selectMyReviews,
+  selectTotalReviewCount,
+  selectCurrentReviewPageNum,
+} from './selectors';
+import { selectUserInfo } from '@pages/AppLayout/selectors';
 
 // import local components
 import TabMenuContainer from '@components/TabMenuContainer';
 import BookInfo from '@components/BookInfo';
 import BookReviewsList from '@components/BookReviewsList';
+
+// import lodash
+import isEmpty from 'lodash/isEmpty';
 
 // import local styling
 import './index.scss';
@@ -34,29 +45,28 @@ const { Content } = Layout;
 const renderBookList = (books, loading) => <BookInfo loading={loading} books={books} />;
 
 class MyBookPage extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedMenu: 'Want To Read',
-    };
-  }
+  PAGE_SIZE = 100;
 
   componentDidMount() {
-    const { fetchWantToRead, fetchReading, fetchMyReviews } = this.props;
+    const { myReviews, fetchWantToRead, fetchReading } = this.props;
+
     fetchWantToRead();
     fetchReading();
-    fetchMyReviews();
+    if (isEmpty(myReviews)) {
+      this.fetchNextReviewHandler();
+    }
   }
 
-  setMenuHandler = key => {
-    this.setState({
-      selectedMenu: key,
-    });
+  fetchNextReviewHandler = () => {
+    const { loading, currentReviewPageNum, userInfo, fetchMyReviews } = this.props;
+    if (!loading.myReviews) {
+      const { username } = userInfo;
+      fetchMyReviews(username, currentReviewPageNum + 1, this.PAGE_SIZE);
+    }
   };
 
   render() {
-    const { loading, wantToRead, reading, myReviews } = this.props;
-    const { selectedMenu } = this.state;
+    const { loading, wantToRead, reading, myReviews, totalReviewCount } = this.props;
 
     return (
       <Content className="my-book-page__container">
@@ -78,12 +88,12 @@ class MyBookPage extends PureComponent {
                   loading={loading.myReviews}
                   bookReviews={myReviews}
                   showAuthor={false}
+                  total={totalReviewCount}
+                  fetchNextHandler={this.fetchNextReviewHandler}
                 />
               ),
             },
           ]}
-          selectedMenu={selectedMenu}
-          setMenuHandler={this.setMenuHandler}
           autoFit
         />
       </Content>
@@ -116,6 +126,10 @@ MyBookPage.propTypes = {
     }),
   ).isRequired,
   myReviews: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  totalReviewCount: PropTypes.number.isRequired,
+  currentReviewPageNum: PropTypes.number.isRequired,
+
+  userInfo: PropTypes.shape({ username: PropTypes.string }).isRequired,
 
   fetchWantToRead: PropTypes.func.isRequired,
   fetchReading: PropTypes.func.isRequired,
@@ -127,6 +141,10 @@ const mapStateToProps = createStructuredSelector({
   wantToRead: selectWantToRead,
   reading: selectReading,
   myReviews: selectMyReviews,
+  totalReviewCount: selectTotalReviewCount,
+  currentReviewPageNum: selectCurrentReviewPageNum,
+
+  userInfo: selectUserInfo,
 });
 
 const mapDispatchToProps = {

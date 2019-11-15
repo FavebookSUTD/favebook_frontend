@@ -1,36 +1,38 @@
 import api from '@apis/api';
 import apiConfig from '@apis/apiConfig';
 
-export function fetchUserRating() {
-  // TODO: Connect to real api
-  const data = {
-    rating: 1.5,
-  };
+export function fetchUserReview({ payload }) {
+  const { username, bookId } = payload;
 
-  return Promise.resolve(data);
+  return api.get({
+    url: apiConfig.books.userReviewsByBook
+      .replace('{username}', username)
+      .replace('{asin}', bookId),
+  });
 }
 
-export function updateUserRating({ payload: { id, rating } }) {
-  // TODO: Connect to real api
-  const data = {
-    rating,
-  };
+export function updateUserReview({ payload }) {
+  const { bookId, rating, review } = payload;
 
-  return Promise.resolve(data);
+  return api.patch({
+    url: apiConfig.books.reviews.replace('{asin}', bookId),
+    body: {
+      review_rating: rating,
+      review_text: review,
+    },
+    needAuthenticate: true,
+  });
 }
 
-export function submitUserReview({ payload: { id, review } }) {
-  // TODO: Connect to real api
-  const data = {
-    id: 123,
-    bookId: id,
-    review,
-    author: 'John Doe',
-  };
+export function submitUserReview({ payload }) {
+  const { bookId, rating, review } = payload;
 
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(data);
-    }, 2000);
+  return api.post({
+    url: apiConfig.books.reviews.replace('{asin}', bookId),
+    body: {
+      review_rating: rating,
+      review_text: review,
+    },
+    needAuthenticate: true,
   });
 }

@@ -2,13 +2,21 @@ import api from '@apis/api';
 import apiConfig from '@apis/apiConfig';
 
 export function fetchBookDetails({ payload }) {
-  const mockData = require('./mock/mockBookDetails.json');
-
-  return new Promise(resolve => setTimeout(() => resolve(mockData), 2000));
+  return api.get({
+    url: apiConfig.books.info.replace('{asin}', payload),
+  });
 }
 
 export function fetchBookReviews({ payload }) {
-  const mockData = require('./mock/mockReviewList.json');
+  const { bookId, pageNum, pageSize } = payload;
 
-  return new Promise(resolve => setTimeout(() => resolve(mockData), 2000));
+  return api
+    .get({
+      url: apiConfig.books.reviews.replace('{asin}', bookId),
+      query: {
+        'pg-num': pageNum,
+        'pg-size': pageSize,
+      },
+    })
+    .then(({ data }) => ({ data, pageNum }));
 }

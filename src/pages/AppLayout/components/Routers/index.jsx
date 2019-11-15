@@ -84,6 +84,11 @@ const Routers = ({ history, loadPrevPath, clearPrevPath }) => {
 };
 
 Routers.propTypes = {
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
+  }).isRequired,
   loadPrevPath: PropTypes.func.isRequired,
   clearPrevPath: PropTypes.func.isRequired,
 };
