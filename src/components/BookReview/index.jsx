@@ -19,13 +19,13 @@ import { Typography, Divider, Rate } from 'antd';
 const { Text, Paragraph } = Typography;
 
 const BookReview = ({ bookReview, showBookImg, showAuthor, showTimestamp }) => {
-  const { title, imgURL, review_text, review_rating, username, timestamp } = bookReview;
+  const { asin, title, imUrl, review_text, review_rating, username, unix_timestamp } = bookReview;
 
   return (
     <div className="book-review__container">
       {showBookImg ? (
-        <div className="book-review__image-container">
-          <ImageWrapper imgSrc={imgURL || ''} imgAltText={title || ''} />
+        <div className="book-review__image-container" onClick={() => goto(`/book/${asin}`)}>
+          <ImageWrapper imgSrc={imUrl || ''} imgAltText={title || ''} />
         </div>
       ) : null}
       <div className="book-review-content__container">
@@ -52,7 +52,7 @@ const BookReview = ({ bookReview, showBookImg, showAuthor, showTimestamp }) => {
           ) : null}
           {showTimestamp ? (
             <Text className="review-timestamp" strong>
-              {Moment(timestamp).format('DD MMM YYYY')}
+              {Moment(unix_timestamp).format('DD MMM YYYY')}
             </Text>
           ) : null}
           <span className="book-review-details-rating__container">
@@ -74,12 +74,13 @@ const BookReview = ({ bookReview, showBookImg, showAuthor, showTimestamp }) => {
 
 BookReview.propTypes = {
   bookReview: PropTypes.shape({
+    asin: PropTypes.string,
     title: PropTypes.string,
-    imgURL: PropTypes.string,
+    imUrl: PropTypes.string,
     review_text: PropTypes.string,
     review_rating: PropTypes.number,
     username: PropTypes.string,
-    timestamp: PropTypes.string,
+    unix_timestamp: PropTypes.number,
   }).isRequired,
   showBookImg: PropTypes.bool,
   showAuthor: PropTypes.bool,
