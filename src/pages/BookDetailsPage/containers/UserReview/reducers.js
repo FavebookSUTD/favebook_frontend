@@ -26,6 +26,12 @@ export default function reducer(state = initialState, action) {
         .set('loading', false)
         .set('error', action.payload.toString());
 
+    case ACTIONS.SUBMIT_USER_REVIEW_SUCCESS:
+      return state
+        .set('review', fromJS(action.payload.data))
+        .set('loading', false)
+        .set('error', '');
+
     case ACTIONS.UPDATE_USER_REVIEW_SUCCESS:
       return state
         .set('review', fromJS(action.payload.data))
@@ -35,9 +41,6 @@ export default function reducer(state = initialState, action) {
     case ACTIONS.UPDATE_USER_REVIEW_FAILURE:
     case ACTIONS.SUBMIT_USER_REVIEW_FAILURE:
       return state.set('loading', false).set('error', action.payload.toString());
-
-    case ACTIONS.SUBMIT_USER_REVIEW_SUCCESS:
-      return state.set('loading', false).set('error', '');
 
     default:
       return state;
