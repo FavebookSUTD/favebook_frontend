@@ -13,6 +13,7 @@ const { Text } = Typography;
 
 const BookRatingStar = ({ ratingValue, updateRatingHandler }) => {
   const [hoverStar, setHoverStar] = useState(null);
+
   return (
     <div className="book-rating-star__container">
       <Rate
@@ -27,7 +28,9 @@ const BookRatingStar = ({ ratingValue, updateRatingHandler }) => {
         }}
         onChange={value => updateRatingHandler(value)}
       />
-      <Text className="rating-value-text" strong>{`${hoverStar || ratingValue}`}</Text>
+      <Text className="rating-value-text" strong>
+        {`${hoverStar || ratingValue >= 0 ? ratingValue : 'NIL'}`}
+      </Text>
     </div>
   );
 };

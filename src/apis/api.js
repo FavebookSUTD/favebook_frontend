@@ -23,7 +23,7 @@ const request = (props, method) => {
   const { url, needAuthenticate, headers, query, body } = props;
 
   const strQuery = queryString.stringify(query);
-  const apiURL = `${url}?${strQuery}`;
+  const apiURL = `${url}${strQuery ? `?${strQuery}` : ''}`;
 
   const configureJWT = headers => {
     if (needAuthenticate) {
@@ -61,6 +61,7 @@ const API = {
   get: props => request(props, 'GET'),
   post: props => request(props, 'POST'),
   put: props => request(props, 'PUT'),
+  patch: props => request(props, 'PATCH'),
   delete: props => request(props, 'DELETE'),
 };
 

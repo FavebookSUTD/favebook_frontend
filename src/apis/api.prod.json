@@ -5,9 +5,13 @@
     "logout": ""
   },
   "books": {
+    "info": "",
     "bookList": "",
     "recommendation": "",
     "autocomplete": "",
-    "search": ""
+    "search": "",
+    "reviews": "",
+    "userReviews": "",
+    "userReviewsByBook": ""
   }
 }

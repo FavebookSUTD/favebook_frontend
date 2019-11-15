@@ -30,16 +30,16 @@ const Routers = ({ history, loadPrevPath, clearPrevPath }) => {
     const user = sessionStorage.getItem('user');
     if (user) {
       const { username, access_token } = JSON.parse(sessionStorage.getItem('user'));
-      return new Promise((resolve, reject) => {
+      return new Promise(resolve => {
         if (username && access_token) {
           clearPrevPath();
           return resolve();
         }
-        return reject(new Error('/authenticate'));
+        return resolve(history.replace('/authenticate'));
       });
     }
 
-    return Promise.reject(new Error('/authenticate'));
+    return Promise.resolve(history.replace('/authenticate'));
   };
 
   return (
@@ -84,6 +84,12 @@ const Routers = ({ history, loadPrevPath, clearPrevPath }) => {
 };
 
 Routers.propTypes = {
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
+    replace: PropTypes.func.isRequired,
+  }).isRequired,
   loadPrevPath: PropTypes.func.isRequired,
   clearPrevPath: PropTypes.func.isRequired,
 };

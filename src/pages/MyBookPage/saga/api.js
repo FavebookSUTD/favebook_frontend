@@ -13,8 +13,16 @@ export function fetchReading() {
   return new Promise(resolve => setTimeout(() => resolve(mockData), 2000));
 }
 
-export function fetchMyReviews() {
-  const mockData = require('./mock/mockReviewList.json');
+export function fetchMyReviews({ payload }) {
+  const { username, pageNum, pageSize } = payload;
 
-  return new Promise(resolve => setTimeout(() => resolve(mockData), 2000));
+  return api
+    .get({
+      url: apiConfig.books.userReviews.replace('{username}', username),
+      query: {
+        'pg-num': pageNum,
+        'pg-size': pageSize,
+      },
+    })
+    .then(({ data }) => ({ data, pageNum }));
 }

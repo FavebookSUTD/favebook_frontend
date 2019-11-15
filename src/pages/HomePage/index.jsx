@@ -30,7 +30,7 @@ import toUpper from 'lodash/toUpper';
 import './index.scss';
 
 // import Antd
-import { Layout, Typography } from 'antd';
+import { Layout, Typography, Icon } from 'antd';
 
 // Extract antd components
 const { Content } = Layout;
@@ -44,7 +44,7 @@ class HomePage extends PureComponent {
   }
 
   render() {
-    const { recommendBooks, bestsellBooks, userInfo } = this.props;
+    const { loading, recommendBooks, bestsellBooks, userInfo } = this.props;
 
     return (
       <Content className="home-page__container">
@@ -52,14 +52,30 @@ class HomePage extends PureComponent {
           {`Good Morning, ${isEmpty(userInfo) ? 'Friend' : toUpper(userInfo.username)}`}
         </Title>
         <FilterBar position="center" />
-        <BookDisplay title="just for you" rows={1} books={recommendBooks} />
-        <BookDisplay title="best sellers" rows={1} books={bestsellBooks} />
+        {!loading.recommend && !loading.bestsell ? (
+          <>
+            <BookDisplay title="just for you" rows={1} books={recommendBooks} />
+            <BookDisplay title="best sellers" rows={1} books={bestsellBooks} />
+          </>
+        ) : (
+          <div className="home-page-loading__container">
+            <Icon className="loading-icon" type="loading" spin />
+          </div>
+        )}
       </Content>
     );
   }
 }
 
 HomePage.propTypes = {
+  loading: PropTypes.shape({
+    recommend: PropTypes.bool,
+    bestsell: PropTypes.bool,
+  }).isRequired,
+  error: PropTypes.shape({
+    recommend: PropTypes.string,
+    bestsell: PropTypes.string,
+  }).isRequired,
   recommendBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
   bestsellBooks: PropTypes.arrayOf(PropTypes.object).isRequired,
   userInfo: PropTypes.shape({

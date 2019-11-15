@@ -22,7 +22,7 @@ const BookDescriptions = ({
   title,
   author,
   ratingValue,
-  commentCount,
+  reviewCount,
   purchaseLinks,
   genres,
 }) => {
@@ -34,14 +34,14 @@ const BookDescriptions = ({
             {title}
           </Title>
           <Text className="book-descriptions__author" ellipsis>
-            {author}
+            {`By ${author}`}
           </Text>
         </div>
         <div className="book-rating__container">
           <BookRatingStar ratingValue={ratingValue} />
           <Text className="review-count" strong>
-            <Icon className="comment-icon" type="message" />
-            {`${commentCount}`}
+            <Icon className="review-icon" type="message" />
+            {`${reviewCount}`}
           </Text>
         </div>
         <div className="book-purchase__btn-group">
@@ -82,7 +82,7 @@ BookDescriptions.propTypes = {
   title: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
   ratingValue: PropTypes.number.isRequired,
-  commentCount: PropTypes.number.isRequired,
+  reviewCount: PropTypes.number.isRequired,
   purchaseLinks: PropTypes.shape({
     amazon: PropTypes.string,
     kindle: PropTypes.string,

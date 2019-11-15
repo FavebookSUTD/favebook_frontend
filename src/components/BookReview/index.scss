@@ -16,6 +16,12 @@
     display: inline-block;
     object-fit: cover;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.16);
+    transition: all 0.2s ease-in;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 
   .book-review-content__container {
@@ -50,6 +56,11 @@
           color: $primary-color;
         }
         margin: 0 0.5rem;
+
+        cursor: not-allowed;
+      }
+
+      .author-name:not(.author-name-disabled) {
         cursor: pointer;
       }
 
