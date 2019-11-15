@@ -28,7 +28,7 @@ export default function reducer(state = initialState, action) {
 
     case ACTIONS.UPDATE_USER_REVIEW_SUCCESS:
       return state
-        .set('review', fromJS(action.payload.data.updated_review))
+        .set('review', fromJS(action.payload.data))
         .set('loading', false)
         .set('error', '');
 
