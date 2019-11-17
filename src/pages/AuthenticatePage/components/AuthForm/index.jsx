@@ -132,14 +132,14 @@ const AuthForm = ({ form, type, loading, submitHandler }) => {
       >
         {isSignup ? 'SIGNUP' : 'SIGN IN'}
       </Button>
-      <Divider className="form-divider">OR</Divider>
+      {/* <Divider className="form-divider">OR</Divider>
       <div className="social-btn-group">
         <Button className="social-btn" type="primary" shape="circle">
           <Icon type="facebook" theme="filled" />
         </Button>
         <Button className="social-btn" type="primary" shape="circle" icon="google" />
         <Button className="social-btn" type="primary" shape="circle" icon="twitter" />
-      </div>
+      </div> */}
     </div>
   );
 };
