@@ -56,11 +56,14 @@ class BookDetailsPage extends PureComponent {
 
     fetchBookDetails(id);
     fetchInitBookReviews(id, 1, this.PAGE_SIZE);
+    this.fetchNextHandler();
   }
 
   fetchNextHandler = () => {
     const {
-      match: { params: id },
+      match: {
+        params: { id },
+      },
       loading,
       currentReviewPageNum,
       fetchNextBookReviews,

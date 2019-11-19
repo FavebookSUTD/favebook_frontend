@@ -49,7 +49,7 @@ export default function reducer(state = initialState, action) {
       return state
         .set('reviews', fromJS([]))
         .setIn(['loading', 'reviews'], false)
-        .setIn(['error', 'book'], action.payload.toString());
+        .setIn(['error', 'reviews'], action.payload.toString());
 
     case ACTIONS.FETCH_NEXT_BOOK_REVIEWS:
       return state.setIn(['loading', 'reviews'], true);
@@ -63,7 +63,9 @@ export default function reducer(state = initialState, action) {
         .setIn(['error', 'reviews'], '');
 
     case ACTIONS.FETCH_NEXT_BOOK_REVIEWS_FAILURE:
-      return state.setIn(['loading', 'reviews'], false);
+      return state
+        .setIn(['loading', 'reviews'], false)
+        .setIn(['error', 'reviews'], action.payload.toString());
 
     case ACTIONS.ADD_NEW_BOOK_REVIEW:
       return state
