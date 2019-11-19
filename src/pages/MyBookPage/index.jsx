@@ -58,10 +58,10 @@ class MyBookPage extends PureComponent {
   }
 
   fetchNextReviewHandler = () => {
-    const { loading, currentReviewPageNum, userInfo, fetchMyReviews } = this.props;
+    const { loading, myReviews, currentReviewPageNum, userInfo, fetchMyReviews } = this.props;
     if (!loading.myReviews) {
       const { username } = userInfo;
-      fetchMyReviews(username, currentReviewPageNum + 1, this.PAGE_SIZE);
+      fetchMyReviews(username, isEmpty(myReviews) ? 1 : currentReviewPageNum + 1, this.PAGE_SIZE);
     }
   };
 
