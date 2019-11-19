@@ -52,8 +52,8 @@ export default function reducer(state = initialState, action) {
 
     case ACTIONS.FETCH_MY_REVIEWS_SUCCESS:
       return state
-        .update('myReviews', reviews => reviews.merge(fromJS(action.payload.data.reviews)))
-        .set('totalReviewCount', action.payload.data.num_reviews)
+        .update('myReviews', reviews => reviews.merge(fromJS(action.payload.data.reviews || [])))
+        .set('totalReviewCount', action.payload.data.num_reviews || 0)
         .set('currentReviewPageNum', action.payload.pageNum)
         .setIn(['loading', 'myReviews'], false)
         .setIn(['error', 'myReviews'], '');

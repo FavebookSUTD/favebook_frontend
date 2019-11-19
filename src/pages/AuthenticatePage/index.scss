@@ -2,7 +2,7 @@
 @import '@themes/themeVariables.scss';
 
 @mixin bannerStyling() {
-  height: 400px;
+  height: 300px;
   min-width: calc(400px + 4rem);
   display: flex;
   flex: 1 0;
@@ -99,7 +99,7 @@
 
       .motivation-slogan {
         text-align: right;
-        font-weight: 300;
+        font-weight: 500;
       }
 
       .author {
