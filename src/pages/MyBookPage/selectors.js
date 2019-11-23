@@ -17,6 +17,8 @@ const selectTotalReviewCount = select(selectMyBookPage, 'totalReviewCount');
 
 const selectCurrentReviewPageNum = select(selectMyBookPage, 'currentReviewPageNum');
 
+const selectPageSize = select(selectMyBookPage, 'pageSize');
+
 export {
   selectLoading,
   selectError,
@@ -25,4 +27,5 @@ export {
   selectMyReviews,
   selectTotalReviewCount,
   selectCurrentReviewPageNum,
+  selectPageSize,
 };

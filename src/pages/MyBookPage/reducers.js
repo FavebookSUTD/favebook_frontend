@@ -14,9 +14,10 @@ export const initialState = fromJS({
   },
   wantToRead: [],
   reading: [],
-  myReviews: [],
+  myReviews: {},
   totalReviewCount: 0,
   currentReviewPageNum: 0,
+  pageSize: 8,
 });
 
 export default function reducer(state = initialState, action) {
@@ -48,13 +49,14 @@ export default function reducer(state = initialState, action) {
         .setIn(['error', 'reading'], action.payload.toString());
 
     case ACTIONS.FETCH_MY_REVIEWS:
-      return state.setIn(['loading', 'myReviews'], true);
+      return state
+        .setIn(['loading', 'myReviews'], true)
+        .set('currentReviewPageNum', action.payload.pageNum);
 
     case ACTIONS.FETCH_MY_REVIEWS_SUCCESS:
       return state
-        .update('myReviews', reviews => reviews.merge(fromJS(action.payload.data.reviews || [])))
+        .setIn(['myReviews', action.payload.pageNum], fromJS(action.payload.data.reviews))
         .set('totalReviewCount', action.payload.data.num_reviews || 0)
-        .set('currentReviewPageNum', action.payload.pageNum)
         .setIn(['loading', 'myReviews'], false)
         .setIn(['error', 'myReviews'], '');
 

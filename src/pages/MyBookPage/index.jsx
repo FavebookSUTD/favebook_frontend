@@ -21,7 +21,7 @@ import {
   selectReading,
   selectMyReviews,
   selectTotalReviewCount,
-  selectCurrentReviewPageNum,
+  selectPageSize,
 } from './selectors';
 import { selectUserInfo } from '@pages/AppLayout/selectors';
 
@@ -31,7 +31,6 @@ import BookInfo from '@components/BookInfo';
 import BookReviewsList from '@components/BookReviewsList';
 
 // import lodash
-import isEmpty from 'lodash/isEmpty';
 
 // import local styling
 import './index.scss';
@@ -45,28 +44,24 @@ const { Content } = Layout;
 const renderBookList = (books, loading) => <BookInfo loading={loading} books={books} />;
 
 class MyBookPage extends PureComponent {
-  PAGE_SIZE = 100;
-
   componentDidMount() {
-    const { myReviews, fetchWantToRead, fetchReading } = this.props;
+    const { pageSize, fetchWantToRead, fetchReading } = this.props;
 
     fetchWantToRead();
     fetchReading();
-    if (isEmpty(myReviews)) {
-      this.fetchNextReviewHandler();
-    }
+    this.fetchReviewHandler(1, pageSize);
   }
 
-  fetchNextReviewHandler = () => {
-    const { loading, myReviews, currentReviewPageNum, userInfo, fetchMyReviews } = this.props;
+  fetchReviewHandler = (pageNum, pageSize) => {
+    const { loading, userInfo, fetchMyReviews } = this.props;
     if (!loading.myReviews) {
       const { username } = userInfo;
-      fetchMyReviews(username, isEmpty(myReviews) ? 1 : currentReviewPageNum + 1, this.PAGE_SIZE);
+      fetchMyReviews(username, pageNum, pageSize);
     }
   };
 
   render() {
-    const { loading, wantToRead, reading, myReviews, totalReviewCount } = this.props;
+    const { loading, wantToRead, reading, myReviews, totalReviewCount, pageSize } = this.props;
 
     return (
       <Content className="my-book-page__container">
@@ -88,8 +83,9 @@ class MyBookPage extends PureComponent {
                   loading={loading.myReviews}
                   bookReviews={myReviews}
                   showAuthor={false}
+                  pageSize={pageSize}
                   total={totalReviewCount}
-                  fetchNextHandler={this.fetchNextReviewHandler}
+                  fetchPageHandler={this.fetchReviewHandler}
                 />
               ),
             },
@@ -125,9 +121,9 @@ MyBookPage.propTypes = {
       rating: PropTypes.number,
     }),
   ).isRequired,
-  myReviews: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  myReviews: PropTypes.shape({}).isRequired,
   totalReviewCount: PropTypes.number.isRequired,
-  currentReviewPageNum: PropTypes.number.isRequired,
+  pageSize: PropTypes.number.isRequired,
 
   userInfo: PropTypes.shape({ username: PropTypes.string }).isRequired,
 
@@ -142,7 +138,7 @@ const mapStateToProps = createStructuredSelector({
   reading: selectReading,
   myReviews: selectMyReviews,
   totalReviewCount: selectTotalReviewCount,
-  currentReviewPageNum: selectCurrentReviewPageNum,
+  pageSize: selectPageSize,
 
   userInfo: selectUserInfo,
 });
