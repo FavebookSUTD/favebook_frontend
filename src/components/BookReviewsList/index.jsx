@@ -1,5 +1,5 @@
 // import React
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 // import local components
@@ -7,7 +7,6 @@ import BookReview from '../BookReview';
 
 // import lodash
 import isEmpty from 'lodash/isEmpty';
-import size from 'lodash/size';
 
 // import local styling
 import './index.scss';
@@ -23,30 +22,30 @@ const BookReviewsList = ({
   showTimestamp,
   pageSize,
   total,
-  fetchNextHandler,
+  fetchPageHandler,
 }) => {
-  const DEFAULT_PAGE_SIZE = 8;
+  const [currentPageNum, setCurrentPageNum] = useState(1);
+  const currentBookReviews = bookReviews[currentPageNum];
 
   return (
     <div className="book-reviews-list__container">
-      <Skeleton loading={loading && isEmpty(bookReviews)} active>
+      <Skeleton loading={loading && isEmpty(currentBookReviews)} active>
         {isEmpty(bookReviews) ? (
           <Empty />
         ) : (
           <List
-            dataSource={bookReviews}
+            dataSource={currentBookReviews || []}
             rowKey={data => data.id}
-            loading={loading}
+            loading={loading && isEmpty(currentBookReviews)}
             pagination={{
+              current: currentPageNum,
               position: 'both',
               hideOnSinglePage: true,
               total,
-              pageSize: pageSize || DEFAULT_PAGE_SIZE,
-              onChange: (page, pageSize) => {
-                const currentBookCount = size(bookReviews);
-                if (page > 1 && page * pageSize >= currentBookCount && currentBookCount < total) {
-                  fetchNextHandler();
-                }
+              pageSize,
+              onChange: (pageNum, pageSize) => {
+                setCurrentPageNum(pageNum);
+                fetchPageHandler(pageNum, pageSize);
               },
             }}
             renderItem={bookReview => (
@@ -67,21 +66,21 @@ const BookReviewsList = ({
 };
 
 BookReviewsList.propTypes = {
-  bookReviews: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  bookReviews: PropTypes.shape({}).isRequired,
   loading: PropTypes.bool.isRequired,
   showBookImg: PropTypes.bool,
   showAuthor: PropTypes.bool,
   showTimestamp: PropTypes.bool,
   pageSize: PropTypes.number,
   total: PropTypes.number.isRequired,
-  fetchNextHandler: PropTypes.func.isRequired,
+  fetchPageHandler: PropTypes.func.isRequired,
 };
 
 BookReviewsList.defaultProps = {
   showBookImg: true,
   showAuthor: true,
   showTimestamp: true,
-  pageSize: null,
+  pageSize: 8,
 };
 
 export default BookReviewsList;
