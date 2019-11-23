@@ -12,14 +12,14 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import { fetchBookDetails, fetchInitBookReviews, fetchNextBookReviews } from './actions';
+import { fetchBookDetails, fetchBookReviews } from './actions';
 
 // import selector
 import {
   selectBook,
   selectReviews,
   selectTotalReviewCount,
-  selectCurrentReviewPageNum,
+  selectPageSize,
   selectLoading,
   selectError,
 } from './selectors';
@@ -43,33 +43,29 @@ import './index.scss';
 import { Row, Col, Result } from 'antd';
 
 class BookDetailsPage extends PureComponent {
-  PAGE_SIZE = 100;
-
   componentDidMount() {
     const {
       match: {
         params: { id },
       },
+      pageSize,
       fetchBookDetails,
-      fetchInitBookReviews,
     } = this.props;
 
     fetchBookDetails(id);
-    fetchInitBookReviews(id, 1, this.PAGE_SIZE);
-    this.fetchNextHandler();
+    this.fetchBookReviewsHandler(1, pageSize);
   }
 
-  fetchNextHandler = () => {
+  fetchBookReviewsHandler = (pageNum, pageSize) => {
     const {
       match: {
         params: { id },
       },
       loading,
-      currentReviewPageNum,
-      fetchNextBookReviews,
+      fetchBookReviews,
     } = this.props;
     if (!loading.reviews) {
-      fetchNextBookReviews(id, currentReviewPageNum + 1, this.PAGE_SIZE);
+      fetchBookReviews(id, pageNum, pageSize);
     }
   };
 
@@ -81,6 +77,7 @@ class BookDetailsPage extends PureComponent {
       book,
       reviews,
       totalReviewCount,
+      pageSize,
       loading,
       error,
     } = this.props;
@@ -121,11 +118,12 @@ class BookDetailsPage extends PureComponent {
                     reactNode: (
                       <BookReviewsList
                         loading={loading.reviews}
-                        bookReviews={reviews || []}
+                        bookReviews={reviews}
                         showBookImg={false}
                         showTimestamp={false}
-                        total={totalReviewCount || 0}
-                        fetchNextHandler={this.fetchNextHandler}
+                        total={totalReviewCount}
+                        pageSize={pageSize}
+                        fetchPageHandler={this.fetchBookReviewsHandler}
                       />
                     ),
                   },
@@ -151,9 +149,9 @@ BookDetailsPage.propTypes = {
     imUrl: PropTypes.string,
     genres: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  reviews: PropTypes.shape({}).isRequired,
   totalReviewCount: PropTypes.number.isRequired,
-  currentReviewPageNum: PropTypes.number.isRequired,
+  pageSize: PropTypes.number.isRequired,
   loading: PropTypes.shape({
     book: PropTypes.bool.isRequired,
     reviews: PropTypes.bool.isRequired,
@@ -169,23 +167,21 @@ BookDetailsPage.propTypes = {
   }).isRequired,
 
   fetchBookDetails: PropTypes.func.isRequired,
-  fetchInitBookReviews: PropTypes.func.isRequired,
-  fetchNextBookReviews: PropTypes.func.isRequired,
+  fetchBookReviews: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   book: selectBook,
   reviews: selectReviews,
   totalReviewCount: selectTotalReviewCount,
-  currentReviewPageNum: selectCurrentReviewPageNum,
+  pageSize: selectPageSize,
   loading: selectLoading,
   error: selectError,
 });
 
 const mapDispatchToProps = {
   fetchBookDetails,
-  fetchInitBookReviews,
-  fetchNextBookReviews,
+  fetchBookReviews,
 };
 
 const withReducer = injectReducer({ key: 'BookDetailsPage', reducer });

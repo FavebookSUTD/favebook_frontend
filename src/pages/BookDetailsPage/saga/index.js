@@ -17,28 +17,16 @@ export default function* watchBookDetailsPage() {
       fetchBookDetails,
     ),
     takeLatest(
-      ACTIONS.FETCH_INIT_BOOK_REVIEWS,
+      ACTIONS.FETCH_BOOK_REVIEWS,
       saga,
-      ACTIONS.FETCH_INIT_BOOK_REVIEWS_SUCCESS,
-      ACTIONS.FETCH_INIT_BOOK_REVIEWS_FAILURE,
-      fetchBookReviews,
-    ),
-    takeLatest(
-      ACTIONS.FETCH_NEXT_BOOK_REVIEWS,
-      saga,
-      ACTIONS.FETCH_NEXT_BOOK_REVIEWS_SUCCESS,
-      ACTIONS.FETCH_NEXT_BOOK_REVIEWS_FAILURE,
+      ACTIONS.FETCH_BOOK_REVIEWS_SUCCESS,
+      ACTIONS.FETCH_BOOK_REVIEWS_FAILURE,
       fetchBookReviews,
     ),
     takeEvery(
-      UserReviewActions.SUBMIT_USER_REVIEW_SUCCESS,
+      [UserReviewActions.SUBMIT_USER_REVIEW_SUCCESS, UserReviewActions.UPDATE_USER_REVIEW_SUCCESS],
       updateBookReviewSaga,
-      ACTIONS.ADD_NEW_BOOK_REVIEW,
-    ),
-    takeEvery(
-      UserReviewActions.UPDATE_USER_REVIEW_SUCCESS,
-      updateBookReviewSaga,
-      ACTIONS.UPDATE_BOOK_REVIEW,
+      ACTIONS.FETCH_BOOK_REVIEWS,
     ),
   ]);
 }
