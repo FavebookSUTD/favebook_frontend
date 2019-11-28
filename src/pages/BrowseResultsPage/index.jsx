@@ -15,8 +15,7 @@ import injectSaga from '@utils/core/injectSaga';
 // import actions
 
 // import selector
-import { selectSearchResults, selectAllResults } from '@containers/FilterBar/selectors';
-import { selectLoading } from './selectors';
+import { selectSearchResults, selectLoading } from '@containers/FilterBar/selectors';
 
 // import lodash
 import isEmpty from 'lodash/isEmpty';
@@ -36,14 +35,18 @@ const { Content } = Layout;
 
 class BrowseResultsPage extends PureComponent {
   render() {
-    const { loading, searchResults, browseResult } = this.props;
+    const { loading, searchResults } = this.props;
 
     return (
       <Content className="results-page__main-container">
         <FilterBar position="center" />
         <div className="results-page__content">
-          <Skeleton active loading={loading}>
-            {!isEmpty(searchResults) && !loading ? <BookInfo books={browseResult} /> : <Empty />}
+          <Skeleton active loading={loading.search}>
+            {!isEmpty(searchResults) && !loading.search ? (
+              <BookInfo books={searchResults} />
+            ) : (
+              <Empty />
+            )}
           </Skeleton>
         </div>
       </Content>
@@ -52,15 +55,16 @@ class BrowseResultsPage extends PureComponent {
 }
 
 BrowseResultsPage.propTypes = {
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.shape({
+    autocomplete: PropTypes.bool,
+    search: PropTypes.bool,
+  }).isRequired,
   searchResults: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  browseResult: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   loading: selectLoading,
   searchResults: selectSearchResults,
-  browseResult: selectAllResults,
 });
 
 const mapDispatchToProps = {};

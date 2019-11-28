@@ -1,7 +1,8 @@
 import { select, selectToJS } from '@utils/selectorUtils';
 import { initialState } from './reducers';
 import { createSelector } from 'reselect';
-import uniqBy from 'lodash/uniqBy';
+import isEqual from 'lodash/isEqual';
+import concat from 'lodash/concat';
 
 const selectFilterBar = state => state.get('FilterBar', initialState);
 
@@ -9,38 +10,32 @@ const selectError = selectToJS(selectFilterBar, 'error');
 
 const selectLoading = selectToJS(selectFilterBar, 'loading');
 
-const selectSearchResults = selectToJS(selectFilterBar, 'searchResults');
-
-const selectAutocompleteResultsPartial = createSelector(
+const selectSearchResults = createSelector(
   selectFilterBar,
   state => {
-    const test = state
-      .get('autocompleteResults')
-      .slice(0, 5)
-      .toJS();
-    return test;
+    const selectedBookAsin = state.getIn(['selectedBook', 'bookId']);
+    const result = state.get('searchResults').reduce((compileResult, value) => {
+      if (isEqual(value.get('asin'), selectedBookAsin)) {
+        return concat([value.toObject()], compileResult);
+      }
+      compileResult.push(value.toObject());
+      return compileResult;
+    }, []);
+    return result;
   },
 );
-const selectAutocompleteResultsFull = selectToJS(selectFilterBar, 'autocompleteResults');
+
+const selectAutocompleteResults = selectToJS(selectFilterBar, 'autocompleteResults');
 
 const selectCurrentSearchVal = select(selectFilterBar, 'currentSearchVal');
 
-const selectAllResults = createSelector(
-  selectFilterBar,
-  state => {
-    const searchResults = state.get('searchResults');
-    const autoCompleteResults = state.get('autocompleteResults');
-    const allResults = searchResults.concat(autoCompleteResults).toJS();
-    return uniqBy(allResults, 'asin');
-  },
-);
+const selectSelectedBook = selectToJS(selectFilterBar, 'selectedBook');
 
 export {
   selectError,
   selectLoading,
   selectSearchResults,
-  selectAutocompleteResultsPartial,
-  selectAutocompleteResultsFull,
+  selectAutocompleteResults,
   selectCurrentSearchVal,
-  selectAllResults,
+  selectSelectedBook,
 };

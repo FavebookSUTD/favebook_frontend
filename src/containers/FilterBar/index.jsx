@@ -1,6 +1,7 @@
 // import React
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -18,14 +19,16 @@ import { searchBooks, autocompleteBooks } from './actions';
 import {
   selectError,
   selectLoading,
-  selectAutocompleteResultsPartial,
+  selectAutocompleteResults,
   selectCurrentSearchVal,
+  selectSelectedBook,
 } from './selectors';
 
 // import lodash
 import debounce from 'lodash/debounce';
 import map from 'lodash/map';
 import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
 
 // import utils
 import { goto } from '@utils/goto';
@@ -41,7 +44,7 @@ const { Option } = AutoComplete;
 
 const renderOptions = options =>
   map(options, option => (
-    <Option className="search-result__option" key={option._id} label={option.title}>
+    <Option className="search-result__option" key={option.asin} label={option.title}>
       <Icon className="search-result-icon" type="search" />
       {option.title}
     </Option>
@@ -55,7 +58,17 @@ class FilterBar extends PureComponent {
   }
 
   render() {
-    const { position, loading, autocompleteResults, searchBooks, currentSearchVal } = this.props;
+    const {
+      history: {
+        location: { pathname },
+      },
+      position,
+      loading,
+      autocompleteResults,
+      searchBooks,
+      currentSearchVal,
+      selectedBook,
+    } = this.props;
 
     return (
       <div className={`filter-bar ${position}`}>
@@ -65,21 +78,24 @@ class FilterBar extends PureComponent {
           filterOption={false}
           defaultActiveFirstOption={false}
           optionLabelProp="label"
-          defaultValue={currentSearchVal}
+          defaultValue={selectedBook.selectedVal || selectedBook.searchVal}
           notFoundContent={loading.autocomplete ? <Spin className="filter-spining-icon" /> : null}
           placeholder={<Icon className="search-icon" type="search" />}
           dropdownClassName="filter-autocomplete-dropdown__container"
           dataSource={renderOptions(!loading.autocomplete ? autocompleteResults : [])}
           onSearch={this.deboucedAutocompleteBooks}
-          onSelect={(_, option) => {
-            searchBooks(option.props.label);
-          }}
+          onSelect={(_, option) => searchBooks(option.key, option.props.label, currentSearchVal)}
         />
         <Button
           className="filter-button"
           type="primary"
           disabled={isEmpty(autocompleteResults)}
-          onClick={() => goto('/browseresults')}
+          onClick={() => {
+            searchBooks(selectedBook.bookId, selectedBook.selectedVal, currentSearchVal);
+            if (!isEqual(pathname, '/browseresults')) {
+              goto('/browseresults');
+            }
+          }}
         >
           FILTER
         </Button>
@@ -89,6 +105,11 @@ class FilterBar extends PureComponent {
 }
 
 FilterBar.propTypes = {
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
+  }).isRequired,
   position: PropTypes.oneOf(['left', 'center', 'right']),
   loading: PropTypes.shape({
     autocomplete: PropTypes.bool,
@@ -96,6 +117,11 @@ FilterBar.propTypes = {
   }).isRequired,
   autocompleteResults: PropTypes.arrayOf(PropTypes.object).isRequired,
   currentSearchVal: PropTypes.string.isRequired,
+  selectedBook: PropTypes.shape({
+    bookId: PropTypes.string,
+    selectedVal: PropTypes.string,
+    searchVal: PropTypes.string,
+  }).isRequired,
 
   searchBooks: PropTypes.func.isRequired,
   autocompleteBooks: PropTypes.func.isRequired,
@@ -108,8 +134,9 @@ FilterBar.defaultProps = {
 const mapStateToProps = createStructuredSelector({
   error: selectError,
   loading: selectLoading,
-  autocompleteResults: selectAutocompleteResultsPartial,
+  autocompleteResults: selectAutocompleteResults,
   currentSearchVal: selectCurrentSearchVal,
+  selectedBook: selectSelectedBook,
 });
 
 const mapDispatchToProps = {
@@ -128,5 +155,6 @@ const withConnect = connect(
 export default compose(
   withReducer,
   withSaga,
+  withRouter,
   withConnect,
 )(FilterBar);
