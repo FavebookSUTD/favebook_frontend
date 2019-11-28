@@ -90,7 +90,11 @@ BookInfo.propTypes = {
     }),
   ).isRequired,
   pageSize: PropTypes.number,
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
+};
+
+BookInfo.defaultProps = {
+  loading: false,
 };
 
 BookInfo.defaultProps = {
