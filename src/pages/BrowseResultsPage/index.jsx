@@ -13,10 +13,9 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import { fetchNextPage } from './actions';
 
 // import selector
-import { selectLoading, selectPageSize, selectTotal, selectNextPage } from './selectors';
+import { selectSearchResults, selectLoading } from '@containers/FilterBar/selectors';
 
 // import lodash
 import isEmpty from 'lodash/isEmpty';
@@ -29,77 +28,46 @@ import FilterBar from '@containers/FilterBar';
 import './index.scss';
 
 // import Antd
-import { Layout, Pagination, Skeleton, Empty } from 'antd';
+import { Layout, Skeleton, Empty } from 'antd';
 
 // Extract antd components
 const { Content } = Layout;
 
 class BrowseResultsPage extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pageNum: 1,
-    };
-  }
-
-  componentDidMount() {
-    const { pageSize, fetchNextPage } = this.props;
-    const { pageNum } = this.state;
-    fetchNextPage(pageNum, pageSize);
-  }
-
-  onPageChange = (current, pageSize) => {
-    const { fetchNextPage } = this.props;
-    this.setState({
-      pageNum: current,
-    });
-    fetchNextPage(current, pageSize);
-  };
-
   render() {
-    const { loading, pageSize, total, books } = this.props;
-    const { pageNum } = this.state;
+    const { loading, searchResults } = this.props;
 
     return (
       <Content className="results-page__main-container">
-        <FilterBar position="right" />
+        <FilterBar position="center" />
         <div className="results-page__content">
-          <Skeleton active loading={loading}>
-            {!isEmpty(books) && !loading ? <BookInfo books={books[pageNum]} /> : <Empty />}
+          <Skeleton active loading={loading.search}>
+            {!isEmpty(searchResults) && !loading.search ? (
+              <BookInfo books={searchResults} />
+            ) : (
+              <Empty />
+            )}
           </Skeleton>
         </div>
-        <Pagination
-          className="results-page__pagination"
-          hideOnSinglePage
-          current={pageNum}
-          pageSize={pageSize}
-          total={total}
-          onChange={this.onPageChange}
-        />
       </Content>
     );
   }
 }
 
 BrowseResultsPage.propTypes = {
-  loading: PropTypes.bool.isRequired,
-  pageSize: PropTypes.number.isRequired,
-  total: PropTypes.number.isRequired,
-  books: PropTypes.shape({}).isRequired,
-
-  fetchNextPage: PropTypes.func.isRequired,
+  loading: PropTypes.shape({
+    autocomplete: PropTypes.bool,
+    search: PropTypes.bool,
+  }).isRequired,
+  searchResults: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   loading: selectLoading,
-  pageSize: selectPageSize,
-  total: selectTotal,
-  books: selectNextPage,
+  searchResults: selectSearchResults,
 });
 
-const mapDispatchToProps = {
-  fetchNextPage,
-};
+const mapDispatchToProps = {};
 
 const withReducer = injectReducer({ key: 'BrowseResultsPage', reducer });
 const withSaga = injectSaga({ key: 'BrowseResultsPage', saga });

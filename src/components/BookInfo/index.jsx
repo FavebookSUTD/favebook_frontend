@@ -39,7 +39,7 @@ const BookInfo = ({ books, pageSize, loading }) => {
             itemLayout="vertical"
             split={false}
             dataSource={books}
-            rowKey={data => data.id}
+            rowKey={data => data._id}
             pagination={{
               position: 'both',
               hideOnSinglePage: true,
@@ -48,14 +48,14 @@ const BookInfo = ({ books, pageSize, loading }) => {
             renderItem={book => (
               <List.Item key={book.id}>
                 <List.Item.Meta
-                  avatar={getBookImage(book.imgURL, book.rating)}
+                  avatar={getBookImage(book.imUrl, book.rating)}
                   title={
                     <span>
                       <Title
                         className="book-title"
                         level={4}
                         ellipsis={{ rows: 2 }}
-                        onClick={() => goto(`/book/${book.id}`)}
+                        onClick={() => goto(`/book/${book.asin}`)}
                       >
                         {book.title}
                       </Title>
@@ -81,15 +81,20 @@ const BookInfo = ({ books, pageSize, loading }) => {
 BookInfo.propTypes = {
   books: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
+      _id: PropTypes.string,
+      asin: PropTypes.string,
       title: PropTypes.string,
-      imgURL: PropTypes.string,
+      imUrl: PropTypes.string,
       author: PropTypes.string,
       rating: PropTypes.number,
     }),
   ).isRequired,
   pageSize: PropTypes.number,
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
+};
+
+BookInfo.defaultProps = {
+  loading: false,
 };
 
 BookInfo.defaultProps = {

@@ -1,12 +1,41 @@
 import { select, selectToJS } from '@utils/selectorUtils';
 import { initialState } from './reducers';
+import { createSelector } from 'reselect';
+import isEqual from 'lodash/isEqual';
+import concat from 'lodash/concat';
 
 const selectFilterBar = state => state.get('FilterBar', initialState);
 
-const selectError = select(selectFilterBar, 'error');
+const selectError = selectToJS(selectFilterBar, 'error');
 
-const selectFetching = select(selectFilterBar, 'fetching');
+const selectLoading = selectToJS(selectFilterBar, 'loading');
 
-const selectSearchResult = selectToJS(selectFilterBar, 'searchResults');
+const selectSearchResults = createSelector(
+  selectFilterBar,
+  state => {
+    const selectedBookAsin = state.getIn(['selectedBook', 'bookId']);
+    const result = state.get('searchResults').reduce((compileResult, value) => {
+      if (isEqual(value.get('asin'), selectedBookAsin)) {
+        return concat([value.toObject()], compileResult);
+      }
+      compileResult.push(value.toObject());
+      return compileResult;
+    }, []);
+    return result;
+  },
+);
 
-export { selectError, selectFetching, selectSearchResult };
+const selectAutocompleteResults = selectToJS(selectFilterBar, 'autocompleteResults');
+
+const selectCurrentSearchVal = select(selectFilterBar, 'currentSearchVal');
+
+const selectSelectedBook = selectToJS(selectFilterBar, 'selectedBook');
+
+export {
+  selectError,
+  selectLoading,
+  selectSearchResults,
+  selectAutocompleteResults,
+  selectCurrentSearchVal,
+  selectSelectedBook,
+};

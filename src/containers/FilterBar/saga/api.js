@@ -1,12 +1,32 @@
 import api from '@apis/api';
 import apiConfig from '@apis/apiConfig';
+import isEmpty from 'lodash/isEmpty';
 
 export function searchBooks({ payload }) {
-  // TODO: Connect to real api
-  if (payload) {
-    return fetch('https://randomuser.me/api/?results=5')
-      .then(response => response.json())
-      .then(body => body.results);
+  const { searchVal } = payload;
+  if (isEmpty(searchVal)) {
+    return {
+      data: [],
+    };
   }
-  return [];
+
+  return api.get({
+    url: apiConfig.books.autocomplete
+      .replace('{prefix}', encodeURIComponent(searchVal))
+      .replace('{limit}', 100),
+  });
+}
+
+export function autocompleteBooks({ payload }) {
+  const { autocompleteVal } = payload;
+  if (isEmpty(autocompleteVal)) {
+    return {
+      data: [],
+    };
+  }
+  return api.get({
+    url: apiConfig.books.autocomplete
+      .replace('{prefix}', encodeURIComponent(autocompleteVal))
+      .replace('{limit}', 5),
+  });
 }

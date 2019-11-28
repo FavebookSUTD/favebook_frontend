@@ -1,6 +1,7 @@
 // import React
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -12,72 +13,89 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import { searchBooks } from './actions';
+import { searchBooks, autocompleteBooks } from './actions';
 
 // import selector
-import { selectError, selectFetching, selectSearchResult } from './selectors';
+import {
+  selectError,
+  selectLoading,
+  selectAutocompleteResults,
+  selectCurrentSearchVal,
+  selectSelectedBook,
+} from './selectors';
 
 // import lodash
 import debounce from 'lodash/debounce';
 import map from 'lodash/map';
+import isEmpty from 'lodash/isEmpty';
+import isEqual from 'lodash/isEqual';
+
+// import utils
+import { goto } from '@utils/goto';
 
 // import local styling
 import './index.scss';
 
 // import Antd
-import { Icon, Button, Select, Spin } from 'antd';
+import { Icon, Button, Spin, AutoComplete } from 'antd';
 
 // Extract antd components
-const { Option } = Select;
+const { Option } = AutoComplete;
 
 const renderOptions = options =>
   map(options, option => (
-    <Option className="search-result__option" key={option.email} label={option.email}>
+    <Option className="search-result__option" key={option.asin} label={option.title}>
       <Icon className="search-result-icon" type="search" />
-      {option.email}
+      {option.title}
     </Option>
   ));
 
 class FilterBar extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      dropdownOpened: false,
-      searchVal: '',
-    };
-    const { searchBooks } = this.props;
-    this.deboucedSearchBooks = debounce(searchBooks, 500);
+    const { autocompleteBooks } = this.props;
+    this.deboucedAutocompleteBooks = debounce(autocompleteBooks, 300);
   }
 
   render() {
-    const { position, fetching, searchResults } = this.props;
-    const { dropdownOpened, searchVal } = this.state;
+    const {
+      history: {
+        location: { pathname },
+      },
+      position,
+      loading,
+      autocompleteResults,
+      searchBooks,
+      currentSearchVal,
+      selectedBook,
+    } = this.props;
 
     return (
       <div className={`filter-bar ${position}`}>
-        <Select
-          className="filter-select__container"
-          showSearch
+        <AutoComplete
+          className="filter-autocomplete__container"
           showArrow={false}
           filterOption={false}
           defaultActiveFirstOption={false}
-          notFoundContent={fetching && searchVal ? <Spin className="filter-spining-icon" /> : null}
           optionLabelProp="label"
+          defaultValue={selectedBook.selectedVal || selectedBook.searchVal}
+          notFoundContent={loading.autocomplete ? <Spin className="filter-spining-icon" /> : null}
           placeholder={<Icon className="search-icon" type="search" />}
-          dropdownClassName="filter-select-dropdown__container"
-          onDropdownVisibleChange={open => this.setState({ dropdownOpened: open })}
-          onSearch={val => {
-            this.setState({ searchVal: val });
-            this.deboucedSearchBooks(val);
-          }}
-        >
-          {renderOptions(searchResults)}
-        </Select>
+          dropdownClassName="filter-autocomplete-dropdown__container"
+          dataSource={renderOptions(!loading.autocomplete ? autocompleteResults : [])}
+          onSearch={this.deboucedAutocompleteBooks}
+          onSelect={(_, option) => searchBooks(option.key, option.props.label, currentSearchVal)}
+        />
         <Button
           className="filter-button"
           type="primary"
-          disabled={dropdownOpened}
-          onClick={() => console.log('Filter')}
+          disabled={isEmpty(autocompleteResults)}
+          onClick={() => {
+            searchBooks(selectedBook.bookId, selectedBook.selectedVal, currentSearchVal);
+            if (!isEqual(pathname, '/browseresults')) {
+              goto('/browseresults');
+            }
+          }}
         >
           FILTER
         </Button>
@@ -87,10 +105,26 @@ class FilterBar extends PureComponent {
 }
 
 FilterBar.propTypes = {
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
+  }).isRequired,
   position: PropTypes.oneOf(['left', 'center', 'right']),
-  fetching: PropTypes.bool.isRequired,
-  searchResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loading: PropTypes.shape({
+    autocomplete: PropTypes.bool,
+    search: PropTypes.bool,
+  }).isRequired,
+  autocompleteResults: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currentSearchVal: PropTypes.string.isRequired,
+  selectedBook: PropTypes.shape({
+    bookId: PropTypes.string,
+    selectedVal: PropTypes.string,
+    searchVal: PropTypes.string,
+  }).isRequired,
+
   searchBooks: PropTypes.func.isRequired,
+  autocompleteBooks: PropTypes.func.isRequired,
 };
 
 FilterBar.defaultProps = {
@@ -99,12 +133,15 @@ FilterBar.defaultProps = {
 
 const mapStateToProps = createStructuredSelector({
   error: selectError,
-  fetching: selectFetching,
-  searchResults: selectSearchResult,
+  loading: selectLoading,
+  autocompleteResults: selectAutocompleteResults,
+  currentSearchVal: selectCurrentSearchVal,
+  selectedBook: selectSelectedBook,
 });
 
 const mapDispatchToProps = {
   searchBooks,
+  autocompleteBooks,
 };
 
 const withReducer = injectReducer({ key: 'FilterBar', reducer });
@@ -118,5 +155,6 @@ const withConnect = connect(
 export default compose(
   withReducer,
   withSaga,
+  withRouter,
   withConnect,
 )(FilterBar);
