@@ -6,7 +6,7 @@
   },
   "books": {
     "info": "http://54.169.135.100:5000/books/{asin}",
-    "bookList": "http://54.169.135.100:5000/books/",
+    "bookList": "http://54.169.135.100:5000/books",
     "recommendation": "http://54.169.135.100:5000/books/recommended",
     "autocomplete": "http://54.169.135.100:5000/books/search/autocomplete/{prefix}/{limit}",
     "search": "http://54.169.135.100:5000/books/search/{query}",
