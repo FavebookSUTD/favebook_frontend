@@ -26,7 +26,7 @@ export function logout() {
 }
 
 export function fetchGenres() {
-  // TODO: Connect to real api
-  const genres = require('./mock/mockGenres.json');
-  return genres.data;
+  return api.get({
+    url: apiConfig.books.genres.genres,
+  });
 }
