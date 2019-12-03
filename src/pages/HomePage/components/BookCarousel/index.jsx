@@ -37,7 +37,7 @@ const renderBookList = (rows, books) => {
         <div key={j} className="book-rows__container">
           {map(slice(books, startIdx, startIdx + ROW_MAX_COUNT), book => (
             <div key={book._id} className="book-card" onClick={() => goto(`/book/${book.asin}`)}>
-              <ImageWrapper imgSrc={book.imUrl} imgAltText={book.title} />
+              <ImageWrapper imgSrc={book.imUrl} imgAltText={book.title || 'Book'} />
             </div>
           ))}
         </div>,

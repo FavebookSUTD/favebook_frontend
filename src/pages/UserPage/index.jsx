@@ -62,7 +62,7 @@ class UserPage extends PureComponent {
   }
 
   render() {
-    const { userDetails, wantToRead, reading, booksInCommon, loading, error } = this.props;
+    const { userDetails, wantToRead, reading, booksInCommon, loading } = this.props;
 
     return (
       <Content className="user-page__container">

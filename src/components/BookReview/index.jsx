@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import Moment from 'moment';
+import he from 'he';
 
 // import selector
 import { selectUserInfo, selectLoggedIn } from '@pages/AppLayout/selectors';
@@ -45,7 +46,7 @@ const BookReview = ({ bookReview, showBookImg, showAuthor, showTimestamp, userIn
             expandable: true,
           }}
         >
-          {review_text}
+          {he.decode(review_text)}
         </Paragraph>
         <div className="book-review-details__container">
           {showAuthor ? (

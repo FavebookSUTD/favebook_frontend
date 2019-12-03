@@ -12,7 +12,7 @@ export default ACTIONS;
 
 export const fetchBookDetails = bookId => ({
   type: ACTIONS.FETCH_BOOK_DETAILS,
-  payload: bookId,
+  payload: { bookId },
 });
 
 export const fetchBookReviews = (bookId, pageNum, pageSize) => ({
