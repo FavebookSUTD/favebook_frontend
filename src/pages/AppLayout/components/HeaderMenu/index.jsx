@@ -11,6 +11,7 @@ import { loadPrevPath } from '../../actions';
 // import lodash
 import map from 'lodash/map';
 import toUpper from 'lodash/toUpper';
+import nth from 'lodash/nth';
 
 // import utils
 import { goto } from '@utils/goto';
@@ -25,13 +26,16 @@ import { Typography, Icon, Menu, Popconfirm } from 'antd';
 const { SubMenu } = Menu;
 const { Text } = Typography;
 
-const menuClickHandler = key => {
-  switch (key) {
+const menuClickHandler = (key, keyPath) => {
+  switch (nth(keyPath, -1)) {
     case 'home':
       return goto('/');
 
     case 'mybooks':
       return goto('/mybooks');
+
+    case 'browse':
+      return goto(`/browseresults/${key}`);
 
     default:
       return null;
@@ -61,8 +65,8 @@ const HeaderMenu = ({ history, genres, username, logoutHandler, loadPrevPath }) 
         className="menu__container"
         mode="horizontal"
         selectable={false}
-        onClick={({ key }) => {
-          menuClickHandler(key);
+        onClick={({ key, keyPath }) => {
+          menuClickHandler(key, keyPath);
         }}
       >
         <Menu.Item key="home">HOME</Menu.Item>
@@ -85,9 +89,9 @@ const HeaderMenu = ({ history, genres, username, logoutHandler, loadPrevPath }) 
             <Menu.Item key="news-feed">News Feed</Menu.Item>
           </Menu.ItemGroup>
           <Menu.ItemGroup className="menu-item-group__genres-container" title="GENRES">
-            {map(genres, genre => (
-              <Menu.Item key={genre.title} title={genre.title}>
-                {genre.title}
+            {map(genres, ({ genre }) => (
+              <Menu.Item key={genre} title={genre}>
+                {genre}
               </Menu.Item>
             ))}
           </Menu.ItemGroup>

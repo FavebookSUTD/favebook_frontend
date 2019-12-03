@@ -77,7 +77,7 @@ const BookReview = ({ bookReview, showBookImg, showAuthor, showTimestamp, userIn
               disabled
             />
             <Text className="book-review-detials-rating-value" strong>
-              {review_rating}
+              {review_rating.toFixed(1)}
             </Text>
           </span>
         </div>

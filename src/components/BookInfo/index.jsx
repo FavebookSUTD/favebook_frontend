@@ -27,52 +27,61 @@ const getBookImage = (imgURL, rating) => (
   </div>
 );
 
-const BookInfo = ({ books, pageSize, loading }) => {
-  const DEFAULT_PAGE_SIZE = 8;
+const BookInfo = ({ books, pageSize, pageNum, loading, pagination, total, fetchPageHandler }) => {
+  const paginationSettings = {
+    position: 'both',
+    hideOnSinglePage: true,
+    pageSize,
+  };
+
+  if (pagination) {
+    paginationSettings.current = pageNum;
+    paginationSettings.total = total;
+    paginationSettings.onChange = (pageNum, pageSize) => {
+      fetchPageHandler(pageNum, pageSize);
+    };
+  }
 
   return (
     <div className="book-info__container">
-      <Skeleton loading={loading} active>
-        {!isEmpty(books) ? (
-          <List
-            className="book-info__list-container"
-            itemLayout="vertical"
-            split={false}
-            dataSource={books}
-            rowKey={data => data._id}
-            pagination={{
-              position: 'both',
-              hideOnSinglePage: true,
-              pageSize: pageSize || DEFAULT_PAGE_SIZE,
-            }}
-            renderItem={book => (
-              <List.Item key={book.id}>
-                <List.Item.Meta
-                  avatar={getBookImage(book.imUrl, book.rating)}
-                  title={
-                    <span>
-                      <Title
-                        className="book-title"
-                        level={4}
-                        ellipsis={{ rows: 2 }}
-                        onClick={() => goto(`/book/${book.asin}`)}
-                      >
-                        {book.title}
-                      </Title>
-                    </span>
-                  }
-                  description={
-                    <Paragraph className="book-author" ellipsis={{ rows: 2 }}>
-                      {`By ${book.author}`}
-                    </Paragraph>
-                  }
-                />
-              </List.Item>
-            )}
-          />
-        ) : (
-          <Empty description="No book found" />
-        )}
+      <Skeleton loading={isEmpty(books) && loading} active>
+        <List
+          className="book-info__list-container"
+          itemLayout="vertical"
+          split={false}
+          dataSource={books}
+          loading={loading}
+          rowKey={data => data._id}
+          pagination={paginationSettings}
+          locale={{ emptyText: <Empty description="No book found" /> }}
+          renderItem={book => (
+            <List.Item key={book.id}>
+              <List.Item.Meta
+                avatar={getBookImage(
+                  book.imUrl || '',
+                  book.avg_rating > 0 ? book.avg_rating : 'NIL',
+                )}
+                title={
+                  <span>
+                    <Title
+                      className="book-title"
+                      level={4}
+                      ellipsis={{ rows: 2 }}
+                      onClick={() => goto(`/book/${book.asin}`)}
+                    >
+                      {book.title}
+                    </Title>
+                  </span>
+                }
+                description={
+                  <Paragraph className="book-author" ellipsis={{ rows: 2 }}>
+                    {`By ${book.author}`}
+                  </Paragraph>
+                }
+              />
+            </List.Item>
+          )}
+        />
       </Skeleton>
     </div>
   );
@@ -86,19 +95,24 @@ BookInfo.propTypes = {
       title: PropTypes.string,
       imUrl: PropTypes.string,
       author: PropTypes.string,
-      rating: PropTypes.number,
+      avg_rating: PropTypes.number,
     }),
   ).isRequired,
   pageSize: PropTypes.number,
+  pageNum: PropTypes.number,
   loading: PropTypes.bool,
+  pagination: PropTypes.bool,
+  total: PropTypes.number,
+  fetchPageHandler: PropTypes.func,
 };
 
 BookInfo.defaultProps = {
+  pageSize: 8,
+  pageNum: 1,
   loading: false,
-};
-
-BookInfo.defaultProps = {
-  pageSize: null,
+  pagination: false,
+  total: null,
+  fetchPageHandler: () => {},
 };
 
 export default BookInfo;

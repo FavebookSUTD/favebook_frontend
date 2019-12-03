@@ -12,6 +12,10 @@
     "search": "http://localhost:5000/books/search/{query}",
     "reviews": "http://localhost:5000/books/reviews/{asin}",
     "userReviews": "http://localhost:5000/books/reviews/user/{username}",
-    "userReviewsByBook": "http://localhost:5000/books/reviews/user/{username}/{asin}"
+    "userReviewsByBook": "http://localhost:5000/books/reviews/user/{username}/{asin}",
+    "genres": {
+      "genres": "http://localhost:5000/books/genres",
+      "search": "http://localhost:5000/books/genres/{genre}"
+    }
   }
 }

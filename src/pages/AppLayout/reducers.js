@@ -21,7 +21,7 @@ export default function reducer(state = initialState, action) {
       return state.set('loading', false).set('user', fromJS({}));
 
     case ACTIONS.FETCH_GENRES_SUCCESS:
-      return state.set('genres', fromJS(action.payload));
+      return state.set('genres', fromJS(action.payload.data));
 
     case ACTIONS.LOGOUT_SUCCESS:
       return state.set('user', fromJS({}));

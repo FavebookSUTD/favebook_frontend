@@ -27,7 +27,6 @@ import {
 // import lodash
 import debounce from 'lodash/debounce';
 import map from 'lodash/map';
-import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
 
 // import utils
@@ -84,12 +83,17 @@ class FilterBar extends PureComponent {
           dropdownClassName="filter-autocomplete-dropdown__container"
           dataSource={renderOptions(!loading.autocomplete ? autocompleteResults : [])}
           onSearch={this.deboucedAutocompleteBooks}
-          onSelect={(_, option) => searchBooks(option.key, option.props.label, currentSearchVal)}
+          onSelect={(_, option) => {
+            searchBooks(option.key, option.props.label, currentSearchVal);
+            if (!isEqual(pathname, '/browseresults')) {
+              goto('/browseresults');
+            }
+          }}
         />
         <Button
           className="filter-button"
           type="primary"
-          disabled={isEmpty(autocompleteResults)}
+          disabled={loading.autocomplete || loading.search}
           onClick={() => {
             searchBooks(selectedBook.bookId, selectedBook.selectedVal, currentSearchVal);
             if (!isEqual(pathname, '/browseresults')) {

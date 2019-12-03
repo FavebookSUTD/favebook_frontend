@@ -59,6 +59,12 @@ const Routers = ({ history, loadPrevPath, clearPrevPath }) => {
           },
           {
             path: '/browseresults',
+            exact: true,
+            component: BrowseResultsPage,
+          },
+          {
+            path: '/browseresults/:genre',
+            exact: true,
             component: BrowseResultsPage,
           },
           {
