@@ -12,6 +12,10 @@
     "search": "http://54.169.135.100:5000/books/search/{query}",
     "reviews": "http://54.169.135.100:5000/books/reviews/{asin}",
     "userReviews": "http://54.169.135.100:5000/books/reviews/user/{username}",
-    "userReviewsByBook": "http://54.169.135.100:5000/books/reviews/user/{username}/{asin}"
+    "userReviewsByBook": "http://54.169.135.100:5000/books/reviews/user/{username}/{asin}",
+    "genres": {
+      "genres": "",
+      "search": ""
+    }
   }
 }
