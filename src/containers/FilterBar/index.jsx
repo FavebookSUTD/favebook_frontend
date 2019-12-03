@@ -27,7 +27,6 @@ import {
 // import lodash
 import debounce from 'lodash/debounce';
 import map from 'lodash/map';
-import isEmpty from 'lodash/isEmpty';
 import isEqual from 'lodash/isEqual';
 
 // import utils
