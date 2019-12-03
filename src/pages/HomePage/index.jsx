@@ -20,7 +20,7 @@ import { selectUserInfo } from '@pages/AppLayout/selectors';
 
 // import local components
 import FilterBar from '@containers/FilterBar';
-import BookDisplay from './components/BookCarousel';
+import BookCarousel from './components/BookCarousel';
 
 // import lodash
 import isEmpty from 'lodash/isEmpty';
@@ -54,8 +54,8 @@ class HomePage extends PureComponent {
         <FilterBar position="center" />
         {!loading.recommend && !loading.bestsell ? (
           <>
-            <BookDisplay title="just for you" rows={1} books={recommendBooks} />
-            <BookDisplay title="best sellers" rows={1} books={bestsellBooks} />
+            <BookCarousel title="just for you" rows={1} books={recommendBooks} />
+            <BookCarousel title="best sellers" rows={1} books={bestsellBooks} />
           </>
         ) : (
           <div className="home-page-loading__container">
