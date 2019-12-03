@@ -2,8 +2,10 @@ import api from '@apis/api';
 import apiConfig from '@apis/apiConfig';
 
 export function fetchBookDetails({ payload }) {
+  const { bookId } = payload;
+
   return api.get({
-    url: apiConfig.books.info.replace('{asin}', payload),
+    url: apiConfig.books.info.replace('{asin}', bookId),
   });
 }
 

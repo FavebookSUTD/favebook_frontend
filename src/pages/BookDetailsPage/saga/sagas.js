@@ -1,7 +1,7 @@
-import { put, select } from 'redux-saga/effects';
+import { all, put, select } from 'redux-saga/effects';
 
-export function* updateBookReviewSaga(triggerAction) {
-  const payload = yield select(state => {
+export function* updateBookReviewSaga(bookReviewAction, bookDetailsAction) {
+  const bookReviewPayload = yield select(state => {
     const currentState = state.get('BookDetailsPage');
     return {
       bookId: currentState.getIn(['book', 'asin']),
@@ -10,8 +10,14 @@ export function* updateBookReviewSaga(triggerAction) {
     };
   });
 
-  yield put({
-    type: triggerAction,
-    payload,
-  });
+  yield all([
+    put({
+      type: bookReviewAction,
+      payload: bookReviewPayload,
+    }),
+    put({
+      type: bookDetailsAction,
+      payload: { bookId: bookReviewPayload.bookId },
+    }),
+  ]);
 }

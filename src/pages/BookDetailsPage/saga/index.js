@@ -27,6 +27,7 @@ export default function* watchBookDetailsPage() {
       [UserReviewActions.SUBMIT_USER_REVIEW_SUCCESS, UserReviewActions.UPDATE_USER_REVIEW_SUCCESS],
       updateBookReviewSaga,
       ACTIONS.FETCH_BOOK_REVIEWS,
+      ACTIONS.FETCH_BOOK_DETAILS,
     ),
   ]);
 }
