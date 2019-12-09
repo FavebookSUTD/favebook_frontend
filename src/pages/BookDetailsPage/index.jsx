@@ -101,7 +101,6 @@ class BookDetailsPage extends PureComponent {
                 author={author || 'Lioneel & Glenn'}
                 ratingValue={avg_rating || 0}
                 reviewCount={totalReviewCount}
-                purchaseLinks={{}}
                 genres={!isEmpty(genres) ? genres : []}
               />
               <TabMenuContainer
