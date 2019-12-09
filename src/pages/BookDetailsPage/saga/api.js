@@ -22,3 +22,7 @@ export function fetchBookReviews({ payload }) {
     })
     .then(({ data }) => ({ data, pageNum }));
 }
+
+export function faveBook() {
+  return new Promise(resolve => setTimeout(() => resolve({}), 2000));
+}

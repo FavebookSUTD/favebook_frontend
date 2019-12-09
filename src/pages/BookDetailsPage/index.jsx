@@ -12,7 +12,7 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import { fetchBookDetails, fetchBookReviews } from './actions';
+import { fetchBookDetails, fetchBookReviews, faveBook } from './actions';
 
 // import selector
 import {
@@ -69,6 +69,11 @@ class BookDetailsPage extends PureComponent {
     }
   };
 
+  faveBookHandler = () => {
+    const { faveBook } = this.props;
+    faveBook();
+  };
+
   render() {
     const {
       match: {
@@ -92,7 +97,13 @@ class BookDetailsPage extends PureComponent {
         ) : (
           <Row className="book-details-page__content-container">
             <Col className="book-details-page__misc-details-container" span={8}>
-              <BookCover bookCoverURL={imUrl || ''} bookTitle={title || ''} interestStatus={{}} />
+              <BookCover
+                loading={loading.favebook}
+                bookCoverURL={imUrl || ''}
+                bookTitle={title || ''}
+                interestStatus={{}}
+                faveBookHandler={this.faveBookHandler}
+              />
             </Col>
             <Col className="book-details-page__main-details-container" span={16}>
               <BookDescriptions
@@ -154,10 +165,12 @@ BookDetailsPage.propTypes = {
   loading: PropTypes.shape({
     book: PropTypes.bool.isRequired,
     reviews: PropTypes.bool.isRequired,
+    favebook: PropTypes.bool.isRequired,
   }).isRequired,
   error: PropTypes.shape({
     book: PropTypes.string.isRequired,
     reviews: PropTypes.string.isRequired,
+    favebook: PropTypes.string.isRequired,
   }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -167,6 +180,7 @@ BookDetailsPage.propTypes = {
 
   fetchBookDetails: PropTypes.func.isRequired,
   fetchBookReviews: PropTypes.func.isRequired,
+  faveBook: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -181,6 +195,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = {
   fetchBookDetails,
   fetchBookReviews,
+  faveBook,
 };
 
 const withReducer = injectReducer({ key: 'BookDetailsPage', reducer });

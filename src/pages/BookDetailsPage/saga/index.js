@@ -2,10 +2,11 @@ import { all, takeLatest, takeEvery } from 'redux-saga/effects';
 
 import saga from '@sagas/commonSagas';
 import { updateBookReviewSaga } from './sagas';
+import notificationsHandler from '@sagas/notificationsHandler';
 
 import ACTIONS from '../actions';
 import UserReviewActions from '../containers/UserReview/actions';
-import { fetchBookDetails, fetchBookReviews } from './api';
+import { fetchBookDetails, fetchBookReviews, faveBook } from './api';
 
 export default function* watchBookDetailsPage() {
   yield all([
@@ -28,6 +29,25 @@ export default function* watchBookDetailsPage() {
       updateBookReviewSaga,
       ACTIONS.FETCH_BOOK_REVIEWS,
       ACTIONS.FETCH_BOOK_DETAILS,
+    ),
+    takeLatest(
+      ACTIONS.FAVE_BOOK,
+      saga,
+      ACTIONS.FAVE_BOOK_SUCCESS,
+      ACTIONS.FAVE_BOOK_FAILURE,
+      faveBook,
+    ),
+    takeLatest(
+      ACTIONS.FAVE_BOOK_SUCCESS,
+      notificationsHandler,
+      'success',
+      'Successfully Fave the book.',
+    ),
+    takeLatest(
+      ACTIONS.FAVE_BOOK_FAILURE,
+      notificationsHandler,
+      'error',
+      'Failed to Fave the book.',
     ),
   ]);
 }

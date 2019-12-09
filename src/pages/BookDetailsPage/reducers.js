@@ -10,10 +10,12 @@ export const initialState = fromJS({
   loading: {
     book: false,
     reviews: false,
+    favebook: false,
   },
   error: {
     book: '',
     reviews: '',
+    favebook: '',
   },
 });
 
@@ -53,6 +55,17 @@ export default function reducer(state = initialState, action) {
 
     case ACTIONS.RESET_BOOK_REVIEWS:
       return state.set('reviews', fromJS({}));
+
+    case ACTIONS.FAVE_BOOK:
+      return state.setIn(['loading', 'favebook'], true);
+
+    case ACTIONS.FAVE_BOOK_SUCCESS:
+      return state.setIn(['loading', 'favebook'], false).setIn(['error', 'reviews'], '');
+
+    case ACTIONS.FAVE_BOOK_FAILURE:
+      return state
+        .setIn(['loading', 'favebook'], false)
+        .setIn(['error', 'reviews'], action.payload.toString());
 
     default:
       return state;
