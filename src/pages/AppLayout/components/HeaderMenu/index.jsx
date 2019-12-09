@@ -34,7 +34,7 @@ const menuClickHandler = (key, keyPath) => {
     case 'mybooks':
       return goto('/mybooks');
 
-    case 'browse':
+    case 'genre':
       return goto(`/browseresults/${key}`);
 
     default:
@@ -72,23 +72,16 @@ const HeaderMenu = ({ history, genres, username, logoutHandler, loadPrevPath }) 
         <Menu.Item key="home">HOME</Menu.Item>
         <Menu.Item key="mybooks">MY BOOKS</Menu.Item>
         <SubMenu
-          key="browse"
+          key="genre"
           popupClassName="submenu__container"
           title={
             <>
-              <span className="submenu-title__container">BROWSE</span>
+              <span className="submenu-title__container">GENRE</span>
               <Icon type="caret-down" />
             </>
           }
         >
-          <Menu.ItemGroup className="menu-item-group__main-container">
-            <Menu.Item key="recommendations">Recommendations</Menu.Item>
-            <Menu.Item key="choice-awards">Choice Awards</Menu.Item>
-            <Menu.Item key="giveaways">Giveaways</Menu.Item>
-            <Menu.Item key="new-releases">New Releases</Menu.Item>
-            <Menu.Item key="news-feed">News Feed</Menu.Item>
-          </Menu.ItemGroup>
-          <Menu.ItemGroup className="menu-item-group__genres-container" title="GENRES">
+          <Menu.ItemGroup className="menu-item-group__genres-container">
             {map(genres, ({ genre }) => (
               <Menu.Item key={genre} title={genre}>
                 {genre}
@@ -96,7 +89,6 @@ const HeaderMenu = ({ history, genres, username, logoutHandler, loadPrevPath }) 
             ))}
           </Menu.ItemGroup>
         </SubMenu>
-        <Menu.Item key="newsfeed">NEWSFEED</Menu.Item>
       </Menu>
       <Popconfirm title="Confirm Logout?" icon={<Icon type="logout" />} onConfirm={signOutHandler}>
         <div className="signin__container" onClick={signInHandler}>

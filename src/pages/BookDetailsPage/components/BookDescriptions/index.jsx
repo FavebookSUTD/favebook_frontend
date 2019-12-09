@@ -12,20 +12,12 @@ import map from 'lodash/map';
 import './index.scss';
 
 // import Antd
-import { Typography, Icon, Button, Tag, Skeleton } from 'antd';
+import { Typography, Icon, Tag, Skeleton } from 'antd';
 
 // Extract antd components
 const { Title, Text } = Typography;
 
-const BookDescriptions = ({
-  loading,
-  title,
-  author,
-  ratingValue,
-  reviewCount,
-  purchaseLinks,
-  genres,
-}) => {
+const BookDescriptions = ({ loading, title, author, ratingValue, reviewCount, genres }) => {
   return (
     <div className="book-descriptions__main-container">
       <Skeleton loading={loading} active>
@@ -43,27 +35,6 @@ const BookDescriptions = ({
             <Icon className="review-icon" type="message" />
             {`${reviewCount}`}
           </Text>
-        </div>
-        <div className="book-purchase__btn-group">
-          <Text className="book-purchase__title" strong>
-            Buy on
-          </Text>
-          <Button
-            className="book-purchase__btn"
-            disabled={!purchaseLinks || !purchaseLinks.amazon}
-            size="large"
-            type="primary"
-          >
-            AMAZON
-          </Button>
-          <Button
-            className="book-purchase__btn"
-            disabled={!purchaseLinks || !purchaseLinks.kindle}
-            size="large"
-            type="primary"
-          >
-            KINDLE
-          </Button>
         </div>
         <div className="book-genre-tags__container">
           {map(genres, genre => (
@@ -83,10 +54,6 @@ BookDescriptions.propTypes = {
   author: PropTypes.string.isRequired,
   ratingValue: PropTypes.number.isRequired,
   reviewCount: PropTypes.number.isRequired,
-  purchaseLinks: PropTypes.shape({
-    amazon: PropTypes.string,
-    kindle: PropTypes.string,
-  }).isRequired,
   genres: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 

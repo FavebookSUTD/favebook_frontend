@@ -5,21 +5,12 @@ const selectUserPage = state => state.get('UserPage', initialState);
 
 const selectUserDetails = selectToJS(selectUserPage, 'userDetails');
 
-const selectWantToRead = selectToJS(selectUserPage, 'wantToRead');
+const selectFavourite = selectToJS(selectUserPage, 'favourite');
 
-const selectReading = selectToJS(selectUserPage, 'reading');
-
-const selectBooksInCommon = selectToJS(selectUserPage, 'booksInCommon');
+const selectBooksReviewed = selectToJS(selectUserPage, 'booksReviewed');
 
 const selectLoading = selectToJS(selectUserPage, 'loading');
 
 const selectError = selectToJS(selectUserPage, 'error');
 
-export {
-  selectUserDetails,
-  selectWantToRead,
-  selectReading,
-  selectBooksInCommon,
-  selectLoading,
-  selectError,
-};
+export { selectUserDetails, selectFavourite, selectBooksReviewed, selectLoading, selectError };

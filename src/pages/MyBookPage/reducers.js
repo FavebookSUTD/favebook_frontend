@@ -3,17 +3,14 @@ import ACTIONS from './actions';
 
 export const initialState = fromJS({
   loading: {
-    wantToRead: false,
-    reading: false,
+    favourite: false,
     myReviews: false,
   },
   error: {
-    wantToRead: '',
-    reading: '',
+    favourite: '',
     myReviews: '',
   },
-  wantToRead: [],
-  reading: [],
+  favourite: [],
   myReviews: {},
   totalReviewCount: 0,
   currentReviewPageNum: 0,
@@ -22,31 +19,19 @@ export const initialState = fromJS({
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case ACTIONS.FETCH_WANT_TO_READ:
-      return state.setIn(['loading', 'wantToRead'], true);
+    case ACTIONS.FETCH_FAVOURITE:
+      return state.setIn(['loading', 'favourite'], true);
 
-    case ACTIONS.FETCH_WANT_TO_READ_SUCCESS:
+    case ACTIONS.FETCH_FAVOURITE_SUCCESS:
       return state
-        .set('wantToRead', fromJS(action.payload.data))
-        .setIn(['loading', 'wantToRead'], false)
-        .setIn(['error', 'wantToRead'], '');
+        .set('favourite', fromJS(action.payload.data))
+        .setIn(['loading', 'favourite'], false)
+        .setIn(['error', 'favourite'], '');
 
-    case ACTIONS.FETCH_WANT_TO_READ_FAILURE:
-      return state.setIn(['loading', 'wantToRead'], false).set('error', action.payload.toString());
-
-    case ACTIONS.FETCH_READING:
-      return state.setIn(['loading', 'reading'], true);
-
-    case ACTIONS.FETCH_READING_SUCCESS:
+    case ACTIONS.FETCH_FAVOURITE_FAILURE:
       return state
-        .set('reading', fromJS(action.payload.data))
-        .setIn(['loading', 'reading'], false)
-        .setIn(['error', 'reading'], '');
-
-    case ACTIONS.FETCH_READING_FAILURE:
-      return state
-        .setIn(['loading', 'reading'], false)
-        .setIn(['error', 'reading'], action.payload.toString());
+        .setIn(['loading', 'favourite'], false)
+        .setIn(['error', 'favourite'], action.payload.toString());
 
     case ACTIONS.FETCH_MY_REVIEWS:
       return state

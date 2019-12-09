@@ -6,6 +6,9 @@ const ACTIONS = {
   FETCH_BOOK_REVIEWS_SUCCESS: '@pages/BookDetailsPage/FETCH_BOOK_REVIEWS_SUCCESS',
   FETCH_BOOK_REVIEWS_FAILURE: '@pages/BookDetailsPage/FETCH_BOOK_REVIEWS_FAILURE',
   RESET_BOOK_REVIEWS: '@pages/BookDetailsPage/RESET_BOOK_REVIEWS',
+  FAVE_BOOK: '@pages/BookDetailsPage/FAVE_BOOK',
+  FAVE_BOOK_SUCCESS: '@pages/BookDetailsPage/FAVE_BOOK_SUCCESS',
+  FAVE_BOOK_FAILURE: '@pages/BookDetailsPage/FAVE_BOOK_FAILURE',
 };
 
 export default ACTIONS;
@@ -22,4 +25,8 @@ export const fetchBookReviews = (bookId, pageNum, pageSize) => ({
 
 export const resetBookReviews = () => ({
   type: ACTIONS.RESET_BOOK_REVIEWS,
+});
+
+export const faveBook = () => ({
+  type: ACTIONS.FAVE_BOOK,
 });

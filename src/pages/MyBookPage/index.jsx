@@ -12,13 +12,12 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import { fetchWantToRead, fetchReading, fetchMyReviews } from './actions';
+import { fetchFavourite, fetchMyReviews } from './actions';
 
 // import selector
 import {
   selectLoading,
-  selectWantToRead,
-  selectReading,
+  selectFavourite,
   selectMyReviews,
   selectTotalReviewCount,
   selectPageSize,
@@ -45,10 +44,9 @@ const renderBookList = (books, loading) => <BookInfo loading={loading} books={bo
 
 class MyBookPage extends PureComponent {
   componentDidMount() {
-    const { pageSize, fetchWantToRead, fetchReading } = this.props;
+    const { pageSize, fetchFavourite } = this.props;
 
-    fetchWantToRead();
-    fetchReading();
+    fetchFavourite();
     this.fetchReviewHandler(1, pageSize);
   }
 
@@ -61,7 +59,7 @@ class MyBookPage extends PureComponent {
   };
 
   render() {
-    const { loading, wantToRead, reading, myReviews, totalReviewCount, pageSize } = this.props;
+    const { loading, favourite, myReviews, totalReviewCount, pageSize } = this.props;
 
     return (
       <Content className="my-book-page__container">
@@ -69,12 +67,8 @@ class MyBookPage extends PureComponent {
           className="my-book-page__tab-menu-container"
           menuObj={[
             {
-              title: 'Want To Read',
-              reactNode: renderBookList(wantToRead, loading.wantToRead),
-            },
-            {
-              title: 'Reading',
-              reactNode: renderBookList(reading, loading.reading),
+              title: 'Favourite',
+              reactNode: renderBookList(favourite, loading.favourite),
             },
             {
               title: 'My Reviews',
@@ -99,20 +93,10 @@ class MyBookPage extends PureComponent {
 
 MyBookPage.propTypes = {
   loading: PropTypes.shape({
-    wantToRead: PropTypes.bool.isRequired,
-    reading: PropTypes.bool.isRequired,
+    favourite: PropTypes.bool.isRequired,
     myReviews: PropTypes.bool.isRequired,
   }).isRequired,
-  wantToRead: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-      imgURL: PropTypes.string,
-      author: PropTypes.string,
-      rating: PropTypes.number,
-    }),
-  ).isRequired,
-  reading: PropTypes.arrayOf(
+  favourite: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
       title: PropTypes.string,
@@ -127,15 +111,13 @@ MyBookPage.propTypes = {
 
   userInfo: PropTypes.shape({ username: PropTypes.string }).isRequired,
 
-  fetchWantToRead: PropTypes.func.isRequired,
-  fetchReading: PropTypes.func.isRequired,
+  fetchFavourite: PropTypes.func.isRequired,
   fetchMyReviews: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   loading: selectLoading,
-  wantToRead: selectWantToRead,
-  reading: selectReading,
+  favourite: selectFavourite,
   myReviews: selectMyReviews,
   totalReviewCount: selectTotalReviewCount,
   pageSize: selectPageSize,
@@ -144,8 +126,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = {
-  fetchWantToRead,
-  fetchReading,
+  fetchFavourite,
   fetchMyReviews,
 };
 

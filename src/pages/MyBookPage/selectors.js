@@ -7,9 +7,7 @@ const selectLoading = selectToJS(selectMyBookPage, 'loading');
 
 const selectError = selectToJS(selectMyBookPage, 'error');
 
-const selectWantToRead = selectToJS(selectMyBookPage, 'wantToRead');
-
-const selectReading = selectToJS(selectMyBookPage, 'reading');
+const selectFavourite = selectToJS(selectMyBookPage, 'favourite');
 
 const selectMyReviews = selectToJS(selectMyBookPage, 'myReviews');
 
@@ -22,8 +20,7 @@ const selectPageSize = select(selectMyBookPage, 'pageSize');
 export {
   selectLoading,
   selectError,
-  selectWantToRead,
-  selectReading,
+  selectFavourite,
   selectMyReviews,
   selectTotalReviewCount,
   selectCurrentReviewPageNum,

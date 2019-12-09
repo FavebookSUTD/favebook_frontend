@@ -7,19 +7,13 @@ export function fetchUserDetails({ payload }) {
   return new Promise(resolve => setTimeout(() => resolve(mockData), 1000));
 }
 
-export function fetchWantToRead({ payload }) {
+export function fetchFavourite({ payload }) {
   const mockData = require('./mock/mockBookList.json');
 
   return new Promise(resolve => setTimeout(() => resolve(mockData), 1000));
 }
 
-export function fetchReading({ payload }) {
-  const mockData = require('./mock/mockBookList.json');
-
-  return new Promise(resolve => setTimeout(() => resolve(mockData), 1000));
-}
-
-export function fetchBooksInCommon({ payload }) {
+export function fetchBooksReviewed({ payload }) {
   const mockData = require('./mock/mockBookInCommon.json');
 
   return new Promise(resolve => setTimeout(() => resolve(mockData), 1000));

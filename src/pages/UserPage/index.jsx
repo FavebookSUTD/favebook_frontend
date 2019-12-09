@@ -13,19 +13,13 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import {
-  fetchUserDetails,
-  fetchWantToReadBooks,
-  fetchReadingBooks,
-  fetchBooksInCommon,
-} from './actions';
+import { fetchUserDetails, fetchFavourite, fetchBooksReviewed } from './actions';
 
 // import selector
 import {
   selectUserDetails,
-  selectWantToRead,
-  selectReading,
-  selectBooksInCommon,
+  selectFavourite,
+  selectBooksReviewed,
   selectLoading,
   selectError,
 } from './selectors';
@@ -49,20 +43,14 @@ const { Content } = Layout;
 
 class UserPage extends PureComponent {
   componentDidMount() {
-    const {
-      fetchUserDetails,
-      fetchWantToReadBooks,
-      fetchReadingBooks,
-      fetchBooksInCommon,
-    } = this.props;
+    const { fetchUserDetails, fetchFavourite, fetchBooksReviewed } = this.props;
     fetchUserDetails();
-    fetchWantToReadBooks();
-    fetchReadingBooks();
-    fetchBooksInCommon();
+    fetchFavourite();
+    fetchBooksReviewed();
   }
 
   render() {
-    const { userDetails, wantToRead, reading, booksInCommon, loading } = this.props;
+    const { userDetails, favourite, booksReviewed, loading } = this.props;
 
     return (
       <Content className="user-page__container">
@@ -70,16 +58,12 @@ class UserPage extends PureComponent {
         <TabMenuContainer
           menuObj={[
             {
-              title: 'Want To Read',
-              reactNode: <BookInfo books={wantToRead} loading={loading.wantToRead} />,
+              title: 'Favourite',
+              reactNode: <BookInfo books={favourite} loading={loading.favourite} />,
             },
             {
-              title: 'Reading',
-              reactNode: <BookInfo books={reading} loading={loading.wantToRead} />,
-            },
-            {
-              title: 'Book In Common',
-              reactNode: <BookInCommonList loading={loading.booksInCommon} books={booksInCommon} />,
+              title: 'Books Reviewed',
+              reactNode: <BookInCommonList loading={loading.booksReviewed} books={booksReviewed} />,
             },
           ]}
           autoFit
@@ -91,42 +75,37 @@ class UserPage extends PureComponent {
 
 UserPage.propTypes = {
   userDetails: PropTypes.shape({}).isRequired,
-  wantToRead: PropTypes.arrayOf(PropTypes.object).isRequired,
-  reading: PropTypes.arrayOf(PropTypes.object).isRequired,
-  booksInCommon: PropTypes.arrayOf(PropTypes.object).isRequired,
+  favourite: PropTypes.arrayOf(PropTypes.object).isRequired,
+  booksReviewed: PropTypes.arrayOf(PropTypes.object).isRequired,
   loading: PropTypes.shape({
     userDetails: PropTypes.bool.isRequired,
-    wantToRead: PropTypes.bool.isRequired,
-    reading: PropTypes.bool.isRequired,
-    booksInCommon: PropTypes.bool.isRequired,
+    favourite: PropTypes.bool.isRequired,
+    booksReviewed: PropTypes.bool.isRequired,
   }).isRequired,
   error: PropTypes.shape({
     userDetails: PropTypes.string.isRequired,
-    wantToRead: PropTypes.string.isRequired,
+    favourite: PropTypes.string.isRequired,
     reading: PropTypes.string.isRequired,
-    booksInCommon: PropTypes.string.isRequired,
+    booksReviewed: PropTypes.string.isRequired,
   }).isRequired,
 
   fetchUserDetails: PropTypes.func.isRequired,
-  fetchWantToReadBooks: PropTypes.func.isRequired,
-  fetchReadingBooks: PropTypes.func.isRequired,
-  fetchBooksInCommon: PropTypes.func.isRequired,
+  fetchFavourite: PropTypes.func.isRequired,
+  fetchBooksReviewed: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   userDetails: selectUserDetails,
-  wantToRead: selectWantToRead,
-  reading: selectReading,
-  booksInCommon: selectBooksInCommon,
+  favourite: selectFavourite,
+  booksReviewed: selectBooksReviewed,
   loading: selectLoading,
   error: selectError,
 });
 
 const mapDispatchToProps = {
   fetchUserDetails,
-  fetchWantToReadBooks,
-  fetchReadingBooks,
-  fetchBooksInCommon,
+  fetchFavourite,
+  fetchBooksReviewed,
 };
 
 const withReducer = injectReducer({ key: 'UserPage', reducer });
