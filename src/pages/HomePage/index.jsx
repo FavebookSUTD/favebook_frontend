@@ -25,6 +25,7 @@ import BookCarousel from './components/BookCarousel';
 // import lodash
 import isEmpty from 'lodash/isEmpty';
 import toUpper from 'lodash/toUpper';
+import isEqual from 'lodash/isEqual';
 
 // import local styling
 import './index.scss';
@@ -43,9 +44,23 @@ class HomePage extends PureComponent {
     fetchBestsellBookList();
   }
 
+  componentDidUpdate(prevProps) {
+    const {
+      userInfo: { username: oldUsername },
+    } = prevProps;
+
+    const {
+      userInfo: { username: newUsername },
+      fetchRecommendBookList,
+    } = this.props;
+
+    if (!isEqual(oldUsername, newUsername)) {
+      fetchRecommendBookList(newUsername);
+    }
+  }
+
   render() {
     const { loading, recommendBooks, bestsellBooks, userInfo } = this.props;
-
     return (
       <Content className="home-page__container">
         <Title className="home-page-greeting__header" level={1} ellipsis>
@@ -54,8 +69,8 @@ class HomePage extends PureComponent {
         <FilterBar position="center" />
         {!loading.recommend && !loading.bestsell ? (
           <>
-            <BookCarousel title="just for you" rows={1} books={recommendBooks} />
-            <BookCarousel title="best sellers" rows={1} books={bestsellBooks} />
+            <BookCarousel title="random picks" rows={1} books={recommendBooks} />
+            <BookCarousel title="top rated" rows={1} books={bestsellBooks} />
           </>
         ) : (
           <div className="home-page-loading__container">

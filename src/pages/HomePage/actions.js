@@ -9,8 +9,9 @@ const ACTIONS = {
 
 export default ACTIONS;
 
-export const fetchRecommendBookList = () => ({
+export const fetchRecommendBookList = username => ({
   type: ACTIONS.FETCH_RECOMMEND_BOOKLIST,
+  payload: { username },
 });
 
 export const fetchBestsellBookList = () => ({
