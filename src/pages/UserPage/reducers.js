@@ -3,20 +3,17 @@ import ACTIONS from './actions';
 
 export const initialState = fromJS({
   userDetails: {},
-  wantToRead: [],
-  reading: [],
-  booksInCommon: [],
+  favourite: [],
+  booksReviewed: [],
   loading: {
     userDetails: false,
-    wantToRead: false,
-    reading: false,
-    booksInCommon: false,
+    favourite: false,
+    booksReviewed: false,
   },
   error: {
     userDetails: '',
-    wantToRead: '',
-    reading: '',
-    booksInCommon: '',
+    favourite: '',
+    booksReviewed: '',
   },
 });
 
@@ -37,50 +34,35 @@ export default function reducer(state = initialState, action) {
         .setIn(['loading', 'userDetails'], false)
         .setIn(['error', 'userDetails'], action.payload.toString());
 
-    case ACTIONS.FETCH_WANT_TO_READ_BOOKS:
-      return state.setIn(['loading', 'wantToRead'], true);
+    case ACTIONS.FETCH_FAVOURITE:
+      return state.setIn(['loading', 'favourite'], true);
 
-    case ACTIONS.FETCH_WANT_TO_READ_BOOKS_SUCCESS:
+    case ACTIONS.FETCH_FAVOURITE_SUCCESS:
       return state
-        .set('wantToRead', fromJS(action.payload.data))
-        .setIn(['loading', 'wantToRead'], false)
-        .setIn(['error', 'wantToRead'], '');
+        .set('favourite', fromJS(action.payload.data))
+        .setIn(['loading', 'favourite'], false)
+        .setIn(['error', 'favourite'], '');
 
-    case ACTIONS.FETCH_WANT_TO_READ_BOOKS_FAILURE:
+    case ACTIONS.FETCH_FAVOURITE_FAILURE:
       return state
-        .set('wantToRead', fromJS([]))
-        .setIn(['loading', 'wantToRead'], false)
-        .setIn(['error', 'wantToRead'], action.payload.toString());
+        .set('favourite', fromJS([]))
+        .setIn(['loading', 'favourite'], false)
+        .setIn(['error', 'favourite'], action.payload.toString());
 
-    case ACTIONS.FETCH_READING_BOOKS:
-      return state.setIn(['loading', 'reading'], true);
+    case ACTIONS.FETCH_BOOKS_REVIEWED:
+      return state.setIn(['loading', 'booksReviewed'], true);
 
-    case ACTIONS.FETCH_READING_BOOKS_SUCCESS:
+    case ACTIONS.FETCH_BOOKS_REVIEWED_SUCCESS:
       return state
-        .set('reading', fromJS(action.payload.data))
-        .setIn(['loading', 'reading'], false)
-        .setIn(['error', 'reading'], '');
+        .set('booksReviewed', fromJS(action.payload.data))
+        .setIn(['loading', 'booksReviewed'], false)
+        .setIn(['error', 'booksReviewed'], '');
 
-    case ACTIONS.FETCH_READING_BOOKS_FAILURE:
+    case ACTIONS.FETCH_BOOKS_REVIEWED_FAILURE:
       return state
-        .set('reading', fromJS([]))
-        .setIn(['loading', 'reading'], false)
-        .setIn(['error', 'reading'], action.payload.toString());
-
-    case ACTIONS.FETCH_BOOKS_IN_COMMON:
-      return state.setIn(['loading', 'booksInCommon'], true);
-
-    case ACTIONS.FETCH_BOOKS_IN_COMMON_SUCCESS:
-      return state
-        .set('booksInCommon', fromJS(action.payload.data))
-        .setIn(['loading', 'booksInCommon'], false)
-        .setIn(['error', 'booksInCommon'], '');
-
-    case ACTIONS.FETCH_BOOKS_IN_COMMON_FAILURE:
-      return state
-        .set('booksInCommon', fromJS([]))
-        .setIn(['loading', 'booksInCommon'], false)
-        .setIn(['error', 'booksInCommon'], action.payload.toString());
+        .set('booksReviewed', fromJS([]))
+        .setIn(['loading', 'booksReviewed'], false)
+        .setIn(['error', 'booksReviewed'], action.payload.toString());
 
     default:
       return state;
