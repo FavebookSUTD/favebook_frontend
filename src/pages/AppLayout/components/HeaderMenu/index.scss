@@ -55,22 +55,12 @@
       color: $primary-background-color;
     }
 
-    .menu-item-group__main-container {
-      padding: 0.5rem;
-      background: lighten($primary-color, 20%);
-
-      .ant-menu-item-group-title {
-        display: none;
-      }
-    }
-
     .menu-item-group__genres-container {
       padding: 0.5rem;
       background: lighten($primary-color, 18%);
 
       .ant-menu-item-group-title {
-        color: $primary-color;
-        font-weight: 800;
+        display: none;
       }
       .ant-menu-item {
         height: 30px;
