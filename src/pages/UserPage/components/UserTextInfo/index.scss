@@ -22,23 +22,23 @@ $custom-fontsize: 16px;
       font-size: $custom-fontsize;
       vertical-align: bottom;
     }
-    .user-followernumber {
+    .user-num-reviews {
       font-weight: 800;
       font-size: $custom-fontsize;
     }
   }
 
-  .user-commonbooks {
+  .user-review-rating {
     margin-bottom: 1rem;
-    .user-input-commonbooks {
+    .user-input-review-rating {
       font-weight: 800;
       font-size: $custom-fontsize;
     }
   }
 
-  .user-commonpercent {
+  .user-fave-books {
     margin-bottom: 1rem;
-    .user-input-commonpercent {
+    .user-input-fave-books {
       font-weight: 800;
       font-size: $custom-fontsize;
     }

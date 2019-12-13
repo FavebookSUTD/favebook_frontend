@@ -13,22 +13,21 @@ import isEmpty from 'lodash/isEmpty';
 import './index.scss';
 
 // import Antd
-import { Button, Skeleton, Empty } from 'antd';
+import { Skeleton, Empty } from 'antd';
 
 const UserInfo = ({ loading, userInfo }) => {
-  const { username, joinDate } = userInfo;
+  const { username } = userInfo;
 
   return (
     <div className="user-info__container">
       <div className="user-info__membership-container">
-        <UserAvatar loading={loading} username={username} joinDate={joinDate} />
+        <UserAvatar loading={loading} username={username} />
       </div>
       <div className="user-info__relation-container">
         <Skeleton loading={loading} active>
           {!loading && !isEmpty(userInfo) ? (
             <>
               <UserTextInfo userInfo={userInfo} />
-              <Button className="user-follow-btn">{'Follow her'.toUpperCase()}</Button>
             </>
           ) : (
             <Empty description="Unable to get user info." />
@@ -43,7 +42,6 @@ UserInfo.propTypes = {
   loading: PropTypes.bool.isRequired,
   userInfo: PropTypes.shape({
     username: PropTypes.string,
-    joinDate: PropTypes.string,
   }).isRequired,
 };
 

@@ -10,7 +10,7 @@ import { Tooltip } from 'antd';
 
 const BookRatingBubble = ({ ratingValue, userRating }) => {
   return (
-    <Tooltip title={userRating ? 'User Rating' : 'Your Rating'}>
+    <Tooltip title={userRating ? 'Average Rating' : 'User Rating'}>
       <div
         className={`book-rating-bubble__container ${
           userRating ? 'book-rating-bubble-user-rating' : ''

@@ -12,7 +12,7 @@ import { Typography } from 'antd';
 const { Text } = Typography;
 
 const UserTextInfo = ({ userInfo }) => {
-  const { username, followers, commonBooks, commonPercent } = userInfo;
+  const { username, num_reviews, avg_rating, num_favourite_books } = userInfo;
 
   return (
     <div className="user-text-info__container">
@@ -20,19 +20,17 @@ const UserTextInfo = ({ userInfo }) => {
         <Text className="user-name" ellipsis>
           {username.toUpperCase()}
         </Text>
-        <Text>has</Text>
-        <Text className="user-followernumber">{followers}</Text>
-        <Text>followers</Text>
+        <Text>has made</Text>
+        <Text className="user-num-reviews">{num_reviews}</Text>
+        <Text>reviews</Text>
       </div>
-      <div className="user-commonbooks">
-        <Text>You have</Text>
-        <Text className="user-input-commonbooks">{commonBooks}</Text>
-        <Text>common favebooks</Text>
+      <div className="user-review-rating">
+        <Text>Average review rating of</Text>
+        <Text className="user-input-review-rating">{avg_rating}</Text>
       </div>
-      <div className="user-commonpercent">
-        <Text>Your tastes are</Text>
-        <Text className="user-input-commonpercent">{`${commonPercent}%`}</Text>
-        <Text>similar for a book you both rated.</Text>
+      <div className="user-fave-books">
+        <Text className="user-input-fave-books">{num_favourite_books}</Text>
+        <Text>favourite books</Text>
       </div>
     </div>
   );
@@ -41,9 +39,9 @@ const UserTextInfo = ({ userInfo }) => {
 UserTextInfo.propTypes = {
   userInfo: PropTypes.shape({
     username: PropTypes.string,
-    followers: PropTypes.number,
-    commonBooks: PropTypes.number,
-    commonPercent: PropTypes.number,
+    numReviews: PropTypes.number,
+    avg_rating: PropTypes.number,
+    num_favourite_books: PropTypes.number,
   }).isRequired,
 };
 

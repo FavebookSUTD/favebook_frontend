@@ -1,9 +1,8 @@
 {
   "data": {
     "username": "John Doe",
-    "followers": 64,
-    "commonBooks": 5,
-    "commonPercent": 3,
-    "joinDate": "3 Nov 2019"
+    "num_reviews": 64,
+    "avg_rating": 3.5,
+    "num_favourite_books": 3
   }
 }
