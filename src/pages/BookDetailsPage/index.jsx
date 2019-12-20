@@ -51,7 +51,6 @@ class BookDetailsPage extends PureComponent {
       pageSize,
       fetchBookDetails,
     } = this.props;
-
     fetchBookDetails(id);
     this.fetchBookReviewsHandler(1, pageSize);
   }
@@ -69,9 +68,9 @@ class BookDetailsPage extends PureComponent {
     }
   };
 
-  faveBookHandler = () => {
+  faveBookHandler = (isFaved, bookId) => {
     const { faveBook } = this.props;
-    faveBook();
+    faveBook(isFaved, bookId);
   };
 
   render() {
@@ -87,7 +86,7 @@ class BookDetailsPage extends PureComponent {
       error,
     } = this.props;
 
-    const { title, author, avg_rating, description, imUrl, genres } = book;
+    const { title, author, avg_rating, description, imUrl, genres, user_fav } = book;
 
     return (
       <div className="book-details-page__main-container">
@@ -101,8 +100,10 @@ class BookDetailsPage extends PureComponent {
                 loading={loading.favebook}
                 bookCoverURL={imUrl || ''}
                 bookTitle={title || ''}
-                interestStatus={{}}
+                interestStatus={{ wantToReadCount: 5 }}
                 faveBookHandler={this.faveBookHandler}
+                initFave={user_fav}
+                bookId={id}
               />
             </Col>
             <Col className="book-details-page__main-details-container" span={16}>
@@ -158,6 +159,7 @@ BookDetailsPage.propTypes = {
     description: PropTypes.string,
     imUrl: PropTypes.string,
     genres: PropTypes.arrayOf(PropTypes.string),
+    user_fav: PropTypes.bool.isRequired,
   }).isRequired,
   reviews: PropTypes.shape({}).isRequired,
   totalReviewCount: PropTypes.number.isRequired,

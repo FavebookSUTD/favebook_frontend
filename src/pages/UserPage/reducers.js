@@ -24,7 +24,7 @@ export default function reducer(state = initialState, action) {
 
     case ACTIONS.FETCH_USER_DETAILS_SUCCESS:
       return state
-        .set('userDetails', fromJS(action.payload.data))
+        .set('userDetails', fromJS(action.payload))
         .setIn(['loading', 'userDetails'], false)
         .setIn(['error', 'userDetails'], '');
 
@@ -39,7 +39,7 @@ export default function reducer(state = initialState, action) {
 
     case ACTIONS.FETCH_FAVOURITE_SUCCESS:
       return state
-        .set('favourite', fromJS(action.payload.data))
+        .set('favourite', fromJS(action.payload))
         .setIn(['loading', 'favourite'], false)
         .setIn(['error', 'favourite'], '');
 
@@ -54,7 +54,7 @@ export default function reducer(state = initialState, action) {
 
     case ACTIONS.FETCH_BOOKS_REVIEWED_SUCCESS:
       return state
-        .set('booksReviewed', fromJS(action.payload.data))
+        .set('booksReviewed', fromJS(action.payload))
         .setIn(['loading', 'booksReviewed'], false)
         .setIn(['error', 'booksReviewed'], '');
 

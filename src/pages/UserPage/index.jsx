@@ -36,17 +36,19 @@ import BookInCommonList from './components/BookInCommonList';
 import './index.scss';
 
 // import Antd
-import { Layout } from 'antd';
+import { Layout, Typography } from 'antd';
 
 // Extract antd components
 const { Content } = Layout;
+const { Text } = Typography;
 
 class UserPage extends PureComponent {
   componentDidMount() {
-    const { fetchUserDetails, fetchFavourite, fetchBooksReviewed } = this.props;
-    fetchUserDetails();
-    fetchFavourite();
-    fetchBooksReviewed();
+    const { fetchUserDetails, fetchFavourite, fetchBooksReviewed, location } = this.props;
+    const username = location.pathname.replace('/user/', '');
+    fetchUserDetails({ username });
+    fetchFavourite({ username });
+    fetchBooksReviewed({ username });
   }
 
   render() {
@@ -54,20 +56,33 @@ class UserPage extends PureComponent {
 
     return (
       <Content className="user-page__container">
-        <UserInfo loading={loading.userDetails} userInfo={userDetails} />
-        <TabMenuContainer
-          menuObj={[
-            {
-              title: 'Favourite',
-              reactNode: <BookInfo books={favourite} loading={loading.favourite} />,
-            },
-            {
-              title: 'Books Reviewed',
-              reactNode: <BookInCommonList loading={loading.booksReviewed} books={booksReviewed} />,
-            },
-          ]}
-          autoFit
-        />
+        {userDetails ? (
+          <UserInfo loading={loading.userDetails} userInfo={userDetails} />
+        ) : (
+          <Text> Username not found in database </Text>
+        )}
+        {userDetails ? (
+          <TabMenuContainer
+            menuObj={[
+              {
+                title: 'Favourite',
+                reactNode: (
+                  <BookInfo books={favourite.books_favourite} loading={loading.favourite} />
+                ),
+              },
+              {
+                title: 'Books Reviewed',
+                reactNode: (
+                  <BookInCommonList
+                    loading={loading.booksReviewed}
+                    books={booksReviewed.books_reviewed}
+                  />
+                ),
+              },
+            ]}
+            autoFit
+          />
+        ) : null}
       </Content>
     );
   }

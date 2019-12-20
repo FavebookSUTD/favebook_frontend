@@ -23,7 +23,9 @@ const config = {
       genres: `${backendURL}/books/genres`,
       search: `${backendURL}/books/genres/{genre}`,
     },
+    favourites: `${backendURL}/books/favourite/`,
   },
+  userDetails: 'http://localhost:5000/user/{username}',
 };
 
 export default config;

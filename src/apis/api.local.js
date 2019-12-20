@@ -17,7 +17,9 @@ const config = {
       genres: 'http://localhost:5000/books/genres',
       search: 'http://localhost:5000/books/genres/{genre}',
     },
+    favourites: 'http://localhost:5000/books/favourite/',
   },
+  userDetails: 'http://localhost:5000/user/{username}',
 };
 
 export default config;

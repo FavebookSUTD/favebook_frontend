@@ -27,6 +27,7 @@ export const resetBookReviews = () => ({
   type: ACTIONS.RESET_BOOK_REVIEWS,
 });
 
-export const faveBook = () => ({
+export const faveBook = (isFaved, bookId) => ({
   type: ACTIONS.FAVE_BOOK,
+  payload: { isFaved, bookId },
 });

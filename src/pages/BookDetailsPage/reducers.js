@@ -60,12 +60,12 @@ export default function reducer(state = initialState, action) {
       return state.setIn(['loading', 'favebook'], true);
 
     case ACTIONS.FAVE_BOOK_SUCCESS:
-      return state.setIn(['loading', 'favebook'], false).setIn(['error', 'reviews'], '');
+      return state.setIn(['loading', 'favebook'], false).setIn(['error', 'favebook'], '');
 
     case ACTIONS.FAVE_BOOK_FAILURE:
       return state
         .setIn(['loading', 'favebook'], false)
-        .setIn(['error', 'reviews'], action.payload.toString());
+        .setIn(['error', 'favebook'], action.payload.toString())
 
     default:
       return state;

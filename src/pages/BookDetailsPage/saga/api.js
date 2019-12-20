@@ -6,6 +6,7 @@ export function fetchBookDetails({ payload }) {
 
   return api.get({
     url: apiConfig.books.info.replace('{asin}', bookId),
+    needAuthenticate: true,
   });
 }
 
@@ -23,6 +24,22 @@ export function fetchBookReviews({ payload }) {
     .then(({ data }) => ({ data, pageNum }));
 }
 
-export function faveBook() {
-  return new Promise(resolve => setTimeout(() => resolve({}), 2000));
+export function faveBook({ payload }) {
+  const { isFaved, bookId } = payload;
+  if (isFaved) {
+    return api.post({
+      url: apiConfig.books.favourites,
+      body: {
+        book_asin: bookId,
+      },
+      needAuthenticate: true,
+    });
+  }
+  return api.delete({
+    url: apiConfig.books.favourites,
+    body: {
+      book_asin: bookId,
+    },
+    needAuthenticate: true,
+  });
 }

@@ -12,7 +12,7 @@ import { Typography } from 'antd';
 const { Text } = Typography;
 
 const UserTextInfo = ({ userInfo }) => {
-  const { username, num_reviews, avg_rating, num_favourite_books } = userInfo;
+  const { username, num_reviews, avg_rating, num_fav } = userInfo;
 
   return (
     <div className="user-text-info__container">
@@ -29,7 +29,7 @@ const UserTextInfo = ({ userInfo }) => {
         <Text className="user-input-review-rating">{avg_rating}</Text>
       </div>
       <div className="user-fave-books">
-        <Text className="user-input-fave-books">{num_favourite_books}</Text>
+        <Text className="user-input-fave-books">{num_fav}</Text>
         <Text>favourite books</Text>
       </div>
     </div>

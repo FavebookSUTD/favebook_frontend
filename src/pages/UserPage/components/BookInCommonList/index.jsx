@@ -33,7 +33,7 @@ const getRatingComparison = (rating, userRating) => (
     <BookRatingBubble ratingValue={rating} />
   </div>
 );
-
+// TODO
 const BookInCommon = ({ loading, books }) => {
   return (
     <div className="book-in-common__main-container">
