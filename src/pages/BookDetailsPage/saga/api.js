@@ -3,11 +3,17 @@ import apiConfig from '@apis/apiConfig';
 
 export function fetchBookDetails({ payload }) {
   const { bookId } = payload;
-
-  return api.get({
-    url: apiConfig.books.info.replace('{asin}', bookId),
-    needAuthenticate: true,
-  });
+  try {
+    const { username } = JSON.parse(window.sessionStorage.getItem('user'));
+    return api.get({
+      url: apiConfig.books.info.replace('{asin}', bookId),
+      needAuthenticate: true,
+    });
+  } catch {
+    return api.get({
+      url: apiConfig.books.info.replace('{asin}', bookId),
+    });
+  }
 }
 
 export function fetchBookReviews({ payload }) {

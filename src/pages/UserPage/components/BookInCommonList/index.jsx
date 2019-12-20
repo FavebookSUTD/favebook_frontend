@@ -51,7 +51,7 @@ const BookInCommon = ({ loading, books }) => {
               pageSize: 5,
             }}
             renderItem={book => (
-              <List.Item key={book.id} extra={getRatingComparison(book.rating, book.userRating)}>
+              <List.Item key={book.asin} extra={getRatingComparison(book.rating, book.userRating)}>
                 <List.Item.Meta
                   avatar={getBookImage(book.imgURL, book.rating)}
                   title={
@@ -60,7 +60,7 @@ const BookInCommon = ({ loading, books }) => {
                         className="book-title"
                         level={4}
                         ellipsis={{ rows: 2 }}
-                        onClick={() => goto(`/book/${book.id}`)}
+                        onClick={() => goto(`/book/${book.asin}`)}
                       >
                         {book.title}
                       </Title>

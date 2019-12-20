@@ -25,7 +25,7 @@ const config = {
     },
     favourites: `${backendURL}/books/favourite/`,
   },
-  userDetails: 'http://localhost:5000/user/{username}',
+  userDetails: `${backendURL}/user/{username}`,
 };
 
 export default config;

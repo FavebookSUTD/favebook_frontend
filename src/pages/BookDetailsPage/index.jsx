@@ -73,6 +73,15 @@ class BookDetailsPage extends PureComponent {
     faveBook(isFaved, bookId);
   };
 
+  isLoggedIn = () => {
+    try {
+      const { username } = JSON.parse(window.sessionStorage.getItem('user'));
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
   render() {
     const {
       match: {
@@ -86,7 +95,7 @@ class BookDetailsPage extends PureComponent {
       error,
     } = this.props;
 
-    const { title, author, avg_rating, description, imUrl, genres, user_fav } = book;
+    const { title, author, avg_rating, description, imUrl, genres, user_fav, num_fav } = book;
 
     return (
       <div className="book-details-page__main-container">
@@ -100,10 +109,11 @@ class BookDetailsPage extends PureComponent {
                 loading={loading.favebook}
                 bookCoverURL={imUrl || ''}
                 bookTitle={title || ''}
-                interestStatus={{ wantToReadCount: 5 }}
+                wantToReadCount={num_fav}
                 faveBookHandler={this.faveBookHandler}
                 initFave={user_fav}
                 bookId={id}
+                isLoggedIn={this.isLoggedIn()}
               />
             </Col>
             <Col className="book-details-page__main-details-container" span={16}>
@@ -160,6 +170,7 @@ BookDetailsPage.propTypes = {
     imUrl: PropTypes.string,
     genres: PropTypes.arrayOf(PropTypes.string),
     user_fav: PropTypes.bool.isRequired,
+    num_fav: PropTypes.number.isRequired,
   }).isRequired,
   reviews: PropTypes.shape({}).isRequired,
   totalReviewCount: PropTypes.number.isRequired,
