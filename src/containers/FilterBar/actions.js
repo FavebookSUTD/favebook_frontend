@@ -9,9 +9,9 @@ const ACTIONS = {
 
 export default ACTIONS;
 
-export const searchBooks = (bookId, selectedVal, searchVal) => ({
+export const searchBooks = (bookId, searchVal) => ({
   type: ACTIONS.SEARCH_BOOKS,
-  payload: { bookId, selectedVal, searchVal },
+  payload: { bookId, searchVal },
 });
 
 export const autocompleteBooks = autocompleteVal => ({

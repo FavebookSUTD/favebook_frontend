@@ -20,7 +20,6 @@ import {
   selectError,
   selectLoading,
   selectAutocompleteResults,
-  selectCurrentSearchVal,
   selectSelectedBook,
 } from './selectors';
 
@@ -65,7 +64,6 @@ class FilterBar extends PureComponent {
       loading,
       autocompleteResults,
       searchBooks,
-      currentSearchVal,
       selectedBook,
     } = this.props;
 
@@ -77,14 +75,14 @@ class FilterBar extends PureComponent {
           filterOption={false}
           defaultActiveFirstOption={false}
           optionLabelProp="label"
-          defaultValue={selectedBook.selectedVal || selectedBook.searchVal}
+          defaultValue={selectedBook.searchVal}
           notFoundContent={loading.autocomplete ? <Spin className="filter-spining-icon" /> : null}
           placeholder={<Icon className="search-icon" type="search" />}
           dropdownClassName="filter-autocomplete-dropdown__container"
           dataSource={renderOptions(!loading.autocomplete ? autocompleteResults : [])}
           onSearch={this.deboucedAutocompleteBooks}
           onSelect={(_, option) => {
-            searchBooks(option.key, option.props.label, currentSearchVal);
+            searchBooks(option.key, option.props.label);
             if (!isEqual(pathname, '/browseresults')) {
               goto('/browseresults');
             }
@@ -95,7 +93,7 @@ class FilterBar extends PureComponent {
           type="primary"
           disabled={loading.autocomplete || loading.search}
           onClick={() => {
-            searchBooks(selectedBook.bookId, selectedBook.selectedVal, currentSearchVal);
+            searchBooks(selectedBook.bookId, selectedBook.searchVal);
             if (!isEqual(pathname, '/browseresults')) {
               goto('/browseresults');
             }
@@ -120,7 +118,6 @@ FilterBar.propTypes = {
     search: PropTypes.bool,
   }).isRequired,
   autocompleteResults: PropTypes.arrayOf(PropTypes.object).isRequired,
-  currentSearchVal: PropTypes.string.isRequired,
   selectedBook: PropTypes.shape({
     bookId: PropTypes.string,
     selectedVal: PropTypes.string,
@@ -139,7 +136,6 @@ const mapStateToProps = createStructuredSelector({
   error: selectError,
   loading: selectLoading,
   autocompleteResults: selectAutocompleteResults,
-  currentSearchVal: selectCurrentSearchVal,
   selectedBook: selectSelectedBook,
 });
 

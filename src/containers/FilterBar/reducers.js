@@ -6,10 +6,8 @@ export const initialState = fromJS({
   loading: { autocomplete: false, search: false },
   autocompleteResults: [],
   searchResults: [],
-  currentSearchVal: '',
   selectedBook: {
     bookId: '',
-    selectedVal: '',
     searchVal: '',
   },
 });
@@ -36,8 +34,7 @@ export default function reducer(state = initialState, action) {
       return state
         .set('autocompleteResults', fromJS([]))
         .set('searchResults', fromJS([]))
-        .setIn(['selectedBook', 'selectedVal'], '')
-        .set('currentSearchVal', action.payload.autocompleteVal)
+        .setIn(['selectedBook', 'searchVal'], action.payload.autocompleteVal)
         .setIn(['loading', 'autocomplete'], true);
 
     case ACTIONS.AUTOCOMPLETE_BOOKS_SUCCESS:

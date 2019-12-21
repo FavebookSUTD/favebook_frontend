@@ -27,8 +27,6 @@ const selectSearchResults = createSelector(
 
 const selectAutocompleteResults = selectToJS(selectFilterBar, 'autocompleteResults');
 
-const selectCurrentSearchVal = select(selectFilterBar, 'currentSearchVal');
-
 const selectSelectedBook = selectToJS(selectFilterBar, 'selectedBook');
 
 export {
@@ -36,6 +34,5 @@ export {
   selectLoading,
   selectSearchResults,
   selectAutocompleteResults,
-  selectCurrentSearchVal,
   selectSelectedBook,
 };
