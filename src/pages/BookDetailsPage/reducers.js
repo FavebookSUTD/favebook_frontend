@@ -22,7 +22,7 @@ export const initialState = fromJS({
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case ACTIONS.FETCH_BOOK_DETAILS:
-      return state.setIn(['loading', 'book'], true);
+      return state.set('book', fromJS({})).setIn(['loading', 'book'], true);
 
     case ACTIONS.FETCH_BOOK_DETAILS_SUCCESS:
       return state
