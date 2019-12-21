@@ -24,7 +24,7 @@ export default function reducer(state = initialState, action) {
 
     case ACTIONS.FETCH_FAVOURITE_SUCCESS:
       return state
-        .set('favourite', fromJS(action.payload.data))
+        .set('favourite', fromJS(action.payload.books_favourite))
         .setIn(['loading', 'favourite'], false)
         .setIn(['error', 'favourite'], '');
 

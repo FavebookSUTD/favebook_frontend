@@ -9,8 +9,9 @@ const ACTIONS = {
 
 export default ACTIONS;
 
-export const fetchFavourite = () => ({
+export const fetchFavourite = username => ({
   type: ACTIONS.FETCH_FAVOURITE,
+  payload: { username },
 });
 
 export const fetchMyReviews = (username, pageNum, pageSize) => ({

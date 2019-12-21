@@ -1,10 +1,11 @@
 import api from '@apis/api';
 import apiConfig from '@apis/apiConfig';
 
-export function fetchFavourite() {
-  const mockData = require('./mock/mockBookList.json');
-
-  return new Promise(resolve => setTimeout(() => resolve(mockData), 2000));
+export function fetchFavourite({ payload }) {
+  const { username } = payload;
+  return api.get({
+    url: apiConfig.userDetails.replace('{username}', username),
+  });
 }
 
 export function fetchMyReviews({ payload }) {

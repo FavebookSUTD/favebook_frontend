@@ -29,8 +29,6 @@ import TabMenuContainer from '@components/TabMenuContainer';
 import BookInfo from '@components/BookInfo';
 import BookReviewsList from '@components/BookReviewsList';
 
-// import lodash
-
 // import local styling
 import './index.scss';
 
@@ -44,16 +42,23 @@ const renderBookList = (books, loading) => <BookInfo loading={loading} books={bo
 
 class MyBookPage extends PureComponent {
   componentDidMount() {
-    const { pageSize, fetchFavourite } = this.props;
+    const {
+      pageSize,
+      userInfo: { username },
+      fetchFavourite,
+    } = this.props;
 
-    fetchFavourite();
+    fetchFavourite(username);
     this.fetchReviewHandler(1, pageSize);
   }
 
   fetchReviewHandler = (pageNum, pageSize) => {
-    const { loading, userInfo, fetchMyReviews } = this.props;
+    const {
+      loading,
+      userInfo: { username },
+      fetchMyReviews,
+    } = this.props;
     if (!loading.myReviews) {
-      const { username } = userInfo;
       fetchMyReviews(username, pageNum, pageSize);
     }
   };
