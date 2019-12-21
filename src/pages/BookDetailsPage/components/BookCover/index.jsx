@@ -1,5 +1,5 @@
 // import React
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 // import local components
@@ -20,18 +20,10 @@ const BookCover = ({
   bookTitle,
   wantToReadCount,
   faveBookHandler,
-  initFave,
+  userFave,
   bookId,
   isLoggedIn,
 }) => {
-  const [isFaved, setFaved] = useState(initFave);
-  const [readCount, setRead] = useState(wantToReadCount);
-
-  useEffect(() => {
-    setFaved(initFave);
-    setRead(wantToReadCount);
-  }, [initFave, wantToReadCount]);
-
   return (
     <div className="book-cover__container">
       <div className="backdrop-pattern" />
@@ -43,16 +35,12 @@ const BookCover = ({
           <Button
             className="faveit-btn"
             shape="round"
-            disabled={false}
+            disabled={loading}
             loading={loading}
-            onClick={() => {
-              faveBookHandler(!isFaved, bookId);
-              setFaved(!isFaved);
-              setRead(!isFaved ? readCount + 1 : readCount - 1);
-            }}
+            onClick={() => faveBookHandler(!userFave, bookId)}
           >
             {loading ? null : (
-              <Icon className="faveit-icon" type="heart" theme={isFaved ? 'filled' : 'outlined'} />
+              <Icon className="faveit-icon" type="heart" theme={userFave ? 'filled' : 'outlined'} />
             )}
             FAVE IT!
           </Button>
@@ -62,7 +50,7 @@ const BookCover = ({
           </div>
         )}
         <div className="interest-status__statistic-container">
-          <Text className="people-count">{readCount || 0}</Text>
+          <Text className="people-count">{wantToReadCount || 0}</Text>
           <Text>people faved this book</Text>
         </div>
       </div>
@@ -79,8 +67,9 @@ BookCover.propTypes = {
   }).isRequired,
   faveBookHandler: PropTypes.func.isRequired,
   bookId: PropTypes.string.isRequired,
-  initFave: PropTypes.number.isRequired,
+  userFave: PropTypes.bool.isRequired,
   wantToReadCount: PropTypes.number.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default BookCover;

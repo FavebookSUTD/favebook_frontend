@@ -4,7 +4,6 @@ import apiConfig from '@apis/apiConfig';
 export function fetchBookDetails({ payload }) {
   const { bookId } = payload;
   try {
-    const { username } = JSON.parse(window.sessionStorage.getItem('user'));
     return api.get({
       url: apiConfig.books.info.replace('{asin}', bookId),
       needAuthenticate: true,
@@ -31,21 +30,19 @@ export function fetchBookReviews({ payload }) {
 }
 
 export function faveBook({ payload }) {
-  const { isFaved, bookId } = payload;
-  if (isFaved) {
-    return api.post({
-      url: apiConfig.books.favourites,
-      body: {
-        book_asin: bookId,
-      },
-      needAuthenticate: true,
-    });
-  }
+  const { bookId } = payload;
+  return api.post({
+    url: apiConfig.books.favourites,
+    body: { book_asin: bookId },
+    needAuthenticate: true,
+  });
+}
+
+export function unfaveBook({ payload }) {
+  const { bookId } = payload;
   return api.delete({
     url: apiConfig.books.favourites,
-    body: {
-      book_asin: bookId,
-    },
+    body: { book_asin: bookId },
     needAuthenticate: true,
   });
 }

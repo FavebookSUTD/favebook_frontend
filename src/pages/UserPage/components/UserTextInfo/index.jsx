@@ -39,9 +39,9 @@ const UserTextInfo = ({ userInfo }) => {
 UserTextInfo.propTypes = {
   userInfo: PropTypes.shape({
     username: PropTypes.string,
-    numReviews: PropTypes.number,
+    num_reviews: PropTypes.number,
     avg_rating: PropTypes.number,
-    num_favourite_books: PropTypes.number,
+    num_fav: PropTypes.number,
   }).isRequired,
 };
 

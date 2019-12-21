@@ -6,7 +6,7 @@ import notificationsHandler from '@sagas/notificationsHandler';
 
 import ACTIONS from '../actions';
 import UserReviewActions from '../containers/UserReview/actions';
-import { fetchBookDetails, fetchBookReviews, faveBook } from './api';
+import { fetchBookDetails, fetchBookReviews, faveBook, unfaveBook } from './api';
 
 export default function* watchBookDetailsPage() {
   yield all([
@@ -48,6 +48,25 @@ export default function* watchBookDetailsPage() {
       notificationsHandler,
       'error',
       'Failed to Fave the book.',
+    ),
+    takeLatest(
+      ACTIONS.UNFAVE_BOOK,
+      saga,
+      ACTIONS.UNFAVE_BOOK_SUCCESS,
+      ACTIONS.UNFAVE_BOOK_FAILURE,
+      unfaveBook,
+    ),
+    takeLatest(
+      ACTIONS.UNFAVE_BOOK_SUCCESS,
+      notificationsHandler,
+      'success',
+      'Successfully removed Faved book.',
+    ),
+    takeLatest(
+      ACTIONS.FAVE_BOOK_FAILURE,
+      notificationsHandler,
+      'error',
+      'Failed to remove Faved book.',
     ),
   ]);
 }

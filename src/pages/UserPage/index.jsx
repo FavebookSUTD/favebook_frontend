@@ -1,7 +1,6 @@
 // import React
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -44,8 +43,14 @@ const { Text } = Typography;
 
 class UserPage extends PureComponent {
   componentDidMount() {
-    const { fetchUserDetails, fetchFavourite, fetchBooksReviewed, location } = this.props;
-    const username = location.pathname.replace('/user/', '');
+    const {
+      fetchUserDetails,
+      fetchFavourite,
+      fetchBooksReviewed,
+      match: {
+        params: { id: username },
+      },
+    } = this.props;
     fetchUserDetails({ username });
     fetchFavourite({ username });
     fetchBooksReviewed({ username });
@@ -103,6 +108,11 @@ UserPage.propTypes = {
     reading: PropTypes.string.isRequired,
     booksReviewed: PropTypes.string.isRequired,
   }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
 
   fetchUserDetails: PropTypes.func.isRequired,
   fetchFavourite: PropTypes.func.isRequired,
@@ -132,7 +142,7 @@ const withConnect = connect(
 );
 
 export default compose(
-  withRouter,
+  // withRouter,
   withConnect,
   withReducer,
   withSaga,

@@ -12,7 +12,7 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import { fetchBookDetails, fetchBookReviews, faveBook } from './actions';
+import { fetchBookDetails, fetchBookReviews, faveBook, unfaveBook } from './actions';
 
 // import selector
 import {
@@ -23,6 +23,7 @@ import {
   selectLoading,
   selectError,
 } from './selectors';
+import { selectLoggedIn } from '@pages/AppLayout/selectors';
 
 // import local components
 import FilterBar from '@containers/FilterBar';
@@ -69,16 +70,11 @@ class BookDetailsPage extends PureComponent {
   };
 
   faveBookHandler = (isFaved, bookId) => {
-    const { faveBook } = this.props;
-    faveBook(isFaved, bookId);
-  };
-
-  isLoggedIn = () => {
-    try {
-      const { username } = JSON.parse(window.sessionStorage.getItem('user'));
-      return true;
-    } catch {
-      return false;
+    const { faveBook, unfaveBook } = this.props;
+    if (isFaved) {
+      faveBook(bookId);
+    } else {
+      unfaveBook(bookId);
     }
   };
 
@@ -93,6 +89,7 @@ class BookDetailsPage extends PureComponent {
       pageSize,
       loading,
       error,
+      isLoggedIn,
     } = this.props;
 
     const { title, author, avg_rating, description, imUrl, genres, user_fav, num_fav } = book;
@@ -111,9 +108,9 @@ class BookDetailsPage extends PureComponent {
                 bookTitle={title || ''}
                 wantToReadCount={num_fav}
                 faveBookHandler={this.faveBookHandler}
-                initFave={user_fav}
+                userFave={user_fav}
                 bookId={id}
-                isLoggedIn={this.isLoggedIn()}
+                isLoggedIn={isLoggedIn}
               />
             </Col>
             <Col className="book-details-page__main-details-container" span={16}>
@@ -190,10 +187,12 @@ BookDetailsPage.propTypes = {
       id: PropTypes.string,
     }),
   }).isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 
   fetchBookDetails: PropTypes.func.isRequired,
   fetchBookReviews: PropTypes.func.isRequired,
   faveBook: PropTypes.func.isRequired,
+  unfaveBook: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -203,12 +202,14 @@ const mapStateToProps = createStructuredSelector({
   pageSize: selectPageSize,
   loading: selectLoading,
   error: selectError,
+  isLoggedIn: selectLoggedIn,
 });
 
 const mapDispatchToProps = {
   fetchBookDetails,
   fetchBookReviews,
   faveBook,
+  unfaveBook,
 };
 
 const withReducer = injectReducer({ key: 'BookDetailsPage', reducer });

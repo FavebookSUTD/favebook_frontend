@@ -57,15 +57,28 @@ export default function reducer(state = initialState, action) {
       return state.set('reviews', fromJS({}));
 
     case ACTIONS.FAVE_BOOK:
+    case ACTIONS.UNFAVE_BOOK:
       return state.setIn(['loading', 'favebook'], true);
 
     case ACTIONS.FAVE_BOOK_SUCCESS:
-      return state.setIn(['loading', 'favebook'], false).setIn(['error', 'favebook'], '');
+      return state
+        .setIn(['book', 'user_fav'], true)
+        .updateIn(['book', 'num_fav'], numFave => numFave + 1)
+        .setIn(['loading', 'favebook'], false)
+        .setIn(['error', 'favebook'], '');
 
     case ACTIONS.FAVE_BOOK_FAILURE:
+    case ACTIONS.UNFAVE_BOOK_FAILURE:
       return state
         .setIn(['loading', 'favebook'], false)
-        .setIn(['error', 'favebook'], action.payload.toString())
+        .setIn(['error', 'favebook'], action.payload.toString());
+
+    case ACTIONS.UNFAVE_BOOK_SUCCESS:
+      return state
+        .setIn(['book', 'user_fav'], false)
+        .updateIn(['book', 'num_fav'], numFave => numFave - 1)
+        .setIn(['loading', 'favebook'], false)
+        .setIn(['error', 'favebook'], '');
 
     default:
       return state;

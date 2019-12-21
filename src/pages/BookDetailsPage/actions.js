@@ -9,6 +9,9 @@ const ACTIONS = {
   FAVE_BOOK: '@pages/BookDetailsPage/FAVE_BOOK',
   FAVE_BOOK_SUCCESS: '@pages/BookDetailsPage/FAVE_BOOK_SUCCESS',
   FAVE_BOOK_FAILURE: '@pages/BookDetailsPage/FAVE_BOOK_FAILURE',
+  UNFAVE_BOOK: '@pages/BookDetailsPage/UNFAVE_BOOK',
+  UNFAVE_BOOK_SUCCESS: '@pages/BookDetailsPage/UNFAVE_BOOK_SUCCESS',
+  UNFAVE_BOOK_FAILURE: '@pages/BookDetailsPage/UNFAVE_BOOK_FAILURE',
 };
 
 export default ACTIONS;
@@ -27,7 +30,12 @@ export const resetBookReviews = () => ({
   type: ACTIONS.RESET_BOOK_REVIEWS,
 });
 
-export const faveBook = (isFaved, bookId) => ({
+export const faveBook = bookId => ({
   type: ACTIONS.FAVE_BOOK,
-  payload: { isFaved, bookId },
+  payload: { bookId },
+});
+
+export const unfaveBook = bookId => ({
+  type: ACTIONS.UNFAVE_BOOK,
+  payload: { bookId },
 });
