@@ -28,7 +28,6 @@ const request = (props, method) => {
   const configureJWT = headers => {
     if (needAuthenticate) {
       const { access_token } = JSON.parse(window.sessionStorage.getItem('user'));
-      console.log(access_token);
       return {
         ...headers,
         Authorization: `Bearer ${access_token}`,
