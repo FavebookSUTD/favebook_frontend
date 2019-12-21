@@ -2,8 +2,7 @@ import { message } from 'antd';
 
 export default function* notificationsHandler(messageLevel, messageContent) {
   message.config({
-    duration: 5,
-    maxCount: 5,
+    duration: 1,
   });
 
   try {
