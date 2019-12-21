@@ -126,8 +126,7 @@ const withConnect = connect(
 );
 
 export default compose(
-  // withRouter,
-  withConnect,
   withReducer,
   withSaga,
+  withConnect,
 )(UserPage);
