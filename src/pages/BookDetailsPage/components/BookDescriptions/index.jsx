@@ -50,13 +50,17 @@ const BookDescriptions = ({ loading, title, author, ratingValue, reviewCount, ge
 
 BookDescriptions.propTypes = {
   loading: PropTypes.bool.isRequired,
-  title: PropTypes.string.isRequired,
-  author: PropTypes.string.isRequired,
-  ratingValue: PropTypes.number.isRequired,
+  title: PropTypes.string,
+  author: PropTypes.string,
+  ratingValue: PropTypes.number,
   reviewCount: PropTypes.number.isRequired,
   genres: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-BookDescriptions.defaultProps = {};
+BookDescriptions.defaultProps = {
+  title: '',
+  author: '',
+  ratingValue: 0,
+};
 
 export default BookDescriptions;

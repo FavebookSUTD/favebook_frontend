@@ -60,16 +60,21 @@ const BookCover = ({
 
 BookCover.propTypes = {
   loading: PropTypes.bool.isRequired,
-  bookCoverURL: PropTypes.string.isRequired,
-  bookTitle: PropTypes.string.isRequired,
-  interestStatus: PropTypes.shape({
-    wantToReadCount: PropTypes.number,
-  }).isRequired,
+  bookCoverURL: PropTypes.string,
+  bookTitle: PropTypes.string,
+  wantToReadCount: PropTypes.number,
   faveBookHandler: PropTypes.func.isRequired,
   bookId: PropTypes.string.isRequired,
-  userFave: PropTypes.bool.isRequired,
-  wantToReadCount: PropTypes.number.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
+  userFave: PropTypes.bool,
+  isLoggedIn: PropTypes.bool,
+};
+
+BookCover.defaultProps = {
+  bookCoverURL: '',
+  bookTitle: '',
+  wantToReadCount: 0,
+  userFave: false,
+  isLoggedIn: false,
 };
 
 export default BookCover;

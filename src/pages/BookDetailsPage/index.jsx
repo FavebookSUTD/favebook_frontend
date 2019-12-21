@@ -104,8 +104,8 @@ class BookDetailsPage extends PureComponent {
             <Col className="book-details-page__misc-details-container" span={8}>
               <BookCover
                 loading={loading.favebook}
-                bookCoverURL={imUrl || ''}
-                bookTitle={title || ''}
+                bookCoverURL={imUrl}
+                bookTitle={title}
                 wantToReadCount={num_fav}
                 faveBookHandler={this.faveBookHandler}
                 userFave={user_fav}
@@ -116,9 +116,9 @@ class BookDetailsPage extends PureComponent {
             <Col className="book-details-page__main-details-container" span={16}>
               <BookDescriptions
                 loading={loading.book}
-                title={title || ''}
+                title={title}
                 author={author || 'Lioneel & Glenn'}
-                ratingValue={avg_rating || 0}
+                ratingValue={avg_rating}
                 reviewCount={totalReviewCount}
                 genres={!isEmpty(genres) ? genres : []}
               />
@@ -127,9 +127,7 @@ class BookDetailsPage extends PureComponent {
                 menuObj={[
                   {
                     title: 'Summary',
-                    reactNode: (
-                      <BookSummaryContent summary={description || ''} loading={loading.book} />
-                    ),
+                    reactNode: <BookSummaryContent summary={description} loading={loading.book} />,
                   },
                   {
                     title: 'Reviews',
@@ -166,8 +164,8 @@ BookDetailsPage.propTypes = {
     description: PropTypes.string,
     imUrl: PropTypes.string,
     genres: PropTypes.arrayOf(PropTypes.string),
-    user_fav: PropTypes.bool.isRequired,
-    num_fav: PropTypes.number.isRequired,
+    user_fav: PropTypes.bool,
+    num_fav: PropTypes.number,
   }).isRequired,
   reviews: PropTypes.shape({}).isRequired,
   totalReviewCount: PropTypes.number.isRequired,
