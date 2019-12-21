@@ -152,7 +152,7 @@ class UserReview extends PureComponent {
             </div>
             <TextArea
               className="user-review__input-container"
-              autosize={{ minRows: 6, maxRows: 6 }}
+              autoSize={{ minRows: 6, maxRows: 6 }}
               value={userInput}
               onChange={this.updateUserInputHandler}
               onFocus={this.reviewOnFocusHandler}
