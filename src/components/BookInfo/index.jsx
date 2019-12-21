@@ -59,7 +59,7 @@ const BookInfo = ({ books, pageSize, pageNum, loading, pagination, total, fetchP
               <List.Item.Meta
                 avatar={getBookImage(
                   book.imUrl || '',
-                  book.avg_rating > 0 ? book.avg_rating : 'NIL',
+                  book.avg_rating > 0 ? book.avg_rating.toFixed(1) : 'NIL',
                 )}
                 title={
                   <span>

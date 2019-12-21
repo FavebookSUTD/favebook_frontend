@@ -16,7 +16,7 @@ const BookRatingBubble = ({ ratingValue, userRating }) => {
           userRating ? 'book-rating-bubble-user-rating' : ''
         }`}
       >
-        {ratingValue < 0 ? 'NIL' : ratingValue}
+        {ratingValue > 0 ? ratingValue.toFixed(1) : 'NIL'}
       </div>
     </Tooltip>
   );

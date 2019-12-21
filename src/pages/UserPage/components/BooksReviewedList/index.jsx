@@ -33,14 +33,14 @@ const getRatingComparison = (rating, userRating) => (
     <BookRatingBubble ratingValue={rating} />
   </div>
 );
-// TODO
-const BookInCommon = ({ loading, books }) => {
+
+const BooksReviewedList = ({ loading, books, pageSize }) => {
   return (
-    <div className="book-in-common__main-container">
+    <div className="book-reviewed__main-container">
       <Skeleton loading={loading} active>
         {!isEmpty(books) ? (
           <List
-            className="book-in-common__list-container"
+            className="book-reviewed__list-container"
             itemLayout="vertical"
             split={false}
             dataSource={books}
@@ -48,12 +48,15 @@ const BookInCommon = ({ loading, books }) => {
             pagination={{
               position: 'both',
               hideOnSinglePage: true,
-              pageSize: 5,
+              pageSize,
             }}
             renderItem={book => (
-              <List.Item key={book.asin} extra={getRatingComparison(book.rating, book.userRating)}>
+              <List.Item
+                key={book.asin}
+                extra={getRatingComparison(book.avg_rating, book.user_rating)}
+              >
                 <List.Item.Meta
-                  avatar={getBookImage(book.imgURL, book.rating)}
+                  avatar={getBookImage(book.imUrl, book.avg_rating)}
                   title={
                     <span>
                       <Title
@@ -83,9 +86,14 @@ const BookInCommon = ({ loading, books }) => {
   );
 };
 
-BookInCommon.propTypes = {
+BooksReviewedList.propTypes = {
   loading: PropTypes.bool.isRequired,
   books: PropTypes.arrayOf(PropTypes.object).isRequired,
+  pageSize: PropTypes.number,
 };
 
-export default BookInCommon;
+BooksReviewedList.defaultProps = {
+  pageSize: 8,
+};
+
+export default BooksReviewedList;

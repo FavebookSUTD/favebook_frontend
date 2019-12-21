@@ -1,16 +1,12 @@
-import { selectToJS } from '@utils/selectorUtils';
+import { select, selectToJS } from '@utils/selectorUtils';
 import { initialState } from './reducers';
 
 const selectUserPage = state => state.get('UserPage', initialState);
 
 const selectUserDetails = selectToJS(selectUserPage, 'userDetails');
 
-const selectFavourite = selectToJS(selectUserPage, 'favourite');
+const selectLoading = select(selectUserPage, 'loading');
 
-const selectBooksReviewed = selectToJS(selectUserPage, 'booksReviewed');
+const selectError = select(selectUserPage, 'error');
 
-const selectLoading = selectToJS(selectUserPage, 'loading');
-
-const selectError = selectToJS(selectUserPage, 'error');
-
-export { selectUserDetails, selectFavourite, selectBooksReviewed, selectLoading, selectError };
+export { selectUserDetails, selectLoading, selectError };

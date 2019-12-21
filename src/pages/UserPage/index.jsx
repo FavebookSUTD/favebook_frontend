@@ -12,16 +12,10 @@ import injectReducer from '@utils/core/injectReducer';
 import injectSaga from '@utils/core/injectSaga';
 
 // import actions
-import { fetchUserDetails, fetchFavourite, fetchBooksReviewed } from './actions';
+import { fetchUserDetails } from './actions';
 
 // import selector
-import {
-  selectUserDetails,
-  selectFavourite,
-  selectBooksReviewed,
-  selectLoading,
-  selectError,
-} from './selectors';
+import { selectUserDetails, selectLoading, selectError } from './selectors';
 
 // import lodash
 
@@ -29,7 +23,7 @@ import {
 import UserInfo from './components/UserInfo';
 import TabMenuContainer from '@components/TabMenuContainer';
 import BookInfo from '@components/BookInfo';
-import BookInCommonList from './components/BookInCommonList';
+import BooksReviewedList from './components/BooksReviewedList';
 
 // import local styling
 import './index.scss';
@@ -45,24 +39,20 @@ class UserPage extends PureComponent {
   componentDidMount() {
     const {
       fetchUserDetails,
-      fetchFavourite,
-      fetchBooksReviewed,
       match: {
         params: { id: username },
       },
     } = this.props;
     fetchUserDetails({ username });
-    fetchFavourite({ username });
-    fetchBooksReviewed({ username });
   }
 
   render() {
-    const { userDetails, favourite, booksReviewed, loading } = this.props;
+    const { userDetails, loading } = this.props;
 
     return (
       <Content className="user-page__container">
         {userDetails ? (
-          <UserInfo loading={loading.userDetails} userInfo={userDetails} />
+          <UserInfo loading={loading} userInfo={userDetails} />
         ) : (
           <Text> Username not found in database </Text>
         )}
@@ -72,15 +62,20 @@ class UserPage extends PureComponent {
               {
                 title: 'Favourite',
                 reactNode: (
-                  <BookInfo books={favourite.books_favourite} loading={loading.favourite} />
+                  <BookInfo
+                    books={userDetails.books_favourite || []}
+                    loading={loading}
+                    pageSize={5}
+                  />
                 ),
               },
               {
                 title: 'Books Reviewed',
                 reactNode: (
-                  <BookInCommonList
-                    loading={loading.booksReviewed}
-                    books={booksReviewed.books_reviewed}
+                  <BooksReviewedList
+                    loading={loading}
+                    books={userDetails.books_reviewed || []}
+                    pageSize={5}
                   />
                 ),
               },
@@ -94,20 +89,15 @@ class UserPage extends PureComponent {
 }
 
 UserPage.propTypes = {
-  userDetails: PropTypes.shape({}).isRequired,
-  favourite: PropTypes.arrayOf(PropTypes.object).isRequired,
-  booksReviewed: PropTypes.arrayOf(PropTypes.object).isRequired,
-  loading: PropTypes.shape({
-    userDetails: PropTypes.bool.isRequired,
-    favourite: PropTypes.bool.isRequired,
-    booksReviewed: PropTypes.bool.isRequired,
+  userDetails: PropTypes.shape({
+    username: PropTypes.string,
+    num_reviews: PropTypes.number,
+    avg_rating: PropTypes.number,
+    num_fav: PropTypes.number,
+    books_reviewed: PropTypes.arrayOf(PropTypes.object),
+    books_favourite: PropTypes.arrayOf(PropTypes.object),
   }).isRequired,
-  error: PropTypes.shape({
-    userDetails: PropTypes.string.isRequired,
-    favourite: PropTypes.string.isRequired,
-    reading: PropTypes.string.isRequired,
-    booksReviewed: PropTypes.string.isRequired,
-  }).isRequired,
+  loading: PropTypes.bool.isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
@@ -115,22 +105,16 @@ UserPage.propTypes = {
   }).isRequired,
 
   fetchUserDetails: PropTypes.func.isRequired,
-  fetchFavourite: PropTypes.func.isRequired,
-  fetchBooksReviewed: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   userDetails: selectUserDetails,
-  favourite: selectFavourite,
-  booksReviewed: selectBooksReviewed,
   loading: selectLoading,
   error: selectError,
 });
 
 const mapDispatchToProps = {
   fetchUserDetails,
-  fetchFavourite,
-  fetchBooksReviewed,
 };
 
 const withReducer = injectReducer({ key: 'UserPage', reducer });
